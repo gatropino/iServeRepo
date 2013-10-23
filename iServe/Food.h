@@ -1,5 +1,5 @@
 //
-//  CoreData.h
+//  Food.h
 //  iServe
 //
 //  Created by Greg Tropino on 10/23/13.
@@ -7,8 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 #import "Food.h"
+#import "Pizza.h"
 
-@interface CoreData : NSObject
+@class Pizza;
+
+@interface Food : NSManagedObject
+
+@property (nonatomic, retain) Pizza *pizza;
 
 @end
