@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		375606BF18182BC700E5C930 /* Food.m in Sources */ = {isa = PBXBuildFile; fileRef = 375606BE18182BC700E5C930 /* Food.m */; };
+		375606C218182BC800E5C930 /* Pizza.m in Sources */ = {isa = PBXBuildFile; fileRef = 375606C118182BC800E5C930 /* Pizza.m */; };
 		37F7F52918181AFA0014B5BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52818181AFA0014B5BC /* Foundation.framework */; };
 		37F7F52B18181AFA0014B5BC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52A18181AFA0014B5BC /* CoreGraphics.framework */; };
 		37F7F52D18181AFA0014B5BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52C18181AFA0014B5BC /* UIKit.framework */; };
@@ -38,6 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		375606BD18182BC700E5C930 /* Food.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Food.h; sourceTree = "<group>"; };
+		375606BE18182BC700E5C930 /* Food.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Food.m; sourceTree = "<group>"; };
+		375606C018182BC800E5C930 /* Pizza.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pizza.h; sourceTree = "<group>"; };
+		375606C118182BC800E5C930 /* Pizza.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pizza.m; sourceTree = "<group>"; };
 		37F7F52518181AFA0014B5BC /* iServe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iServe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37F7F52818181AFA0014B5BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		37F7F52A18181AFA0014B5BC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -131,6 +137,10 @@
 				37F7F53918181AFA0014B5BC /* AppDelegate.h */,
 				37F7F53A18181AFA0014B5BC /* AppDelegate.m */,
 				37F7F53F18181AFA0014B5BC /* Images.xcassets */,
+				375606C018182BC800E5C930 /* Pizza.h */,
+				375606C118182BC800E5C930 /* Pizza.m */,
+				375606BD18182BC700E5C930 /* Food.h */,
+				375606BE18182BC700E5C930 /* Food.m */,
 				37F7F53C18181AFA0014B5BC /* iServe.xcdatamodeld */,
 				37F7F53118181AFA0014B5BC /* Supporting Files */,
 			);
@@ -262,6 +272,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				375606BF18182BC700E5C930 /* Food.m in Sources */,
+				375606C218182BC800E5C930 /* Pizza.m in Sources */,
 				37F7F53B18181AFA0014B5BC /* AppDelegate.m in Sources */,
 				37F7F53E18181AFA0014B5BC /* iServe.xcdatamodeld in Sources */,
 				37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */,
