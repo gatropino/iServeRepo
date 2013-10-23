@@ -19,7 +19,7 @@
     UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
     RootViewController *rvc = (RootViewController *)[[nav viewControllers] objectAtIndex:0];;
     rvc.managedObjectContext = self.managedObjectContext;
-    
+
     return YES;
 }
 
