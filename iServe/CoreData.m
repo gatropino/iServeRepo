@@ -9,11 +9,30 @@
 #import "CoreData.h"
 
 @implementation CoreData
-
+{
+    id observer2;
+}
 @synthesize fetchedResultsController, managedObjectContext;
+
+-(void)testingMethod
+{
+NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+observer2 = [nc addObserverForName:@"Receiver/PostName" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note)
+             {
+                 //@selector(resetPizzaInventoryLevels);
+             }];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:observer2];
+}
+
+
 
 -(void)resetPizzaInventoryLevels
 {
+    
     NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
     [searchRequest setEntity:[NSEntityDescription entityForName:@"AvailableIngredients" inManagedObjectContext:managedObjectContext]];
     
@@ -35,7 +54,6 @@
         ingredients.sausage = @5;
         ingredients.pepperoni = @5;
     }
-    
 }
 
 -(NSArray *)fetchAllFoodTypes
@@ -46,6 +64,76 @@
     NSArray *matchedObjects = [managedObjectContext executeFetchRequest:searchRequest error:nil];
     
     return matchedObjects;
+}
+
+-(NSArray *)totalCheesePizzasSold
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSManagedObjectModel *model = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectModel];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    fr.entity = [model.entitiesByName objectForKey:@"Week"];
+    
+    //This predicate will be compiled into pure SQL
+    fr.predicate = [NSPredicate predicateWithFormat:@"Pizza.@sum.cheese"];
+    
+    NSError *error = nil;
+    NSArray *cheeseArray = [context executeFetchRequest:fr error:&error];
+    if (error) {
+        NSLog(@"ERROR: %@", error);
+    }
+    NSLog(@"Results: %@", cheeseArray);
+
+    return cheeseArray;
+}
+
+-(NSArray *)totalSausagePizzasSold
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSManagedObjectModel *model = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectModel];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    fr.entity = [model.entitiesByName objectForKey:@"Week"];
+    
+    //This predicate will be compiled into pure SQL
+    fr.predicate = [NSPredicate predicateWithFormat:@"Pizza.@sum.sausage"];
+    
+    NSError *error = nil;
+    NSArray *cheeseArray = [context executeFetchRequest:fr error:&error];
+    if (error) {
+        NSLog(@"ERROR: %@", error);
+    }
+    NSLog(@"Results: %@", cheeseArray);
+    
+    return cheeseArray;
+}
+
+-(NSArray *)totalPepperoniPizzasSold
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSManagedObjectModel *model = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectModel];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    fr.entity = [model.entitiesByName objectForKey:@"Week"];
+    
+    //This predicate will be compiled into pure SQL
+    fr.predicate = [NSPredicate predicateWithFormat:@"Pizza.@sum.pepperoni"];
+    
+    NSError *error = nil;
+    NSArray *cheeseArray = [context executeFetchRequest:fr error:&error];
+    if (error) {
+        NSLog(@"ERROR: %@", error);
+    }
+    NSLog(@"Results: %@", cheeseArray);
+    
+    return cheeseArray;
+}
+
+
+-(NSArray *)attributesOfPizza
+{
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Pizza" inManagedObjectContext:managedObjectContext];
+    
+    NSLog(@"%@", entity.properties);
+    
+    return entity.properties;
 }
 
 -(NSFetchedResultsController *) fetchedResultsController
