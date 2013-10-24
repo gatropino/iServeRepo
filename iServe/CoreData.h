@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "Food.h"
+#import "Pizza.h"
+#import "AvailableIngredients.h"
 #import "AppDelegate.h"
+#import "Images.h"
 
-@interface CoreData : NSObject
+@interface CoreData : NSObject <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;

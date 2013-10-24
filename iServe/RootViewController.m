@@ -26,13 +26,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    //for being able to call my individual methods in core data for testing, don't touch!!
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"CoreDataTesting" object:nil];
+
+
+
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end

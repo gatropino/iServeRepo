@@ -1,5 +1,5 @@
 //
-//  Pizza.h
+//  AvailableIngredients.h
 //  iServe
 //
 //  Created by Greg Tropino on 10/23/13.
@@ -8,14 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "Food.h"
 
 
-@interface Pizza : Food
+@interface AvailableIngredients : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * cheese;
 @property (nonatomic, retain) NSNumber * pepperoni;
 @property (nonatomic, retain) NSNumber * sausage;
-@property (nonatomic, retain) NSString * image;
 
 @end

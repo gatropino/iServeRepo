@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12F45" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Food" representedClassName="Food" syncable="YES">
-        <relationship name="foodLink" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pizza" inverseName="foodLink" inverseEntity="Pizza" syncable="YES"/>
-    </entity>
-    <entity name="Pizza" representedClassName="Pizza" syncable="YES">
+    <entity name="AvailableIngredients" representedClassName="AvailableIngredients" syncable="YES">
         <attribute name="cheese" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="pepperoni" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="sausage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="foodLink" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Food" inverseName="foodLink" inverseEntity="Food" syncable="YES"/>
+    </entity>
+    <entity name="Food" representedClassName="Food" isAbstract="YES" syncable="YES"/>
+    <entity name="Images" representedClassName="Images" syncable="YES">
+        <attribute name="pizzaCheese" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pizzaPepperoni" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pizzaSausage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="storeBinaryImagesLater" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Pizza" representedClassName="Pizza" parentEntity="Food" syncable="YES">
+        <attribute name="cheese" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pepperoni" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="sausage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Food" positionX="160" positionY="192" width="128" height="58"/>
-        <element name="Pizza" positionX="351" positionY="191" width="128" height="103"/>
+        <element name="AvailableIngredients" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Food" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Pizza" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Images" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

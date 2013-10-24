@@ -7,11 +7,9 @@
 //
 
 #import "Food.h"
-#import "Pizza.h"
 
 
 @implementation Food
 
-@dynamic pizza;
 
 @end
