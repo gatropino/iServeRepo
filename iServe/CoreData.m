@@ -17,7 +17,7 @@
 -(void)testingMethod
 {
 NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-observer2 = [nc addObserverForName:@"Receiver/PostName" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note)
+observer2 = [nc addObserverForName:@"CoreDataTesting" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note)
              {
                  //@selector(resetPizzaInventoryLevels);
              }];
