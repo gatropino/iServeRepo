@@ -11,6 +11,6 @@
 @protocol TouchProtocol <NSObject>
 
 -(void)collisionCheck:(id)sender x:(float)x y:(float)y transactionComplete: (BOOL)dropObject;
--(void)dragCompletedUnhighlightAll;
+-(void)dragCompletedUnhighlightMenuItems;
 
 @end

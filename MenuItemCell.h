@@ -15,11 +15,11 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 
 @property NSString *name;        // aka, textLabel
-@property NSString *parentName;
 @property NSString *type;
+@property NSString *parentName;
+@property NSString *parentType;
 @property NSString *viewLevel;
 @property NSString *imageLocation;
-
 
 @property BOOL canDrag;
 @property float defaultPositionX;

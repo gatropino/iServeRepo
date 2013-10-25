@@ -13,164 +13,121 @@
 
 @interface ViewController ()
 
-@property NSMutableArray *menuItemsArray;
-@property NSMutableArray *arrayUI;
-@property NSMutableArray *uiObjectsOnScreen;
+  // arrays
+  @property NSMutableArray *menuItemsArray;
+  @property NSMutableArray *arrayObjectsForUI;  
+  @property NSMutableArray *uiObjectsOnScreen;
 
-@property UIColor *colorDefaultForMenuItems;
-@property UIColor *colorHighlightedForMenuItems;
-@property UIColor *colorDraggingForMenuItems;
-@property UIColor *colorDefaultForUIItems;
-@property UIColor *colorHighlightedForUIItems;
+  // colors
+  @property UIColor *colorDefaultForMenuItems;
+  @property UIColor *colorHighlightedForMenuItems;
+  @property UIColor *colorDraggingForMenuItems;
 
--(void)makeBlocks;
--(void)makeSomeData;
--(void)makeBlocksForUI;
--(void)setup;
+  @property UIColor *colorDefaultForUIItems;
+  @property UIColor *colorHighlightedForUIItems;
+  @property UIColor *colorDraggingForUIItems;
 
--(void)makeNewMenuItem_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type viewLevel:(NSString *)viewLevel;
--(void)makeNewUIItem_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type viewLevel:(NSString *)viewLevel;
+  // sizes
+  @property float menuItemWidth;
+  @property float menuItemHeight;
+  @property float menuItemPadding;
+  @property float positionYStarting;
+  @property float itemPositionXStarting;
+
+  @property int numberOfMenuItemsOnPage;
+
+
+  -(void)setup;
+  -(void)createMenuList;
+  -(void)createUIItems;
+  -(void)makeSomeData;
+
+  -(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type parentType:(NSString *)parentType viewLevel:(NSString *)viewLevel xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor;
+
 @end
 
+
 @implementation ViewController
-@synthesize menuItemsArray, arrayUI, uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems;
+
+  @synthesize menuItemsArray, arrayObjectsForUI, uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, positionYStarting, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self setup];
-    [self makeSomeData];
+    [self makeSomeData];  // replace with info from core data
     
-    [self makeBlocks];
-    
-    uiObjectsOnScreen = [NSMutableArray new];
-    
-    [self makeBlocksForUI];    
-    
-    
-    
-    
-    
+    [self createMenuList];
+    [self createUIItems];   
     
 }
 
 -(void)setup
 {
+    // create arrays
     menuItemsArray = [NSMutableArray new];
+    arrayObjectsForUI = [NSMutableArray new];
+    uiObjectsOnScreen = [NSMutableArray new];    
+
+    // set sizes
+    menuItemWidth = 80;
+    menuItemHeight = 60;
+    menuItemPadding = 2;
+    positionYStarting = 22;
     
-    // set colors  (UPDATE AS YOU GO, not used throughout)
+    // check screen size
+    CGRect screenBound = [[UIScreen mainScreen] bounds];
+    CGSize screenSize = screenBound.size;  
+    CGFloat screenHeight = screenSize.width;  // view in landscape
+    CGFloat screenWidth = screenSize.height;
+    
+    itemPositionXStarting = screenWidth - menuItemWidth;
+    numberOfMenuItemsOnPage = screenHeight / (menuItemHeight + menuItemPadding) -1;
+    
+    // set colors
     colorDefaultForMenuItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];     //dodger blue	#1E90FF	(30,144,255)   
     colorDraggingForMenuItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];    
     colorHighlightedForMenuItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];  
     
     colorDefaultForUIItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];     //purplish
     colorHighlightedForUIItems = [UIColor colorWithRed:192/255 green:192/255 blue:192/255 alpha:.3];    
+    colorHighlightedForUIItems = [UIColor colorWithRed:192/255 green:192/255 blue:192/255 alpha:.1];
     
 }
 
 
--(void)makeBlocks
+#pragma mark Making Blocks
+-(void)createMenuList
 {
     
-    // Set Defaults   
-    float blockWidth = 80;  
-    float blockHeight = 60;
-    float blockPadding = 2;
-    float positionYStarting = 22;  
-    
-    // check screen size
-    CGRect screenBound = [[UIScreen mainScreen] bounds];
-    CGSize screenSize = screenBound.size;  
-    CGFloat screenHeight = screenSize.width;  // view in landscape
-    CGFloat screenWidth = screenSize.height;
-    
-    
-    float positionX = screenWidth - blockWidth;
-    int numberOfBlocks = screenHeight / (blockHeight + blockPadding) -1;
-    
-    for(int x = 0; x<numberOfBlocks; x++)
+    for(int x = 0; x<numberOfMenuItemsOnPage; x++)
     {
         //fetch data
-        MenuItem *currentMenuItem =[menuItemsArray objectAtIndex:x];
+        MenuItem *z =[menuItemsArray objectAtIndex:x];
         
-        // create menu block
-        MenuItemCell *menuBlock = [[NSBundle mainBundle] loadNibNamed:@"MenuItemCell" owner:self options:nil][0];
-        
-        // set view components
-        menuBlock.textLabel.text = currentMenuItem.name;
-        menuBlock.imageView.image = [UIImage imageNamed: currentMenuItem.imageLocation];
-        
-        menuBlock.frame = CGRectMake(positionX,positionYStarting,blockWidth, blockHeight);  
-        menuBlock.backgroundColor = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:1];     //dodger blue	#1E90FF	(30,144,255)
-        
-        // set properties
-        menuBlock.delegate = self;
-        menuBlock.name = currentMenuItem.name;
-        menuBlock.imageLocation = currentMenuItem.imageLocation;
-        menuBlock.parentName = currentMenuItem.parentName;
-        menuBlock.type = currentMenuItem.type;
-        menuBlock.viewLevel = currentMenuItem.viewLevel;
-        menuBlock.defaultPositionX = positionX;
-        menuBlock.defaultPositionY = positionYStarting;
+        MenuItemCell *menuBlock = [self makeBlockView_Name:z.name imageLocation:z.imageLocation parentName:z.parentName type:z.type parentType:z.parentType viewLevel:z.viewLevel xValue:itemPositionXStarting yValue:positionYStarting ht:menuItemHeight wd:menuItemHeight canDrag:TRUE defaultColor:colorDefaultForMenuItems highlightedColor:colorHighlightedForMenuItems dragColor:colorDraggingForMenuItems];
         
         // increment y position
-        positionYStarting = positionYStarting + blockHeight + blockPadding;
+        positionYStarting = positionYStarting + menuItemHeight + menuItemPadding;
         
         [self.view addSubview:menuBlock];
     }
     
-    
 }
 
-
--(void)makeBlocksForUI
+-(void)createUIItems
 {
-    // JUST REPEATED CODE, NEED TO REFACTOR
-    
-    // Set Defaults   
-    float blockWidth = 140;  
-    float blockHeight = 60;
-    float blockPadding = 2;
-    float positionYStarting = 22;  
-    
-    // check screen size
-    CGRect screenBound = [[UIScreen mainScreen] bounds];
-    CGSize screenSize = screenBound.size;  
-    CGFloat screenHeight = screenSize.width;  // view in landscape
-    CGFloat screenWidth = screenSize.height;
-    
-    
-    float positionX =  blockWidth;
-    int numberOfBlocks = screenHeight / (blockHeight + blockPadding) -1;
-    
-    for(int x = 0; x<4; x++)
+
+    for(int x = 0; x<[arrayObjectsForUI count]; x++)
     {
         //fetch data
-        MenuItem *currentMenuItem =[arrayUI objectAtIndex:x];
+        MenuItem *z =[arrayObjectsForUI objectAtIndex:x];
         
-        // create menu block
-        MenuItemCell *menuBlock = [[NSBundle mainBundle] loadNibNamed:@"MenuItemCell" owner:self options:nil][0];
-        
-        // set view components
-        menuBlock.textLabel.text = currentMenuItem.name;
-        menuBlock.imageView.image = [UIImage imageNamed: currentMenuItem.imageLocation];
-        
-        menuBlock.frame = CGRectMake(positionX,positionYStarting,blockWidth, blockHeight);  
-        menuBlock.backgroundColor = colorDefaultForUIItems;
-        
-        // set properties
-        menuBlock.delegate = self;
-        menuBlock.name = currentMenuItem.name;
-        menuBlock.imageLocation = currentMenuItem.imageLocation;
-        menuBlock.parentName = currentMenuItem.parentName;
-        menuBlock.type = currentMenuItem.type;
-        menuBlock.viewLevel = currentMenuItem.viewLevel;
-        menuBlock.defaultPositionX = positionX;
-        menuBlock.defaultPositionY = positionYStarting;
+        MenuItemCell *menuBlock = [self makeBlockView_Name:z.name imageLocation:z.imageLocation parentName:z.parentName type:z.type parentType:z.parentType viewLevel:z.viewLevel xValue:z.xDefault yValue:z.xDefault ht:z.ht wd:z.wd canDrag:FALSE defaultColor:colorDefaultForUIItems highlightedColor:colorHighlightedForUIItems dragColor:colorDraggingForUIItems];
         
         // increment y position
-        positionYStarting = positionYStarting + blockHeight + blockPadding;
+        positionYStarting = positionYStarting + menuItemHeight + menuItemPadding;
         
         // store all UI objects in an Array
         [uiObjectsOnScreen addObject:menuBlock];
@@ -178,12 +135,41 @@
         [self.view addSubview:menuBlock];
     }
     
-    
 }
 
 
+-(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type parentType:(NSString *)parentType viewLevel:(NSString *)viewLevel xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor
+{
 
+    // create menu block
+    MenuItemCell *menuBlock = [[NSBundle mainBundle] loadNibNamed:@"MenuItemCell" owner:self options:nil][0];
+    
+    // set view components
+    menuBlock.textLabel.text = name;
+    menuBlock.imageView.image = [UIImage imageNamed: imageLocation];
+    
+    menuBlock.frame = CGRectMake(x,y,width, height);  
+    menuBlock.backgroundColor = colorDefaultForMenuItems;    
+    
+    // set properties
+    menuBlock.delegate = self;
+    menuBlock.name = name;
+    menuBlock.imageLocation = imageLocation;
+    menuBlock.parentName = parentName;
+    menuBlock.type = type;
+    menuBlock.parentType = parentType;
+    menuBlock.viewLevel = viewLevel;
+    menuBlock.defaultPositionX = x;
+    menuBlock.defaultPositionY = y;
+    
+    menuBlock.canDrag = canDrag; 
+    menuBlock.defaultColor = defaultColor; 
+    menuBlock.highlightedColor = highlightedColor; 
+    menuBlock.dragColor=dragColor;
+    menuBlock.isSelected = FALSE;
 
+    return menuBlock;
+}
 
 
 #pragma mark Delegate
@@ -193,17 +179,13 @@
     
     MenuItemCell *objectBeingHit = nil;
     
-    // get location and size of drag object
-    // don't want to see if any part of the object collided
-    // just where your finger is, so reduce size of frame
-    
-    // change to use passed x and y
-    CGRect objectOne = CGRectMake(sender.frame.origin.x, sender.frame.origin.y, 5, 5);
+    // get location and size of drag object (just where your finger is, so reduce size of frame)
+    CGRect objectOne = CGRectMake(x, y, 5, 5);
     
     
     
     // compare to location and size of display objects to see if collision
-    // (must be capable of receiving drop)
+// (must be capable of receiving drop)
     
     for(MenuItemCell *z in uiObjectsOnScreen)
     {
@@ -256,29 +238,32 @@
         [self.view addSubview:menuBlock];  // NEST OBJECTS?????
         
         // add to data structures (currently arrayUI and uiObjects on the screen)
-        [arrayUI addObject:menuBlock];
+        [arrayObjectsForUI addObject:menuBlock];
         [uiObjectsOnScreen addObject:menuBlock];
         
     } 
     
 }
 
--(void)dragCompletedUnhighlightAll
+-(void)dragCompletedUnhighlightMenuItems
 {
     for(MenuItemCell *z in uiObjectsOnScreen)
     {
         z.backgroundColor = colorDefaultForUIItems;               
     }
     
-    
 }
-
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+
+
+
 
 #pragma mark Menu Items (just temp data)
 
@@ -298,7 +283,7 @@
 
 
 // REFACTOR OUT
--(void)makeNewUIItem_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type viewLevel:(NSString *)viewLevel;
+-(void)makeNewUIItem_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type viewLevel:(NSString *)viewLevel ht:(float)ht wd:(float)wd xDefault:(float)x yDefault:(float)y;
 {
     MenuItem *nextMenuItem = [MenuItem new];
     
@@ -309,7 +294,12 @@
     nextMenuItem.type = type;
     nextMenuItem.viewLevel = viewLevel;
     
-    [arrayUI addObject:nextMenuItem];
+    nextMenuItem.ht = ht;
+    nextMenuItem.wd = wd;
+    nextMenuItem.xDefault = x;
+    nextMenuItem.yDefault = y;
+    
+    [arrayObjectsForUI addObject:nextMenuItem];
 }
 
 
@@ -339,15 +329,16 @@
     [self makeNewMenuItem_Name:@"Coke" imageLocation:@"coke.jpg" parentName:@"Drinks" type:@"menu item" viewLevel:@"all"];
     
     
-    arrayUI = [NSMutableArray new];
-    
     // name, imageLocation, parentName, type, viewLevel    
     
-    [self makeNewUIItem_Name:@"Drink 1" imageLocation:@"" parentName:@"" type:@"" viewLevel:@""];
-    [self makeNewUIItem_Name:@"Drink 2" imageLocation:@"" parentName:@"" type:@"" viewLevel:@""];
-    [self makeNewUIItem_Name:@"Drink 3" imageLocation:@"" parentName:@"" type:@"" viewLevel:@""];
-    [self makeNewUIItem_Name:@"Drink 4" imageLocation:@"" parentName:@"" type:@"" viewLevel:@""];
-    [self makeNewUIItem_Name:@"Drink 5" imageLocation:@"" parentName:@"" type:@"" viewLevel:@""];
+    [self makeNewUIItem_Name:@"1" imageLocation:@"" parentName:@"Drinks" type:@"UIObject" viewLevel:@"" ht:100 wd:100 xDefault:100 yDefault:50];
+
+    
+    [self makeNewUIItem_Name:@"1" imageLocation:@"" parentName:@"Drinks" type:@"UIObject" viewLevel:@"" ht:100 wd:100 xDefault:200 yDefault:150];
+    
+    [self makeNewUIItem_Name:@"1" imageLocation:@"" parentName:@"Drinks" type:@"UIObject" viewLevel:@"" ht:100 wd:100 xDefault:300 yDefault:250];
+    
+    [self makeNewUIItem_Name:@"1" imageLocation:@"" parentName:@"Drinks" type:@"UIObject" viewLevel:@"" ht:100 wd:100 xDefault:400 yDefault:350];
 }
 
 

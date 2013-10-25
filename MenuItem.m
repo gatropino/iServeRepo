@@ -9,6 +9,6 @@
 #import "MenuItem.h"
 
 @implementation MenuItem
-@synthesize name, imageLocation, parentName, type, viewLevel, parentType;
+@synthesize name, imageLocation, parentName, type, viewLevel, parentType, ht, wd, xDefault, yDefault;
 
 @end

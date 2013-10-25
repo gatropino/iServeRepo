@@ -16,6 +16,11 @@
 @property NSString *type;
 @property NSString *viewLevel;
 
+@property float ht;
+@property float wd;
+@property float xDefault;
+@property float yDefault;
+
 @property NSString *imageLocation;
 
 @end
