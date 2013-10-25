@@ -4,7 +4,7 @@
 #import "ViewController.h"
 
 @implementation MenuItemCell
-  @synthesize textLabel, imageView, name, parentName, type, text, imageLocation, delegate, canDrag, defaultColor, isSelected, defaultPositionX, defaultPositionY, destination, highlightedColor, dragColor;
+  @synthesize textLabel, imageView, name, parentName, type, titleToDisplay, imageLocation, delegate, canDrag, defaultColor, isSelected, defaultPositionX, defaultPositionY, destination, receives, highlightedColor, dragColor;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

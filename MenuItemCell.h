@@ -16,11 +16,12 @@
 
 @property NSString *parentName;
 @property NSString *name;        
-@property NSString *type;        // menu, UIarchtype, UIInstance
-@property NSString *text;       //FIX MOVE NAME TO TEXT
+@property NSString *type;        
+@property NSString *titleToDisplay;       
 @property NSString *imageLocation;
 
-@property NSString *destination;
+@property NSString *destination;  
+@property NSString *receives;
 @property BOOL canDrag;
 @property BOOL isSelected;
 @property float defaultPositionX;

@@ -1,10 +1,26 @@
+// types: MenuBranch (a filter), MenuItem, UIDestination, UIInstance
+// can set destination to @"ALL"
+
+
+// BUG text doesn't show and receives???
+
+// 1) allow moves to another location (ie trash)
+// 2) reverse selection
 //
-//  ViewController.m
-//  dragAndDrop
-//
-//  Created by xcode on 10/23/13.
-//  Copyright (c) 2013 xcode. All rights reserved.
-//
+
+
+// ??? 
+// multiple drops
+// packaging of items when drop
+
+// allowing to move item to trash or to another loc 
+
+// click thru menus (both UI and menu) - thus, no buttons on the screen!!!
+
+
+// what about hybrids, salad and salad dressing
+
+
 
 #import "ViewController.h"
 #import "MenuItemCell.h"
@@ -42,7 +58,7 @@
   -(void)createUIItems;
   -(void)makeSomeData;
 
-  -(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destiation text:(NSString *)text xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor;
+-(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destiation receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor;
 
 @end
 
@@ -98,6 +114,7 @@
 
 
 #pragma mark Making Blocks
+
 -(void)createMenuList
 {
     // figure out how many objects to put on a page
@@ -121,7 +138,8 @@
                                                 parentName: z.parentName 
                                                       type: z.type 
                                               destintation: z.destination
-                                                      text: z.text 
+                                                  receives: z.receives 
+                                            titleToDisplay: z.text 
                                    
                                                     xValue: itemPositionXStarting
                                                     yValue: positionYStarting 
@@ -147,24 +165,25 @@
     {
         //fetch data
         MenuItem *z =[arrayObjectsForUI objectAtIndex:x];
-          NSLog(@"text .. %@", z.text);    
-        MenuItemCell *menuBlock = [self makeBlockView_Name: z.name
-                                             imageLocation: z.imageLocation
-                                                parentName: z.parentName 
-                                                      type: z.type 
-                                              destintation: z.destination
-                                                      text: z.text 
+
+        MenuItemCell *menuBlock = [self    makeBlockView_Name: z.name 
+                                                imageLocation: z.imageLocation 
+                                                   parentName: z.parentName 
+                                                         type: z.type 
+                                                 destintation: z.destination 
+                                                     receives: z.receives
+                                               titleToDisplay: z.text 
                                    
-                                                    xValue: z.xDefault
-                                                    yValue: z.yDefault 
-                                                        ht: z.ht 
-                                                        wd: z.wd
+                                                       xValue: z.xDefault 
+                                                       yValue: z.yDefault 
+                                                           ht: z.ht 
+                                                           wd: z.wd 
                                    
-                                                   canDrag: FALSE
-                                              defaultColor: colorDefaultForUIItems 
-                                          highlightedColor: colorHighlightedForUIItems 
-                                                 dragColor: colorDraggingForUIItems];
-        
+                                                      canDrag: FALSE 
+                                                 defaultColor: colorDefaultForUIItems 
+                                             highlightedColor: colorHighlightedForUIItems 
+                                                    dragColor: colorDraggingForUIItems];
+ 
         
         // increment y position
         positionYStarting = positionYStarting + menuItemHeight + menuItemPadding;
@@ -178,9 +197,8 @@
 }
 
 
--(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destination text:(NSString *)text xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor
+-(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destination receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor;
 {
-
     // create menu block
     MenuItemCell *menuBlock = [[NSBundle mainBundle] loadNibNamed:@"MenuItemCell" owner:self options:nil][0];
   
@@ -195,10 +213,11 @@
     menuBlock.delegate = self;
     menuBlock.name = name;
     menuBlock.type = type;
-    menuBlock.text = text;
+    menuBlock.titleToDisplay = titleToDisplay;
     menuBlock.imageLocation = imageLocation;
     menuBlock.parentName = parentName;
     menuBlock.destination = destination;
+    menuBlock.receives = receives;
     
     menuBlock.defaultPositionX = x;
     menuBlock.defaultPositionY = y;
@@ -208,7 +227,7 @@
     menuBlock.highlightedColor = highlightedColor; 
     menuBlock.dragColor=dragColor;
     menuBlock.isSelected = FALSE;
-
+   
     return menuBlock;
 }
 
@@ -224,8 +243,10 @@
     
     // highlight potential receivers
     for(MenuItemCell *z in uiObjectsOnScreen){
-    
-            if([z.name isEqualToString: sender.destination]){
+        NSLog(@"%@", z.receives);
+            if([z.name isEqualToString: sender.destination] || 
+               [z.receives isEqualToString: sender.name]    || 
+               [z.receives isEqualToString:@"ALL"]){
             
                     z.backgroundColor = colorDraggingForUIItems;
            
@@ -245,7 +266,8 @@
                                                 parentName: sender.parentName 
                                                       type: sender.type 
                                               destintation: sender.destination
-                                                      text: sender.text 
+                                                  receives: sender.receives 
+                                            titleToDisplay: sender.titleToDisplay 
                                    
                                                     xValue: objectBeingHit.frame.origin.x
                                                     yValue: objectBeingHit.frame.origin.y
@@ -290,14 +312,16 @@
     nextMenuItem.parentName = parentName;
     nextMenuItem.destination = destination;        
     nextMenuItem.type = type;
-    nextMenuItem.viewLevel = viewLevel;
+    nextMenuItem.receives = viewLevel;
+    nextMenuItem.text = @"text";
+    nextMenuItem.receives = @"receives";
     
     [menuItemsArray addObject:nextMenuItem];
 }
 
 
 // REFACTOR OUT
--(void)makeNewUIItem_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destination:(NSString *)destination text:(NSString *)text  ht:(float)ht wd:(float)wd xDefault:(float)x yDefault:(float)y;
+-(void)makeNewUIItem_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destination:(NSString *)destination text:(NSString *)text  ht:(float)ht wd:(float)wd xDefault:(float)x yDefault:(float)y receives:(NSString *)receives;
 {
     MenuItem *nextMenuItem = [MenuItem new];
     
@@ -307,7 +331,8 @@
     nextMenuItem.destination = destination;      
     nextMenuItem.type = type;
     nextMenuItem.text = text;
-    
+    nextMenuItem.receives = receives;
+                
     nextMenuItem.ht = ht;
     nextMenuItem.wd = wd;
     nextMenuItem.xDefault = x;
@@ -320,17 +345,23 @@
 -(void)makeSomeData
 {
     
+    // MENU
+    [self makeNewMenuItem_Name:@"a" imageLocation:@"coke.jpg"   parentName:@"a" destination:@"a" text:@"" type:@"MenuItem" viewLevel:@""];
     
-    [self makeNewMenuItem_Name:@"coke" imageLocation:@"coke.jpg" parentName:@"Drinks" destination:@"UIDrinks" text:@"coke" type:@"" viewLevel:@""];
-    [self makeNewMenuItem_Name:@"coke" imageLocation:@"bud.png" parentName:@"Drinks" destination:@"UIDrinks" text:@"bud" type:@"" viewLevel:@""];
-        [self makeNewMenuItem_Name:@"coke" imageLocation:@"sprite.jpg" parentName:@"Drinks" destination:@"UIDrinks" text:@"..." type:@"" viewLevel:@""];
-        [self makeNewMenuItem_Name:@"coke" imageLocation:@"coke.jpg" parentName:@"Drinks" destination:@"UIDrinks" text:@"bud" type:@"" viewLevel:@""];
+    [self makeNewMenuItem_Name:@"b" imageLocation:@"bud.png"    parentName:@"b" destination:@"b" text:@"" type:@"MenuItem" viewLevel:@""];
     
-    // name, imageLocation, parentName, type, viewLevel    
-    [self makeNewUIItem_Name:@"UIDrinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:60 yDefault:60];
-    [self makeNewUIItem_Name:@"Drinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:160 yDefault:160];     
-    [self makeNewUIItem_Name:@"Drinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:260 yDefault:260];
-    [self makeNewUIItem_Name:@"UIDrinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:360 yDefault:360];      
+    [self makeNewMenuItem_Name:@"c" imageLocation:@"sprite.jpg" parentName:@"c" destination:@"c" text:@"" type:@"MenuItem" viewLevel:@""];
+    
+    [self makeNewMenuItem_Name:@"d" imageLocation:@"coke.jpg"   parentName:@"d" destination:@"d" text:@"" type:@"MenuItem" viewLevel:@""];
+    
+    // UI 
+    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:60 yDefault:60 receives:@"b"];
+    
+    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:160 yDefault:160 receives:@"b"];     
+    
+    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:260 yDefault:260 receives:@""];
+    
+    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:360 yDefault:360 receives:@""];      
 
 }
 

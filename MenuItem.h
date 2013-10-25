@@ -16,6 +16,7 @@
 @property NSString *text;
 @property NSString *type;
 @property NSString *viewLevel;
+@property NSString *receives;
 
 @property float ht;
 @property float wd;
