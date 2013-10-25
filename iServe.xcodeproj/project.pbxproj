@@ -29,6 +29,13 @@
 		37F7F55E18181BB40014B5BC /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37F7F55D18181BB40014B5BC /* Storyboard.storyboard */; };
 		37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7F56018181CCE0014B5BC /* RootViewController.m */; };
 		37F7F56418181D720014B5BC /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7F56318181D720014B5BC /* CoreData.m */; };
+		CD65A2C41819B5EF00422B43 /* MenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD65A2C31819B5EF00422B43 /* MenuItemCell.m */; };
+		CD65A2C71819B66200422B43 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD65A2C61819B66200422B43 /* ViewController.m */; };
+		CD65A2CA1819B6C100422B43 /* MenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CD65A2C91819B6C100422B43 /* MenuItem.m */; };
+		CD65A2CE1819B75000422B43 /* bud.png in Resources */ = {isa = PBXBuildFile; fileRef = CD65A2CB1819B75000422B43 /* bud.png */; };
+		CD65A2CF1819B75000422B43 /* coke.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD65A2CC1819B75000422B43 /* coke.jpg */; };
+		CD65A2D01819B75000422B43 /* sprite.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD65A2CD1819B75000422B43 /* sprite.jpg */; };
+		CD65A2D21819B79400422B43 /* MenuItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD65A2D11819B79400422B43 /* MenuItemCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +80,17 @@
 		37F7F56018181CCE0014B5BC /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		37F7F56218181D720014B5BC /* CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreData.h; sourceTree = "<group>"; };
 		37F7F56318181D720014B5BC /* CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreData.m; sourceTree = "<group>"; };
+		CD65A2C11819B5AC00422B43 /* TouchProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TouchProtocol.h; path = iServe/TouchProtocol.h; sourceTree = "<group>"; };
+		CD65A2C21819B5EF00422B43 /* MenuItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItemCell.h; sourceTree = "<group>"; };
+		CD65A2C31819B5EF00422B43 /* MenuItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItemCell.m; sourceTree = "<group>"; };
+		CD65A2C51819B66100422B43 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		CD65A2C61819B66200422B43 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		CD65A2C81819B6C100422B43 /* MenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItem.h; sourceTree = "<group>"; };
+		CD65A2C91819B6C100422B43 /* MenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItem.m; sourceTree = "<group>"; };
+		CD65A2CB1819B75000422B43 /* bud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bud.png; sourceTree = "<group>"; };
+		CD65A2CC1819B75000422B43 /* coke.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = coke.jpg; sourceTree = "<group>"; };
+		CD65A2CD1819B75000422B43 /* sprite.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sprite.jpg; sourceTree = "<group>"; };
+		CD65A2D11819B79400422B43 /* MenuItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuItemCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +137,17 @@
 		37F7F51C18181AFA0014B5BC = {
 			isa = PBXGroup;
 			children = (
+				CD65A2C11819B5AC00422B43 /* TouchProtocol.h */,
+				CD65A2C21819B5EF00422B43 /* MenuItemCell.h */,
+				CD65A2C31819B5EF00422B43 /* MenuItemCell.m */,
+				CD65A2D11819B79400422B43 /* MenuItemCell.xib */,
+				CD65A2C51819B66100422B43 /* ViewController.h */,
+				CD65A2C61819B66200422B43 /* ViewController.m */,
+				CD65A2CB1819B75000422B43 /* bud.png */,
+				CD65A2CC1819B75000422B43 /* coke.jpg */,
+				CD65A2CD1819B75000422B43 /* sprite.jpg */,
+				CD65A2C81819B6C100422B43 /* MenuItem.h */,
+				CD65A2C91819B6C100422B43 /* MenuItem.m */,
 				37F7F53018181AFA0014B5BC /* iServe */,
 				37F7F54D18181AFA0014B5BC /* iServeTests */,
 				37F7F52718181AFA0014B5BC /* Frameworks */,
@@ -270,7 +299,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				37F7F53518181AFA0014B5BC /* InfoPlist.strings in Resources */,
+				CD65A2CF1819B75000422B43 /* coke.jpg in Resources */,
+				CD65A2D21819B79400422B43 /* MenuItemCell.xib in Resources */,
+				CD65A2CE1819B75000422B43 /* bud.png in Resources */,
 				37F7F54018181AFA0014B5BC /* Images.xcassets in Resources */,
+				CD65A2D01819B75000422B43 /* sprite.jpg in Resources */,
 				37F7F55E18181BB40014B5BC /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,10 +326,13 @@
 				375606F918188C8C00E5C930 /* AvailableIngredients.m in Sources */,
 				375606EC18188C4000E5C930 /* Pizza.m in Sources */,
 				37F7F53B18181AFA0014B5BC /* AppDelegate.m in Sources */,
+				CD65A2C41819B5EF00422B43 /* MenuItemCell.m in Sources */,
 				37F7F53E18181AFA0014B5BC /* iServe.xcdatamodeld in Sources */,
+				CD65A2C71819B66200422B43 /* ViewController.m in Sources */,
 				37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */,
 				375606F518188C4100E5C930 /* Food.m in Sources */,
 				37F7F56418181D720014B5BC /* CoreData.m in Sources */,
+				CD65A2CA1819B6C100422B43 /* MenuItem.m in Sources */,
 				375606F218188C4100E5C930 /* Images.m in Sources */,
 				37F7F53718181AFA0014B5BC /* main.m in Sources */,
 			);
