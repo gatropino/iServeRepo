@@ -34,6 +34,7 @@
         float x = self.frame.origin.x - self.frame.size.width /2 + changeInLocation.x ;
         float y = self.frame.origin.y - self.frame.size.height/2 + changeInLocation.y ;
     
+        // highlight possible drop locations and highlight in another color when over drop location
         [delegate collisionCheck:self x:x y:y transactionComplete:FALSE];
     
         self.frame = CGRectMake(x, y, self.frame.size.width, self.frame.size.height);

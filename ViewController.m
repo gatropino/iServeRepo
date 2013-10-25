@@ -1,8 +1,8 @@
-// types: MenuBranch (a filter), MenuItem, UIDestination, UIInstance
-// can set destination to @"ALL"
+// types: MenuBranch, MenuItem, UIDestination, UIInstance (UI NAV STUFF are menu branches)
 
 
-// BUG text doesn't show and receives???
+
+// BUG text doesn't show 
 
 // 1) allow moves to another location (ie trash)
 // 2) reverse selection
@@ -57,8 +57,9 @@
   -(void)createMenuList;
   -(void)createUIItems;
   -(void)makeSomeData;
+  -(void)makeInstance:(MenuItemCell *)sender objectBeingHit:(MenuItemCell *)objectBeingHit;
 
--(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destiation receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor;
+  -(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destiation receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor;
 
 @end
 
@@ -66,6 +67,9 @@
 @implementation ViewController
 
   @synthesize menuItemsArray, arrayObjectsForUI, uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, positionYStarting, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems;
+
+
+#pragma mark Setup
 
 - (void)viewDidLoad
 {
@@ -103,8 +107,8 @@
     
     // set colors
     colorDefaultForMenuItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];     //dodger blue	#1E90FF	(30,144,255)   
-    colorDraggingForMenuItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];    
-    colorHighlightedForMenuItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];  
+    colorDraggingForMenuItems = [UIColor greenColor];   
+    colorHighlightedForMenuItems = [UIColor brownColor];  
     
     colorDefaultForUIItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];     //purplish
     colorHighlightedForUIItems = [UIColor redColor];    
@@ -137,7 +141,7 @@
                                              imageLocation: z.imageLocation
                                                 parentName: z.parentName 
                                                       type: z.type 
-                                              destintation: z.destination
+                                              destintation: @"MenuItem"
                                                   receives: z.receives 
                                             titleToDisplay: z.text 
                                    
@@ -169,7 +173,7 @@
         MenuItemCell *menuBlock = [self    makeBlockView_Name: z.name 
                                                 imageLocation: z.imageLocation 
                                                    parentName: z.parentName 
-                                                         type: z.type 
+                                                         type: @"UIDestination"
                                                  destintation: z.destination 
                                                      receives: z.receives
                                                titleToDisplay: z.text 
@@ -203,7 +207,7 @@
     MenuItemCell *menuBlock = [[NSBundle mainBundle] loadNibNamed:@"MenuItemCell" owner:self options:nil][0];
   
     // set view components
-    menuBlock.textLabel.text = @"you"; //text;
+    menuBlock.textLabel.text = titleToDisplay;
     menuBlock.imageView.image = [UIImage imageNamed: imageLocation];
     
     menuBlock.frame = CGRectMake(x,y,width, height);  
@@ -243,7 +247,7 @@
     
     // highlight potential receivers
     for(MenuItemCell *z in uiObjectsOnScreen){
-        NSLog(@"%@", z.receives);
+        
             if([z.name isEqualToString: sender.destination] || 
                [z.receives isEqualToString: sender.name]    || 
                [z.receives isEqualToString:@"ALL"]){
@@ -258,37 +262,53 @@
                             objectBeingHit = z;
 
     } } }
-
+    
     if(objectDropped && objectBeingHit){
         
-        MenuItemCell *menuBlock = [self makeBlockView_Name: sender.name
-                                             imageLocation: sender.imageLocation
-                                                parentName: sender.parentName 
-                                                      type: sender.type 
-                                              destintation: sender.destination
-                                                  receives: sender.receives 
-                                            titleToDisplay: sender.titleToDisplay 
-                                   
-                                                    xValue: objectBeingHit.frame.origin.x
-                                                    yValue: objectBeingHit.frame.origin.y
-                                                        ht: objectBeingHit.frame.size.height
-                                                        wd: objectBeingHit.frame.size.width
-                                   
-                                                   canDrag: TRUE 
-                                              defaultColor: colorDefaultForUIItems 
-                                          highlightedColor: colorHighlightedForUIItems 
-                                                 dragColor: colorDraggingForUIItems];
-        
-        
-        // add to view
-        [self.view addSubview:menuBlock];  // NEST OBJECTS?????
-        
-        // add to data structures (currently arrayUI and uiObjects on the screen)
-        [arrayObjectsForUI addObject:menuBlock];
-        [uiObjectsOnScreen addObject:menuBlock];
+        // if it is an instance, move its location; if it is a menu item, create an instance
+        if ([sender.type isEqualToString:@"UIInstance"]) {
+            
+                sender.defaultPositionX = objectBeingHit.frame.origin.x;
+                sender.defaultPositionY = objectBeingHit.frame.origin.y;  // note: does not resize
+            
+        } else if ([sender.type isEqualToString:@"MenuItem"]) {
+            
+                [self makeInstance:sender objectBeingHit:objectBeingHit];}
+    
+        else { NSLog(@"Error"); }
         
     } 
     
+}
+
+-(void)makeInstance:(MenuItemCell *)sender objectBeingHit:(MenuItemCell *)objectBeingHit
+{
+    MenuItemCell *menuBlock = [self makeBlockView_Name: sender.name
+                                         imageLocation: sender.imageLocation
+                                            parentName: sender.parentName 
+                                                  type: @"UIInstance"
+                                          destintation: sender.destination
+                                              receives: sender.receives 
+                                        titleToDisplay: sender.titleToDisplay 
+                           
+                                                xValue: objectBeingHit.frame.origin.x
+                                                yValue: objectBeingHit.frame.origin.y
+                                                    ht: objectBeingHit.frame.size.height
+                                                    wd: objectBeingHit.frame.size.width
+                           
+                                               canDrag: TRUE 
+                                          defaultColor: colorDefaultForUIItems 
+                                      highlightedColor: colorHighlightedForUIItems 
+                                             dragColor: colorDraggingForUIItems];
+
+
+    // add to view
+    [self.view addSubview:menuBlock];  // NEST OBJECTS?????
+
+    // add to data structures (currently arrayUI and uiObjects on the screen)
+    [arrayObjectsForUI addObject:menuBlock];
+    [uiObjectsOnScreen addObject:menuBlock];
+
 }
 
 -(void)dragCompletedUnhighlightMenuItems
@@ -361,7 +381,7 @@
     
     [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:260 yDefault:260 receives:@""];
     
-    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:360 yDefault:360 receives:@""];      
+    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:360 yDefault:360 receives:@"ALL"];      
 
 }
 
