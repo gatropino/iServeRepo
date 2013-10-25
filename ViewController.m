@@ -147,7 +147,7 @@
     {
         //fetch data
         MenuItem *z =[arrayObjectsForUI objectAtIndex:x];
-        
+          NSLog(@"text .. %@", z.text);    
         MenuItemCell *menuBlock = [self makeBlockView_Name: z.name
                                              imageLocation: z.imageLocation
                                                 parentName: z.parentName 
@@ -183,9 +183,9 @@
 
     // create menu block
     MenuItemCell *menuBlock = [[NSBundle mainBundle] loadNibNamed:@"MenuItemCell" owner:self options:nil][0];
-    
+  
     // set view components
-    menuBlock.textLabel.text = name;
+    menuBlock.textLabel.text = @"you"; //text;
     menuBlock.imageView.image = [UIImage imageNamed: imageLocation];
     
     menuBlock.frame = CGRectMake(x,y,width, height);  
@@ -194,11 +194,12 @@
     // set properties
     menuBlock.delegate = self;
     menuBlock.name = name;
+    menuBlock.type = type;
+    menuBlock.text = text;
     menuBlock.imageLocation = imageLocation;
     menuBlock.parentName = parentName;
-    menuBlock.type = type;
     menuBlock.destination = destination;
-    menuBlock.text = text;
+    
     menuBlock.defaultPositionX = x;
     menuBlock.defaultPositionY = y;
     
@@ -224,24 +225,18 @@
     // highlight potential receivers
     for(MenuItemCell *z in uiObjectsOnScreen){
     
-        if([z.type isEqualToString: sender.destination]){
+            if([z.name isEqualToString: sender.destination]){
             
-   // IT IS CHANGING BUT GETTING CHANGED AGAIN BEFORE YOU CAN SEE IT     
-            z.backgroundColor = [UIColor brownColor];
-            
-            // compare to location and size of display objects to see if collision
-            if (CGRectIntersectsRect (objectOne, z.frame)) {
-                
-                // if collision then . . .
-                z.backgroundColor = colorHighlightedForUIItems; 
-                objectBeingHit = z;
-                
-            }else{
-                z.backgroundColor = colorDefaultForUIItems; }   
+                    z.backgroundColor = colorDraggingForUIItems;
+           
+                    // compare to location and size of display objects to see if collision
+                    if (CGRectIntersectsRect (objectOne, z.frame)) {
         
-        }
-    
-    }
+                            // if collision then . . .
+                            z.backgroundColor = colorHighlightedForUIItems; 
+                            objectBeingHit = z;
+
+    } } }
 
     if(objectDropped && objectBeingHit){
         
@@ -293,7 +288,7 @@
     nextMenuItem.name = name;
     nextMenuItem.imageLocation = imageLocation;
     nextMenuItem.parentName = parentName;
-    nextMenuItem.destination = @"Drinks";        // FIX ME!!!
+    nextMenuItem.destination = destination;        
     nextMenuItem.type = type;
     nextMenuItem.viewLevel = viewLevel;
     
@@ -326,16 +321,16 @@
 {
     
     
-    [self makeNewMenuItem_Name:@"coke" imageLocation:@"coke.jpg" parentName:@"Drinks" destination:@"UIDrinks" text:@"..." type:@"" viewLevel:@""];
-    [self makeNewMenuItem_Name:@"coke" imageLocation:@"bud.png" parentName:@"Drinks" destination:@"UIDrinks" text:@"..." type:@"" viewLevel:@""];
+    [self makeNewMenuItem_Name:@"coke" imageLocation:@"coke.jpg" parentName:@"Drinks" destination:@"UIDrinks" text:@"coke" type:@"" viewLevel:@""];
+    [self makeNewMenuItem_Name:@"coke" imageLocation:@"bud.png" parentName:@"Drinks" destination:@"UIDrinks" text:@"bud" type:@"" viewLevel:@""];
         [self makeNewMenuItem_Name:@"coke" imageLocation:@"sprite.jpg" parentName:@"Drinks" destination:@"UIDrinks" text:@"..." type:@"" viewLevel:@""];
-        [self makeNewMenuItem_Name:@"coke" imageLocation:@"coke.jpg" parentName:@"Drinks" destination:@"UIDrinks" text:@"..." type:@"" viewLevel:@""];
+        [self makeNewMenuItem_Name:@"coke" imageLocation:@"coke.jpg" parentName:@"Drinks" destination:@"UIDrinks" text:@"bud" type:@"" viewLevel:@""];
     
     // name, imageLocation, parentName, type, viewLevel    
-    [self makeNewUIItem_Name:@"UIDrinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:50 wd:50 xDefault:60 yDefault:60];
-    [self makeNewUIItem_Name:@"UIDrinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:50 wd:50 xDefault:160 yDefault:160];     
-    [self makeNewUIItem_Name:@"UIDrinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:50 wd:50 xDefault:260 yDefault:260];
-    [self makeNewUIItem_Name:@"UIDrinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:50 wd:50 xDefault:360 yDefault:360];      
+    [self makeNewUIItem_Name:@"UIDrinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:60 yDefault:60];
+    [self makeNewUIItem_Name:@"Drinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:160 yDefault:160];     
+    [self makeNewUIItem_Name:@"Drinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:260 yDefault:260];
+    [self makeNewUIItem_Name:@"UIDrinks" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:360 yDefault:360];      
 
 }
 
