@@ -1,31 +1,10 @@
-// multitouch option
-// 
-//  select one, deselects others?
-
-//  use notificaiton center
-//  but what about off screen
-
-//  array of current objects in main view
-//  send message to delegate, delegate sends message back to each object
-
-//  collision control?  
-//  - array
-//  - position sent out to relevant pieces (notification or del)
-//  - touch (overlap, touch thru other object (just recognize second object, store drop as state in view controller)
-
-// when dragging, lock everyone else out!  (or just have interface objects turned to off)
-
-// unhighlight - call delegate, filter for all menu items but self, thus our strategy seems to be to change the data and let the display catch up?  or should it just run through all the displays and turn them off (skipping self)
-
-// view runs delegate method to filter data set for things that can receive it
-// highlight them
 
 
 #import "MenuItemCell.h"
 #import "ViewController.h"
 
 @implementation MenuItemCell
-  @synthesize textLabel, imageView, name, parentName, type, viewLevel, imageLocation, delegate, canDrag, defaultColor, isSelected, defaultPositionX, defaultPositionY, parentType, highlightedColor, dragColor;
+  @synthesize textLabel, imageView, name, parentName, type, text, imageLocation, delegate, canDrag, defaultColor, isSelected, defaultPositionX, defaultPositionY, destination, highlightedColor, dragColor;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {

@@ -14,20 +14,20 @@
 @property (strong, nonatomic) IBOutlet UILabel *textLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 
-@property NSString *name;        // aka, textLabel
-@property NSString *type;
 @property NSString *parentName;
-@property NSString *parentType;
-@property NSString *viewLevel;
+@property NSString *name;        
+@property NSString *type;        // menu, UIarchtype, UIInstance
+@property NSString *text;       //FIX MOVE NAME TO TEXT
 @property NSString *imageLocation;
 
+@property NSString *destination;
 @property BOOL canDrag;
+@property BOOL isSelected;
 @property float defaultPositionX;
 @property float defaultPositionY;
 @property UIColor *defaultColor;
 @property UIColor *highlightedColor;
 @property UIColor *dragColor;
-@property BOOL isSelected;
 
 @property id<TouchProtocol>delegate;
 

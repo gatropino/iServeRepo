@@ -12,7 +12,8 @@
 
 @property NSString *name;        // aka, textLabel
 @property NSString *parentName;
-@property NSString *parentType;
+@property NSString *destination;
+@property NSString *text;
 @property NSString *type;
 @property NSString *viewLevel;
 
