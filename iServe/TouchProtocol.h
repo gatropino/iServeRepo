@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MenuItem.h"
 
 @protocol TouchProtocol <NSObject>
 
 -(void)collisionCheck:(id)sender x:(float)x y:(float)y transactionComplete: (BOOL)dropObject;
 -(void)dragCompletedUnhighlightMenuItems;
+-(void)viewSubMenu:(id)sender;
 
 @end

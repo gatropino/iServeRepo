@@ -1,25 +1,27 @@
-// types: MenuBranch, MenuItem, UIDestination, UIInstance (UI NAV STUFF are menu branches)
+// READ ME/MUST READ
+// types: MenuItem, UIDestination, UIInstance, MenuBranch, UIFilter 
+// must have a root MenuItem, name it Main Menu
 
 
+// BUG 
+// text doesn't show 
+// center detection on drag and drop
 
-// BUG text doesn't show 
-
-// 1) allow moves to another location (ie trash)
-// 2) reverse selection
-//
-
-
-// ??? 
+// TO DO
+// reverse selection
+// click thru menus for UI - thus, no buttons on the screen!!!
+// packaging of items when drop (opt 1: multiple landing locations, opt 2: freeform drop, opt 3: popup window
 // multiple drops
-// packaging of items when drop
 
-// allowing to move item to trash or to another loc 
+// builder mode
+// have Greg add core data so can make lower screen bar on this system (for example, going back to main menu)
 
-// click thru menus (both UI and menu) - thus, no buttons on the screen!!!
+
 
 
 // what about hybrids, salad and salad dressing
 
+// ???   "<MenuItemCell: 0x8d93cb0; frame = (60 60; 100 100); autoresize = RM+BM; layer = <CALayer: 0x8d938d0>>",
 
 
 #import "ViewController.h"
@@ -30,9 +32,10 @@
 @interface ViewController ()
 
   // arrays
-  @property NSMutableArray *menuItemsArray;
-  @property NSMutableArray *arrayObjectsForUI;  
+  @property NSMutableArray *menuItemsGlobal;
+  @property NSMutableArray *menuItemsCurrent;
   @property NSMutableArray *uiObjectsOnScreen;
+  @property NSMutableArray *uiObjectsDataset;  
 
   // colors
   @property UIColor *colorDefaultForMenuItems;
@@ -47,26 +50,28 @@
   @property float menuItemWidth;
   @property float menuItemHeight;
   @property float menuItemPadding;
-  @property float positionYStarting;
+  @property float yDefualtStartingPosition;
   @property float itemPositionXStarting;
 
   @property int numberOfMenuItemsOnPage;
 
-
-  -(void)setup;
-  -(void)createMenuList;
+  -(void)getDefaultSettings;
+  -(void)setupMenu;
+  -(void)clearMenu; 
   -(void)createUIItems;
   -(void)makeSomeData;
+
+  -(void)buildMenuByFindingChildrenOfParent:(NSString *)nameOfParent;
   -(void)makeInstance:(MenuItemCell *)sender objectBeingHit:(MenuItemCell *)objectBeingHit;
 
-  -(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destiation receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor;
+  -(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destiation receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor editExistingBlockInsteadOfCreating:(MenuItemCell *)block;
 
 @end
 
 
 @implementation ViewController
 
-  @synthesize menuItemsArray, arrayObjectsForUI, uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, positionYStarting, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems;
+  @synthesize uiObjectsDataset, uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems, menuItemsGlobal, yDefualtStartingPosition, menuItemsCurrent;
 
 
 #pragma mark Setup
@@ -75,26 +80,29 @@
 {
     [super viewDidLoad];
     
-    [self setup];
+    [self getDefaultSettings];
+    [self setupMenu];
+    
     [self makeSomeData];  // replace with info from core data
     
-    [self createMenuList];
+    [self buildMenuByFindingChildrenOfParent:@"Main Menu"];
     [self createUIItems];   
     
 }
 
--(void)setup
+-(void)getDefaultSettings
 {
     // create arrays
-    menuItemsArray = [NSMutableArray new];
-    arrayObjectsForUI = [NSMutableArray new];
+    menuItemsGlobal   = [NSMutableArray new];
+    menuItemsCurrent  = [NSMutableArray new]; 
+    uiObjectsDataset  = [NSMutableArray new];
     uiObjectsOnScreen = [NSMutableArray new];    
 
     // set sizes
     menuItemWidth = 80;
     menuItemHeight = 60;
     menuItemPadding = 2;
-    positionYStarting = 22;
+    yDefualtStartingPosition = 22;
     
     // check screen size
     CGRect screenBound = [[UIScreen mainScreen] bounds];
@@ -106,7 +114,8 @@
     numberOfMenuItemsOnPage = screenHeight / (menuItemHeight + menuItemPadding) -1;
     
     // set colors
-    colorDefaultForMenuItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];     //dodger blue	#1E90FF	(30,144,255)   
+    colorDefaultForMenuItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];     
+                                                           //dodger blue	#1E90FF	(30,144,255)   
     colorDraggingForMenuItems = [UIColor greenColor];   
     colorHighlightedForMenuItems = [UIColor brownColor];  
     
@@ -119,57 +128,112 @@
 
 #pragma mark Making Blocks
 
--(void)createMenuList
+-(void)setupMenu
 {
-    // figure out how many objects to put on a page
-    int numberOfItems;
 
-    if (numberOfMenuItemsOnPage > [menuItemsArray count]) {
-        numberOfItems = [menuItemsArray count]; }
-    else {
-        numberOfItems = numberOfMenuItemsOnPage;
-    }
-
+    // make menu from blocks (no data), will reuse the cells
+    float yBlockPosition = yDefualtStartingPosition;
     
-    // make blocks
-    for(int x = 0; x<numberOfItems; x++)
-    {
-        //fetch data
-        MenuItem *z =[menuItemsArray objectAtIndex:x];
+    for(int x = 0; x<numberOfMenuItemsOnPage; x++)  {
         
-        MenuItemCell *menuBlock = [self makeBlockView_Name: z.name
-                                             imageLocation: z.imageLocation
-                                                parentName: z.parentName 
-                                                      type: z.type 
-                                              destintation: @"MenuItem"
-                                                  receives: z.receives 
-                                            titleToDisplay: z.text 
+        MenuItemCell *menuBlock = [self makeBlockView_Name: @""
+                                             imageLocation: @""
+                                                parentName: @"no parent allowed" 
+                                                      type: @"MenuItem"
+                                              destintation: @"no destination set"
+                                                  receives: @"no receiver set" 
+                                            titleToDisplay: @"" 
                                    
                                                     xValue: itemPositionXStarting
-                                                    yValue: positionYStarting 
+                                                    yValue: yBlockPosition 
                                                         ht: menuItemHeight 
                                                         wd: menuItemWidth 
-                                                   canDrag: TRUE 
+                                                   canDrag: FALSE
                                               defaultColor: colorDefaultForMenuItems 
-                                          highlightedColor: colorHighlightedForMenuItems 
-                                                 dragColor: colorDraggingForMenuItems];
+                                          highlightedColor: colorDefaultForMenuItems 
+                                                 dragColor: colorDefaultForMenuItems
+                        editExistingBlockInsteadOfCreating: nil];
         
         // increment y position
-        positionYStarting = positionYStarting + menuItemHeight + menuItemPadding;
+        yBlockPosition = yBlockPosition + menuItemHeight + menuItemPadding;
         
+        [menuItemsCurrent addObject:menuBlock];
         [self.view addSubview:menuBlock];
+
     }
     
+}
+
+-(void)clearMenu  // same as setup, but do not make the objects
+{
+    
+  for(MenuItemCell *z in menuItemsCurrent)  {
+        
+      __unused MenuItemCell * menuBlock = [self makeBlockView_Name: @""
+                                             imageLocation: @""
+                                                parentName: @"no parent allowed" 
+                                                      type: @"MenuItem"
+                                              destintation: @"no destination set"
+                                                  receives: @"no receiver set" 
+                                            titleToDisplay: @"" 
+                                   
+                                                    xValue: 0
+                                                    yValue: 0
+                                                        ht: 0 
+                                                        wd: 0
+                                   
+                                                   canDrag: FALSE
+                                              defaultColor: colorDefaultForMenuItems 
+                                          highlightedColor: colorDefaultForMenuItems 
+                                                 dragColor: colorDefaultForMenuItems
+                        editExistingBlockInsteadOfCreating: z];
+        
+    }
+    
+}
+
+-(void)buildMenuByFindingChildrenOfParent:(NSString *)nameOfParent
+{
+
+    // clean out the old menu
+    [self clearMenu];
+ 
+    // for each child of the parent, build a Menu Item
+    int counter = 0;
+    for(MenuItem *z in menuItemsGlobal){
+        
+            if([z.parentName isEqualToString:nameOfParent]){
+        
+                   __unused MenuItemCell *menuBlock = [self makeBlockView_Name: z.name
+                                                         imageLocation: z.imageLocation
+                                                            parentName: z.parentName 
+                                                                  type: z.type
+                                                          destintation: z.destination
+                                                              receives: z.receives 
+                                                        titleToDisplay: z.text
+                                   
+                                                                xValue: 0
+                                                                yValue: 0
+                                                                    ht: 0 
+                                                                    wd: 0
+                                                               canDrag: TRUE 
+                                                          defaultColor: colorDefaultForMenuItems 
+                                                      highlightedColor: colorHighlightedForMenuItems 
+                                                             dragColor: colorDraggingForMenuItems
+                                            editExistingBlockInsteadOfCreating: [menuItemsCurrent objectAtIndex:counter]];
+                counter +=1;
+            }
+    }
 }
 
 -(void)createUIItems
 {
 
-    for(int x = 0; x<[arrayObjectsForUI count]; x++)
+    for(int x = 0; x<[uiObjectsDataset count]; x++)
     {
         //fetch data
-        MenuItem *z =[arrayObjectsForUI objectAtIndex:x];
-
+        MenuItem *z =[uiObjectsDataset objectAtIndex:x];
+        
         MenuItemCell *menuBlock = [self    makeBlockView_Name: z.name 
                                                 imageLocation: z.imageLocation 
                                                    parentName: z.parentName 
@@ -186,12 +250,9 @@
                                                       canDrag: FALSE 
                                                  defaultColor: colorDefaultForUIItems 
                                              highlightedColor: colorHighlightedForUIItems 
-                                                    dragColor: colorDraggingForUIItems];
+                                                    dragColor: colorDraggingForUIItems
+                           editExistingBlockInsteadOfCreating: nil];
  
-        
-        // increment y position
-        positionYStarting = positionYStarting + menuItemHeight + menuItemPadding;
-        
         // store all UI objects in an Array
         [uiObjectsOnScreen addObject:menuBlock];
         
@@ -201,11 +262,22 @@
 }
 
 
--(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destination receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor;
+-(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destination receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor editExistingBlockInsteadOfCreating:(MenuItemCell *)block
 {
-    // create menu block
-    MenuItemCell *menuBlock = [[NSBundle mainBundle] loadNibNamed:@"MenuItemCell" owner:self options:nil][0];
-  
+    // create menu block (unless editing an old one)
+    
+    MenuItemCell *menuBlock;
+    
+    if(block == nil){
+        menuBlock = [[NSBundle mainBundle] loadNibNamed:@"MenuItemCell" owner:self options:nil][0]; }
+    else{
+        menuBlock = block; }
+
+    if (x==0){ x = menuBlock.frame.origin.x; }  // should add use defaultXYHtWd instead of passing value = 0
+    if (y==0){ y = menuBlock.frame.origin.y; }
+    if (width==0){ width = menuBlock.frame.size.width; }
+    if (height==0){ height = menuBlock.frame.size.height;}
+    
     // set view components
     menuBlock.textLabel.text = titleToDisplay;
     menuBlock.imageView.image = [UIImage imageNamed: imageLocation];
@@ -226,12 +298,17 @@
     menuBlock.defaultPositionX = x;
     menuBlock.defaultPositionY = y;
     
-    menuBlock.canDrag = canDrag; 
     menuBlock.defaultColor = defaultColor; 
     menuBlock.highlightedColor = highlightedColor; 
-    menuBlock.dragColor=dragColor;
+    menuBlock.dragColor = dragColor;
     menuBlock.isSelected = FALSE;
    
+    // 
+    if([type isEqualToString:@"MenuBranch"]) {
+        menuBlock.canDrag = FALSE; 
+    }else {
+        menuBlock.canDrag = canDrag; }
+    
     return menuBlock;
 }
 
@@ -244,10 +321,10 @@
     
     // get location and size of drag object (just where your finger is, so reduce size of frame)
     CGRect objectOne = CGRectMake(x, y, 5, 5);
-    
+  
     // highlight potential receivers
     for(MenuItemCell *z in uiObjectsOnScreen){
-        
+
             if([z.name isEqualToString: sender.destination] || 
                [z.receives isEqualToString: sender.name]    || 
                [z.receives isEqualToString:@"ALL"]){
@@ -299,14 +376,15 @@
                                                canDrag: TRUE 
                                           defaultColor: colorDefaultForUIItems 
                                       highlightedColor: colorHighlightedForUIItems 
-                                             dragColor: colorDraggingForUIItems];
+                                             dragColor: colorDraggingForUIItems
+                    editExistingBlockInsteadOfCreating: nil];
 
 
     // add to view
-    [self.view addSubview:menuBlock];  // NEST OBJECTS?????
+    [self.view addSubview:menuBlock];  
 
     // add to data structures (currently arrayUI and uiObjects on the screen)
-    [arrayObjectsForUI addObject:menuBlock];
+    [uiObjectsDataset addObject:menuBlock];
     [uiObjectsOnScreen addObject:menuBlock];
 
 }
@@ -317,6 +395,14 @@
     {
         z.backgroundColor = colorDefaultForUIItems;               
     }
+    
+}
+
+-(void)viewSubMenu:(MenuItemCell *)sender
+{
+
+    // fetch items for parentName = sender.name (ie, look for the children)
+    [self buildMenuByFindingChildrenOfParent: sender.name];
     
 }
 
@@ -336,7 +422,7 @@
     nextMenuItem.text = @"text";
     nextMenuItem.receives = @"receives";
     
-    [menuItemsArray addObject:nextMenuItem];
+    [menuItemsGlobal addObject:nextMenuItem];
 }
 
 
@@ -358,7 +444,7 @@
     nextMenuItem.xDefault = x;
     nextMenuItem.yDefault = y;
     
-    [arrayObjectsForUI addObject:nextMenuItem];
+    [uiObjectsDataset addObject:nextMenuItem];
 }
 
 
@@ -366,18 +452,30 @@
 {
     
     // MENU
-    [self makeNewMenuItem_Name:@"a" imageLocation:@"coke.jpg"   parentName:@"a" destination:@"a" text:@"" type:@"MenuItem" viewLevel:@""];
+    [self makeNewMenuItem_Name:@"Drinks" imageLocation:@"coke.jpg"   parentName:@"Main Menu" destination:@"a" text:@"" type:@"MenuBranch" viewLevel:@""];
     
-    [self makeNewMenuItem_Name:@"b" imageLocation:@"bud.png"    parentName:@"b" destination:@"b" text:@"" type:@"MenuItem" viewLevel:@""];
     
-    [self makeNewMenuItem_Name:@"c" imageLocation:@"sprite.jpg" parentName:@"c" destination:@"c" text:@"" type:@"MenuItem" viewLevel:@""];
     
-    [self makeNewMenuItem_Name:@"d" imageLocation:@"coke.jpg"   parentName:@"d" destination:@"d" text:@"" type:@"MenuItem" viewLevel:@""];
+    [self makeNewMenuItem_Name:@"ThirdMenu" imageLocation:@"bud.png" parentName:@"Main Menu" destination:@"why" text:@"" type:@"MenuBranch" viewLevel:@""];
+    
+    [self makeNewMenuItem_Name:@"c" imageLocation:@"sprite.jpg" parentName:@"Drinks" destination:@"c" text:@"" type:@"MenuBranch" viewLevel:@""];
+    
+    [self makeNewMenuItem_Name:@"d" imageLocation:@"coke.jpg"   parentName:@"Drinks" destination:@"d" text:@"" type:@"MenuBranch" viewLevel:@""];
+    
+    
+    
+    [self makeNewMenuItem_Name:@"Cola" imageLocation:@"coke.jpg"    parentName:@"c" destination:@"why" text:@"" type:@"MenuItem" viewLevel:@""];
+    
+ //   [self makeNewMenuItem_Name:@"c" imageLocation:@"sprite.jpg" parentName:@"ThirdMenu" destination:@"c" text:@"" type:@"MenuItem" viewLevel:@""];
+    
+  //  [self makeNewMenuItem_Name:@"d" imageLocation:@"sprite"   parentName:@"ThirdMenu" destination:@"d" text:@"" type:@"MenuItem" viewLevel:@""];
+
+
     
     // UI 
-    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:60 yDefault:60 receives:@"b"];
+    [self makeNewUIItem_Name:@"why" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:60 yDefault:60 receives:@"b"];
     
-    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:160 yDefault:160 receives:@"b"];     
+    [self makeNewUIItem_Name:@"why" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:160 yDefault:160 receives:@"b"];     
     
     [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:260 yDefault:260 receives:@""];
     

@@ -8,16 +8,34 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
-    isSelected = (isSelected + 1) % 2;
-    
-    if (isSelected == TRUE){
-
-        self.backgroundColor = dragColor; 
+    // look at type - MenuBranch, UIFilter, MenuItem, UIDestination, UIInstance - to see what action to perform
+ 
+    if([self.type isEqualToString:@"MenuBranch"]) {
         
-    } else {
-        self.backgroundColor = defaultColor;
-    }
+            [delegate viewSubMenu:(MenuItemCell *)self];
+        
+    } else if ([self.type isEqualToString:@"UIFilter"]) {  
+    
+    
+    } else if ([self.type isEqualToString:@"MenuItem"]) {
+        
+            isSelected = (isSelected + 1) % 2;
+        
+            if (isSelected == TRUE){
+                self.backgroundColor = dragColor; 
+            } else {
+                self.backgroundColor = defaultColor;}
+        
+    } else if ([self.type isEqualToString:@"UIDestination"]) {
+        
+        
+        
+    } else if ([self.type isEqualToString:@"UIInstance"]) {
+        
+    
+    } else { 
+        NSLog(@"Error in naming conventions"); }
+    
     
 }
 
@@ -25,7 +43,7 @@
 {
     
     if(canDrag){
-        
+            
         UITouch *touch = [touches anyObject];  
     
         // get CGPoint with postion info (returns value relative to origin this subview)
