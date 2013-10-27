@@ -138,9 +138,9 @@
 			isa = PBXGroup;
 			children = (
 				CD65A2C11819B5AC00422B43 /* TouchProtocol.h */,
+				CD65A2D11819B79400422B43 /* MenuItemCell.xib */,
 				CD65A2C21819B5EF00422B43 /* MenuItemCell.h */,
 				CD65A2C31819B5EF00422B43 /* MenuItemCell.m */,
-				CD65A2D11819B79400422B43 /* MenuItemCell.xib */,
 				CD65A2C51819B66100422B43 /* ViewController.h */,
 				CD65A2C61819B66200422B43 /* ViewController.m */,
 				CD65A2CB1819B75000422B43 /* bud.png */,

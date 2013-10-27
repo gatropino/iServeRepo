@@ -7,10 +7,7 @@
 // text doesn't show 
 // center detection on drag and drop
 
-// TO DO
-// reverse selection
-// click thru menus for UI - thus, no buttons on the screen!!!
-// packaging of items when drop (opt 1: multiple landing locations, opt 2: freeform drop, opt 3: popup window
+
 // multiple drops
 
 // builder mode
@@ -50,15 +47,18 @@
   @property float menuItemWidth;
   @property float menuItemHeight;
   @property float menuItemPadding;
+  @property float uiItemPadding;
   @property float yDefualtStartingPosition;
   @property float itemPositionXStarting;
 
   @property int numberOfMenuItemsOnPage;
+  @property int localIDNumberCounter;           // replace with Core Data
 
   -(void)getDefaultSettings;
   -(void)setupMenu;
   -(void)clearMenu; 
   -(void)createUIItems;
+  -(void)sortUIItemsOnScreen;
   -(void)makeSomeData;
 
   -(void)buildMenuByFindingChildrenOfParent:(NSString *)nameOfParent;
@@ -71,7 +71,7 @@
 
 @implementation ViewController
 
-  @synthesize uiObjectsDataset, uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems, menuItemsGlobal, yDefualtStartingPosition, menuItemsCurrent;
+  @synthesize uiObjectsDataset, uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems, menuItemsGlobal, yDefualtStartingPosition, menuItemsCurrent, uiItemPadding, localIDNumberCounter;
 
 
 #pragma mark Setup
@@ -92,6 +92,8 @@
 
 -(void)getDefaultSettings
 {
+    localIDNumberCounter = 1;       // repace with core data
+    
     // create arrays
     menuItemsGlobal   = [NSMutableArray new];
     menuItemsCurrent  = [NSMutableArray new]; 
@@ -102,6 +104,7 @@
     menuItemWidth = 80;
     menuItemHeight = 60;
     menuItemPadding = 2;
+    uiItemPadding = 5;
     yDefualtStartingPosition = 22;
     
     // check screen size
@@ -125,6 +128,27 @@
     
 }
 
+-(void)sortUIItemsOnScreen
+{
+
+    [uiObjectsOnScreen sortUsingComparator:^NSComparisonResult(MenuItemCell *obj1, MenuItemCell *obj2) {
+            
+        if(obj1.frame.origin.x < obj2.frame.origin.x){
+            return -1; } 
+        else if (obj1.frame.origin.x > obj2.frame.origin.x){
+            return 1;  }
+        
+     
+        if(obj1.frame.origin.y < obj2.frame.origin.y){
+            return -1;  } 
+        else {
+            return 1;   }
+    
+    }];
+
+
+
+}
 
 #pragma mark Making Blocks
 
@@ -303,7 +327,9 @@
     menuBlock.dragColor = dragColor;
     menuBlock.isSelected = FALSE;
    
-    // 
+    menuBlock.localIDNumber = [NSString stringWithFormat:@"%i",localIDNumberCounter];
+    localIDNumberCounter +=1;
+   
     if([type isEqualToString:@"MenuBranch"]) {
         menuBlock.canDrag = FALSE; 
     }else {
@@ -331,7 +357,7 @@
             
                     z.backgroundColor = colorDraggingForUIItems;
            
-                    // compare to location and size of display objects to see if collision
+                    // compare to location of display objects to see if collision
                     if (CGRectIntersectsRect (objectOne, z.frame)) {
         
                             // if collision then . . .
@@ -341,28 +367,79 @@
     } } }
     
     if(objectDropped && objectBeingHit){
+       
+        // set color
+        objectBeingHit.backgroundColor = colorDefaultForMenuItems;
         
-        // if it is an instance, move its location; if it is a menu item, create an instance
-        if ([sender.type isEqualToString:@"UIInstance"]) {
+        // if it is a menu item, create an instance
+        if ([sender.type isEqualToString: @"MenuItem"]) {
+           
+            [self makeInstance:sender objectBeingHit:objectBeingHit]; }
+        
+        else if ([sender.type isEqualToString:@"UIInstance"]) {
+
+            sender.instanceOf = objectBeingHit.localIDNumber;  
             
-                sender.defaultPositionX = objectBeingHit.frame.origin.x;
-                sender.defaultPositionY = objectBeingHit.frame.origin.y;  // note: does not resize
-            
-        } else if ([sender.type isEqualToString:@"MenuItem"]) {
-            
-                [self makeInstance:sender objectBeingHit:objectBeingHit];}
-    
-        else { NSLog(@"Error"); }
+        } else {}
+
         
     } 
     
 }
 
+-(void)updateScreenLocationsAfterDragAndDrop
+{
+    
+    BOOL placeInstancesInHorizontalLine = TRUE;       //add to MenuItemCell
+    
+    // sort uiObjectsOnScreen array by x and y positions, keeping objects in respective positions
+    [self sortUIItemsOnScreen];
+
+    NSMutableArray *copyUIObjectsOnScreen = [NSMutableArray arrayWithArray:uiObjectsOnScreen];
+    
+    // fetch UIDestinationObjects
+    for(MenuItemCell* z in uiObjectsOnScreen){
+
+        if([z.type isEqualToString: @"UIDestination"]){
+           
+           
+                NSLog(@"destination object %@  %@", z.name, z.localIDNumber);  
+                int x = z.defaultPositionX;
+                int y = z.defaultPositionY;
+                int wd = z.frame.size.width;
+                int ht = z.frame.size.height; 
+        
+                // for each instance of our destination object
+                //for(MenuItemCell *mc in uiObjectsOnScreen){
+                for(MenuItemCell *mc in copyUIObjectsOnScreen){
+                        if([mc.instanceOf isEqualToString: z.localIDNumber]){
+                                    NSLog(@"instance object  %@  %@", mc.name, mc.instanceOf); 
+                                    mc.frame = CGRectMake(x, y, wd, ht);
+                        
+                                    if(placeInstancesInHorizontalLine){
+                                                x = x + wd + uiItemPadding; }
+                                    else {
+                                                y = y + ht + uiItemPadding; }
+                        
+                        }
+        
+        
+                }
+            
+                // move destination object to next space
+                z.frame = CGRectMake(x, y, wd, ht);
+        
+        }}
+
+}
+
+
+
 -(void)makeInstance:(MenuItemCell *)sender objectBeingHit:(MenuItemCell *)objectBeingHit
 {
     MenuItemCell *menuBlock = [self makeBlockView_Name: sender.name
                                          imageLocation: sender.imageLocation
-                                            parentName: sender.parentName 
+                                            parentName: sender.parentName   
                                                   type: @"UIInstance"
                                           destintation: sender.destination
                                               receives: sender.receives 
@@ -378,8 +455,9 @@
                                       highlightedColor: colorHighlightedForUIItems 
                                              dragColor: colorDraggingForUIItems
                     editExistingBlockInsteadOfCreating: nil];
-
-
+    
+    menuBlock.instanceOf = objectBeingHit.localIDNumber; 
+    
     // add to view
     [self.view addSubview:menuBlock];  
 
@@ -389,15 +467,26 @@
 
 }
 
--(void)dragCompletedUnhighlightMenuItems
+-(void)unhighlightUIObjects
 {
     for(MenuItemCell *z in uiObjectsOnScreen)
     {
-        z.backgroundColor = colorDefaultForUIItems;               
+        z.backgroundColor = colorDefaultForUIItems;    
+        z.isSelected = FALSE;
     }
     
 }
 
+-(void)unhighlightMenu
+{
+
+    for(MenuItemCell *z in menuItemsCurrent)
+    {
+        z.backgroundColor = colorDefaultForUIItems;    
+        z.isSelected = FALSE;
+    }
+
+}
 -(void)viewSubMenu:(MenuItemCell *)sender
 {
 
@@ -406,6 +495,24 @@
     
 }
 
+-(BOOL)reverseDragAndDrop_Sender: (MenuItemCell *)sender
+{
+    // can't update an array you are enumerating through, so making a copy
+    NSArray *copyOfUIObjectsOnScreen = [NSArray arrayWithArray:uiObjectsOnScreen];
+    
+    BOOL didDrop = FALSE;
+    
+    for(MenuItemCell *z in copyOfUIObjectsOnScreen){
+    
+        
+            if(z.isSelected && ([sender.destination isEqualToString:z.name] || [sender.name isEqualToString:z.receives] || [z.receives isEqualToString:@"ALL"]) ){
+    
+                    [self makeInstance:sender objectBeingHit:z]; 
+                    didDrop = TRUE;  }
+    }
+    
+    return didDrop;
+}
 
 #pragma mark Menu Items (just temp data)
 
@@ -466,9 +573,9 @@
     
     [self makeNewMenuItem_Name:@"Cola" imageLocation:@"coke.jpg"    parentName:@"c" destination:@"why" text:@"" type:@"MenuItem" viewLevel:@""];
     
- //   [self makeNewMenuItem_Name:@"c" imageLocation:@"sprite.jpg" parentName:@"ThirdMenu" destination:@"c" text:@"" type:@"MenuItem" viewLevel:@""];
+    [self makeNewMenuItem_Name:@"c" imageLocation:@"sprite.jpg" parentName:@"c" destination:@"why" text:@"" type:@"MenuItem" viewLevel:@""];
     
-  //  [self makeNewMenuItem_Name:@"d" imageLocation:@"sprite"   parentName:@"ThirdMenu" destination:@"d" text:@"" type:@"MenuItem" viewLevel:@""];
+    [self makeNewMenuItem_Name:@"d" imageLocation:@"sprite.jpg"   parentName:@"c" destination:@"why" text:@"" type:@"MenuItem" viewLevel:@""];
 
 
     
@@ -477,9 +584,9 @@
     
     [self makeNewUIItem_Name:@"why" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:160 yDefault:160 receives:@"b"];     
     
-    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:260 yDefault:260 receives:@""];
+    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:260 yDefault:260 receives:@"Cola"];
     
-    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:360 yDefault:360 receives:@"ALL"];      
+    [self makeNewUIItem_Name:@"" imageLocation:@"" parentName:@"table" type:@"" destination:@"table" text:@"drinks go here" ht:100 wd:100 xDefault:360 yDefault:360 receives:@""];      
 
 }
 
