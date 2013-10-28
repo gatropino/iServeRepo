@@ -21,6 +21,8 @@
     //RootViewController *rvc = (RootViewController *)[[nav viewControllers] objectAtIndex:0];;
     //rvc.managedObjectContext = self.managedObjectContext;
 
+    _managedObjectContext = [self managedObjectContext];
+    [CoreData myData].managedObjectContext = _managedObjectContext;
     return YES;
 }
 
