@@ -30,15 +30,29 @@
 
 @property float defaultPositionX;   
 @property float defaultPositionY;
+@property BOOL placeInstancesInHorizontalLine;
 @property UIColor *defaultColor;
 @property UIColor *highlightedColor;
 @property UIColor *dragColor;
 
-@property id<TouchProtocol>delegate;
+// instance tracking variables providing intuitive access
+@property NSString *restaurant;
+@property NSString *table;
+@property NSString *customer;
+@property BOOL isSeated;
 
+// for objects able to initiate actions (could subclass, but then would require time to rewrite code)
+@property NSString *filterRestaurant;
+@property NSString *filterTable;
+@property NSString *filterCustomer;
+@property BOOL filterIsSeated;
+
+@property id<TouchProtocol>delegate;
+@property int buildMode;  // 0 = build mode off  1 = can drag from menu to create instance  2 = instance created 
+                          // create enum, or more trouble than worth
 @end
 
 //TO ADD
 //  useCurrentSizeAndLocationSettings (to make method, not used here)
-//  placeInstancesInHorizontalLine 
+
 

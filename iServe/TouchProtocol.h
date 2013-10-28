@@ -7,15 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MenuItem.h"
 
 @protocol TouchProtocol <NSObject>
 
+// basic gui
 -(void)collisionCheck:(id)sender x:(float)x y:(float)y transactionComplete: (BOOL)dropObject;
 -(void)updateScreenLocationsAfterDragAndDrop;
 -(BOOL)reverseDragAndDrop_Sender: (id)sender;
 -(void)viewSubMenu:(id)sender;
 -(void)unhighlightMenu;
 -(void)unhighlightUIObjects;
+-(void)dropBuildObject:(id)sender;
+
+// filters
+-(void)changeFilters:(id)mit;
 
 @end

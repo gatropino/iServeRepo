@@ -10,7 +10,7 @@
 
 @implementation MenuItem
 
-@synthesize name, imageLocation, parentName, type, viewLevel, ht, wd, xDefault, yDefault, destination, text, receives;
+@synthesize name, imageLocation, parentName, type, viewLevel, ht, wd, xDefault, yDefault, destination, text, receives, restaurant, customer, table, filterIsSeated, filterTable, filterCustomer, filterRestaurant;
 
 @end
 

@@ -4,24 +4,35 @@
 #import "ViewController.h"
 
 @implementation MenuItemCell
-  @synthesize textLabel, imageView, name, parentName, type, titleToDisplay, imageLocation, delegate, canDrag, defaultColor, isSelected, defaultPositionX, defaultPositionY, destination, receives, highlightedColor, dragColor, instanceOf, localIDNumber;
+  @synthesize textLabel, imageView, name, parentName, type, titleToDisplay, imageLocation, delegate, canDrag, defaultColor, isSelected, defaultPositionX, defaultPositionY, destination, receives, highlightedColor, dragColor, instanceOf, localIDNumber, restaurant, table, customer, isSeated, filterRestaurant, filterCustomer, filterTable, filterIsSeated, placeInstancesInHorizontalLine, buildMode;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     
-    // if type = MenuBranch
-    if([self.type isEqualToString:@"MenuBranch"]) {
+    // if type = UIDestination
+    if ([self.type isEqualToString:@"UIDestination"]) {
         
-            // fetch subdirectory and update screen
-            [delegate viewSubMenu:(MenuItemCell *)self];
-       
+            if(buildMode == 0){  
+    NSLog(@"the color error is here"); 
+                [self toggleThisBlocksColor];
+                [delegate unhighlightMenu]; }
+        
         
     // if type = UIFilter       
     } else if ([self.type isEqualToString:@"UIFilter"]) { 
+
+            if(buildMode == 0){  
+
+                // fetch subdirectory and update screen
+                [delegate changeFilters:self]; }
+    
         
-            // fetch subdirectory and update screen
+    // if in build mode, do not respond to other input    
+    } else if (buildMode > 0) { 
         
+            return; 
         
+    
     // if type = MenuItem
     } else if ([self.type isEqualToString:@"MenuItem"]) {
         
@@ -37,18 +48,16 @@
                     [delegate updateScreenLocationsAfterDragAndDrop];
                     [delegate unhighlightMenu];
                     [delegate unhighlightUIObjects];
-                }];
+                }];}
+    
+        
+    // if type = MenuBranch
+    } else if([self.type isEqualToString:@"MenuBranch"]) {
+            
+            // fetch subdirectory and update screen
+            [delegate viewSubMenu:(MenuItemCell *)self];
+        
 
-        }
-        
-    // if type = UIDestination
-    } else if ([self.type isEqualToString:@"UIDestination"]) {
-        
-            [self toggleThisBlocksColor];
-                
-            [delegate unhighlightMenu];
-        
-        
     // if type = UIInstance       
     } else if ([self.type isEqualToString:@"UIInstance"]) {
         
@@ -56,6 +65,7 @@
         
     } else { 
         NSLog(@"Error in naming conventions"); }
+    
     
     
 }
@@ -122,13 +132,24 @@
                 [delegate unhighlightUIObjects];
                 [delegate unhighlightMenu]; 
         
-        } else if ([self.type isEqualToString:@"UIFilter"]){
-        
-        } else if ([self.type isEqualToString:@"UIDestination"]){
+        } else if ([self.type isEqualToString:@"UIFilter"] || [self.type isEqualToString:@"UIDestination"]){
+                
+                if(buildMode == 1){
+                    
+                    [delegate dropBuildObject:self];
             
-                // UIDestination should never been moved by user
-                // but it will be moved off its default, so be careful because it will make it into here
-                // but better to leave in current format, the refactored version was too hard to follow
+                    [delegate unhighlightUIObjects];
+                    [delegate unhighlightMenu];}
+            
+            
+                else if (buildMode == 2){
+                    defaultPositionX = self.frame.origin.x;
+                    defaultPositionY = self.frame.origin.y;  
+            
+                    [delegate unhighlightUIObjects];
+                    [delegate unhighlightMenu]; }
+            
+                else { return; }
             
         } else if ([self.type isEqualToString:@"UIInstance"]){
             
