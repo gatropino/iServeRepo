@@ -19,9 +19,9 @@
         <attribute name="sausage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="AvailableIngredients" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Food" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Pizza" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Images" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="AvailableIngredients" positionX="7" positionY="-18" width="128" height="90"/>
+        <element name="Food" positionX="70" positionY="-126" width="128" height="45"/>
+        <element name="Images" positionX="7" positionY="147" width="128" height="105"/>
+        <element name="Pizza" positionX="322" positionY="9" width="128" height="105"/>
     </elements>
 </model>

@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CoreData.h"
 
 @interface RootViewController : UIViewController
 
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end

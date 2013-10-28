@@ -18,4 +18,14 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
++(CoreData *) myData;
+-(void)resetPizzaInventoryLevels;
+-(NSArray *)fetchAllPizzasMade;
+-(NSInteger)totalCheesePizzasSold;
+-(NSInteger)totalSausagePizzasSold;
+-(NSInteger)totalPepperoniPizzasSold;
+-(NSArray *)attributesOfPizza;
+-(Pizza *)quantityOfCheese:(NSNumber *)cheeseToppings quantityOfSausage:(NSNumber *)sausageToppings quantityOfPepperoni:(NSNumber *)pepperoniToppings;
+-(Pizza *)createPizzaObject;
+
 @end
