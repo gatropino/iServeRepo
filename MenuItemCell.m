@@ -24,6 +24,8 @@
             if(buildMode == 0){  
 
                 // fetch subdirectory and update screen
+                [delegate unhighlightUIObjects];
+                [self toggleThisBlocksColor];
                 [delegate changeFilters:self]; }
     
         

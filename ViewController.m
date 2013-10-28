@@ -7,11 +7,17 @@
 // menu item to go back to main, just list Main Menu
 
 /*
-what objects do you want to appear on the screen?
-for UIFilter, just list wanted UIItems and store in an array
- 
- 
 
+ add temp bar at the bottom where can drag items to move from one place ot the next or delete with button
+ 
+ builder - edit2
+ scale, add photo, add text
+ 
+ filter set up backwards, should allow all to show all, not always show
+ maybe break out (of course, set up filters at the bottom to always show so...)
+ 
+ add flags
+ 
 */
 
 // BUG 
@@ -230,7 +236,7 @@ for UIFilter, just list wanted UIItems and store in an array
                                               defaultColor: colorDefaultForMenuItems 
                                           highlightedColor: colorDefaultForMenuItems 
                                                  dragColor: colorDefaultForMenuItems
-                        editExistingBlockInsteadOfCreating: z];
+                        editExistingBlockInsteadOfCreating: z   ];
         
     }
     
@@ -458,19 +464,23 @@ for UIFilter, just list wanted UIItems and store in an array
        // NSLog(@"filter %@,%@,%@", restaurant, table, customer );
        // NSLog(@"%@,%@,%@", z.restaurant, z.table, z.customer );
         
-        if(([z.restaurant isEqualToString:restaurant] || [z.restaurant isEqualToString:@"ALL"]) &&
-           ([z.table isEqualToString:table]           || [z.table isEqualToString:@"ALL"])     && 
-           ([z.customer isEqualToString:customer]     || [z.customer isEqualToString:@"ALL"]))     {
+        // wrong, if restaurant = ALL
+        if(([restaurant isEqualToString:@"ALL"]   ||                // ie, the filter = all
+            [z.restaurant isEqualToString:restaurant]   ||          // the value = the same as the filter
+            [z.restaurant isEqualToString:@"ALWAYS SHOW"])          // or the value is markes as always show
+                        && 
+           ([table isEqualToString:@"ALL"]  ||
+            [z.table isEqualToString:table]   || 
+            [z.table isEqualToString:@"ALWAYS SHOW"])  
+                        && 
+           ([customer isEqualToString:@"ALL"]  ||
+            [z.customer isEqualToString:customer]  || 
+            [z.customer isEqualToString:@"ALWAYS SHOW"]))   {
            
                     z.hidden = FALSE;
-                    [uiObjectsOnScreen addObject:z];
-        }
-        
-        
+                    [uiObjectsOnScreen addObject:z];  }
         
     }
-    
-    
     
 }
 
@@ -829,13 +839,28 @@ for UIFilter, just list wanted UIItems and store in an array
     
     // UIDestination 
     
-    [self makeNewUIItem_Name:@"why" imageLocation:@"" parentName:@"" type:@"UIDestination" destination:@"" text:@"Dest1" ht:100 wd:100 xDefault:100 yDefault:100 receives:@"" restaurant:@"ALL" table:@"table1" customer:@"ALL" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" filterIsSeated:TRUE];
-    [self makeNewUIItem_Name:@"why" imageLocation:@"" parentName:@"" type:@"UIDestination" destination:@"" text:@"Dest2" ht:100 wd:100 xDefault:100 yDefault:300 receives:@"" restaurant:@"ALL" table:@"table2" customer:@"ALL" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" filterIsSeated:true];
-    [self makeNewUIItem_Name:@"why" imageLocation:@"" parentName:@"" type:@"UIDestination" destination:@"" text:@"Dest3" ht:100 wd:100 xDefault:100 yDefault:450 receives:@"" restaurant:@"ALL" table:@"table2" customer:@"ALL" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" filterIsSeated:true];
+    [self makeNewUIItem_Name:@"why" imageLocation:@"" parentName:@"" type:@"UIDestination" destination:@"" text:@"Dest1" ht:100 wd:100 xDefault:100 yDefault:100 receives:@"" restaurant:@"menu only" table:@"table1" customer:@"ALL" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" filterIsSeated:TRUE];
+    [self makeNewUIItem_Name:@"why" imageLocation:@"" parentName:@"" type:@"UIDestination" destination:@"" text:@"Dest2" ht:100 wd:100 xDefault:100 yDefault:300 receives:@"" restaurant:@"menu only" table:@"table2" customer:@"ALL" filterRestaurant:@"menu only" filterTable:@"" filterCustomer:@"" filterIsSeated:true];
+    [self makeNewUIItem_Name:@"why" imageLocation:@"" parentName:@"" type:@"UIDestination" destination:@"" text:@"Dest3" ht:100 wd:100 xDefault:100 yDefault:450 receives:@"" restaurant:@"menu only" table:@"table2" customer:@"ALL" filterRestaurant:@"menu only" filterTable:@"" filterCustomer:@"" filterIsSeated:true];
     
     // UIFilter
-        [self makeNewUIItem_Name:@"UIFilter1" imageLocation:@"" parentName:@"" type:@"UIFilter" destination:@"" text:@"UIFilter1" ht:100 wd:100 xDefault:100 yDefault:600 receives:@"" restaurant:@"ALL" table:@"ALL" customer:@"ALL" filterRestaurant:@"ALL" filterTable:@"table1" filterCustomer:@"ALL" filterIsSeated:TRUE];
-        [self makeNewUIItem_Name:@"UIFilter2" imageLocation:@"" parentName:@"" type:@"UIFilter" destination:@"" text:@"UIFilter2" ht:100 wd:100 xDefault:300 yDefault:600 receives:@"" restaurant:@"ALL" table:@"ALL" customer:@"ALL" filterRestaurant:@"ALL" filterTable:@"table2" filterCustomer:@"ALL" filterIsSeated:TRUE];
+        [self makeNewUIItem_Name:@"UIFilter1" imageLocation:@"" parentName:@"" type:@"UIFilter" destination:@"" text:@"Table1" ht:100 wd:100 xDefault:100 yDefault:600 receives:@"" 
+                      
+                  restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" 
+               
+                filterRestaurant:@"ALL" filterTable:@"table1" filterCustomer:@"ALL" filterIsSeated:TRUE];
+        
+    [self makeNewUIItem_Name:@"UIFilter2" imageLocation:@"" parentName:@"" type:@"UIFilter" destination:@"" text:@"Table2" ht:100 wd:100 xDefault:300 yDefault:600 receives:@"" 
+                  
+                  restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" 
+          
+            filterRestaurant:@"ALL" filterTable:@"table2" filterCustomer:@"ALL" filterIsSeated:TRUE];
+   
+    [self makeNewUIItem_Name:@"UIFilter3" imageLocation:@"" parentName:@"" type:@"UIFilter" destination:@"" text:@"ALL" ht:100 wd:100 xDefault:500 yDefault:600 receives:@"" 
+                 
+                  restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" 
+          
+            filterRestaurant:@"ALL" filterTable:@"ALL" filterCustomer:@"ALL" filterIsSeated:TRUE];
     
 
 }
