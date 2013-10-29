@@ -12,16 +12,68 @@
         <attribute name="pizzaSausage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="storeBinaryImagesLater" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="MenuItemData" representedClassName="MenuItemData" syncable="YES">
+        <attribute name="buildMode" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="canDrag" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="customer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="defaultPositionX" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="defaultPositionY" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="destination" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filterCustomer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filterIsSeated" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="filterRestaurant" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filterTable" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageLocation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="instanceOf" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isSeated" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isSelected" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="localIDNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="placeInstancesInHorizontalLine" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="receives" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="restaurant" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="table" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleToDisplay" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Pizza" representedClassName="Pizza" parentEntity="Food" syncable="YES">
         <attribute name="cheese" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pepperoni" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="sausage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="UIItemData" representedClassName="UIItemData" syncable="YES">
+        <attribute name="buildMode" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="canDrag" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="customer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="defaultPositionX" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="defaultPositionY" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="destination" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filterCustomer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filterIsSeated" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="filterRestaurant" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="filterTable" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageLocation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="instanceOf" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isSeated" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isSelected" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="localIDNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="placeInstancesInHorizontalLine" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="receives" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="restaurant" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="table" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleToDisplay" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="AvailableIngredients" positionX="7" positionY="-18" width="128" height="90"/>
-        <element name="Food" positionX="70" positionY="-126" width="128" height="45"/>
-        <element name="Images" positionX="7" positionY="147" width="128" height="105"/>
-        <element name="Pizza" positionX="322" positionY="9" width="128" height="105"/>
+        <element name="AvailableIngredients" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Food" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Images" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="UIItemData" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Pizza" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="MenuItemData" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>
