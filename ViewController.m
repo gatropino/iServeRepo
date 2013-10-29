@@ -245,12 +245,15 @@
 -(void)buildMenuByFindingChildrenOfParent:(NSString *)nameOfParent
 {
     
+    
+    NSArray *menuData = [[CoreData myData] fetchMenuItems];
+
     // clean out the old menu
     [self clearMenu];
     
     // for each child of the parent, build a Menu Item
     int counter = 0;
-    for(MenuItem *z in menuItemsGlobal){
+    for(MenuItemData *z in menuData){
         
         if([z.parentName isEqualToString:nameOfParent]){
             
@@ -260,7 +263,7 @@
                                                                    type: z.type
                                                            destintation: z.destination
                                                                receives: z.receives
-                                                         titleToDisplay: z.text
+                                                         titleToDisplay: z.titleToDisplay
                                                 
                                                                  xValue: 0
                                                                  yValue: 0
@@ -327,6 +330,10 @@
 
 -(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destination receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor editExistingBlockInsteadOfCreating:(MenuItemCell *)block
 {
+    
+    
+    
+    
     // create menu block (unless editing an old one)
     
     MenuItemCell *menuBlock;
@@ -384,11 +391,12 @@
 -(void)createUIItems  // gets data and imports into MenuCellObjects
 {
     
+    NSArray *menuData = [[CoreData myData] fetchUIItems];
     
-    for(int x = 0; x<[uiObjectToLoadFromDataSource count]; x++)
+    for(int x = 0; x<[menuData count]; x++)
     {
         //fetch data
-        MenuItem *z =[uiObjectToLoadFromDataSource objectAtIndex:x];
+        UIItemData *z =[menuData objectAtIndex:x];
         
         MenuItemCell *menuBlock = [self    makeBlockView_Name: z.name
                                                 imageLocation: z.imageLocation
@@ -396,12 +404,12 @@
                                                          type: z.type
                                                  destintation: z.destination
                                                      receives: z.receives
-                                               titleToDisplay: z.text
+                                               titleToDisplay: z.titleToDisplay
                                    
-                                                       xValue: z.xDefault
-                                                       yValue: z.yDefault
-                                                           ht: z.ht
-                                                           wd: z.wd
+                                                       xValue: [z.defaultPositionX floatValue]
+                                                       yValue: [z.defaultPositionY floatValue]
+                                                           ht: 100
+                                                           wd: 100
                                    
                                                       canDrag: FALSE
                                                  defaultColor: colorDefaultForUIItems
@@ -417,7 +425,7 @@
         menuBlock.filterRestaurant = z.filterRestaurant;
         menuBlock.filterTable = z.filterTable;
         menuBlock.filterCustomer = z.filterCustomer;
-        menuBlock.filterIsSeated = z.filterIsSeated;
+        menuBlock.filterIsSeated = [z.filterIsSeated boolValue];
         
         
         // store all UI objects in an Array
@@ -815,42 +823,33 @@
 
 -(void)makeSomeData
 {
-    
+    /*
     [[CoreData myData] makeNewMenuItemFromData_parentName:@"Main Menu" name:@"Drinks" titleToDisplay:@"" imageLocation:@"coke.jpg" type:@"MenuBranch"  localIDNumber:@"" instanceOf:@"" destination:@"a" receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0];
 
-    [[CoreData myData] makeNewMenuItemFromData_parentName:@"Main Menu" name:@"Drinks" titleToDisplay:@"" imageLocation:@"bud.png" type:@"MenuBranch"  localIDNumber:@"" instanceOf:@"" destination:@"a" receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0];
+    [[CoreData myData] makeNewMenuItemFromData_parentName:@"Drinks" name:@"Drinks" titleToDisplay:@"" imageLocation:@"bud.png" type:@"MenuItem"  localIDNumber:@"" instanceOf:@"" destination:@"a" receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0];
     
-    [[CoreData myData] makeNewMenuItemFromData_parentName:@"Main Menu" name:@"Drinks" titleToDisplay:@"" imageLocation:@"sprite.jpg" type:@"MenuBranch"  localIDNumber:@"" instanceOf:@"" destination:@"a" receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0];
+    [[CoreData myData] makeNewMenuItemFromData_parentName:@"Drinks" name:@"Drinks" titleToDisplay:@"" imageLocation:@"sprite.jpg" type:@"MenuItem"  localIDNumber:@"" instanceOf:@"" destination:@"a" receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0];
 
     
     
     
-    [[CoreData myData] makeNewUIItem_parentName:@"" name:@"a" titleToDisplay:@"Dest1" imageLocation:@"" type:@"UIDestination" localIDNumber:@"" instanceOf:@"" destination:@"Dest1" receives:@"" restaurant:@"menu only"  table:@"table1" customer:@"ALL" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:true isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:100 buildMode:@0];
-    [[CoreData myData] makeNewUIItem_parentName:@"" name:@"a" titleToDisplay:@"Dest1" imageLocation:@"" type:@"UIDestination" localIDNumber:@"" instanceOf:@"" destination:@"Dest1" receives:@"" restaurant:@"menu only"  table:@"table1" customer:@"ALL" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:true isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:100 buildMode:@0];
+    [[CoreData myData] makeNewUIItem_parentName:@"" name:@"a" titleToDisplay:@"Dest1" imageLocation:@"" type:@"UIDestination" localIDNumber:@"" instanceOf:@"" destination:@"Dest1" receives:@"" restaurant:@"ALWAYS SHOW"  table:@"table1" customer:@"ALWAYS SHOW" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:true isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:100 buildMode:@0];
+    
+    [[CoreData myData] makeNewUIItem_parentName:@"" name:@"a" titleToDisplay:@"Dest1" imageLocation:@"" type:@"UIDestination" localIDNumber:@"" instanceOf:@"" destination:@"Dest1" receives:@"" restaurant:@"ALWAYS SHOW"  table:@"table1" customer:@"ALWAYS SHOW" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:true isSeated:FALSE filterIsSeated:FALSE defaultPositionX:300 defaultPositionY:100 buildMode:@0];
 
     
-    [[CoreData myData] makeNewUIItem_parentName:@"" name:@"UIFilter1" titleToDisplay:@"Dest1" imageLocation:@"" type:@"UIDestination" localIDNumber:@"" instanceOf:@"" destination:@"Dest1" receives:@"" restaurant:@"menu only"  table:@"table1" customer:@"ALL" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:true isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:100 buildMode:@0];
+    [[CoreData myData] makeNewUIItem_parentName:@"" name:@"UIFilter1" titleToDisplay:@"Dest1" imageLocation:@"" type:@"UIDestination" localIDNumber:@"" instanceOf:@"" destination:@"Dest1" receives:@"" restaurant:@""  table:@"table2" customer:@"" filterRestaurant:@"" filterTable:@"table2" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:true isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:500 buildMode:@0];
+    
     
     
     // UIFilter
-    [self makeNewUIItem_Name:@"UIFilter1" imageLocation:@"" parentName:@"" type:@"UIFilter" destination:@"" text:@"Table1" ht:100 wd:100 xDefault:100 yDefault:600 receives:@""
-     
-                  restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW"
-     
-            filterRestaurant:@"ALL" filterTable:@"table1" filterCustomer:@"ALL" filterIsSeated:TRUE];
     
-    [self makeNewUIItem_Name:@"UIFilter2" imageLocation:@"" parentName:@"" type:@"UIFilter" destination:@"" text:@"Table2" ht:100 wd:100 xDefault:300 yDefault:600 receives:@""
-     
-                  restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW"
-     
-            filterRestaurant:@"ALL" filterTable:@"table2" filterCustomer:@"ALL" filterIsSeated:TRUE];
+        [[CoreData myData] makeNewUIItem_parentName:@"" name:@"UIFilter1" titleToDisplay:@"Table1" imageLocation:@"" type:@"UIFilter" localIDNumber:@"" instanceOf:@"" destination:@"Dest1" receives:@"" restaurant:@"ALWAYS SHOW"  table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" filterRestaurant:@"" filterTable:@"table1" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:true isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:500 buildMode:@0];
     
-    [self makeNewUIItem_Name:@"UIFilter3" imageLocation:@"" parentName:@"" type:@"UIFilter" destination:@"" text:@"ALL" ht:100 wd:100 xDefault:500 yDefault:600 receives:@""
-     
-                  restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW"
-     
-            filterRestaurant:@"ALL" filterTable:@"ALL" filterCustomer:@"ALL" filterIsSeated:TRUE];
+            [[CoreData myData] makeNewUIItem_parentName:@"" name:@"UIFilter1" titleToDisplay:@"Table2" imageLocation:@"" type:@"UIFilter" localIDNumber:@"" instanceOf:@"" destination:@"Dest1" receives:@"" restaurant:@"ALWAYS SHOW"  table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" filterRestaurant:@"" filterTable:@"table2" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:true isSeated:FALSE filterIsSeated:FALSE defaultPositionX:300 defaultPositionY:500 buildMode:@0];
     
+            [[CoreData myData] makeNewUIItem_parentName:@"" name:@"UIFilter1" titleToDisplay:@"Rest" imageLocation:@"" type:@"UIFilter" localIDNumber:@"" instanceOf:@"" destination:@"Dest1" receives:@"" restaurant:@"ALWAYS SHOW"  table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" filterRestaurant:@"" filterTable:@"table2" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:true isSeated:FALSE filterIsSeated:FALSE defaultPositionX:500 defaultPositionY:500 buildMode:@0];
+*/
     
 }
 
