@@ -41,6 +41,7 @@
 		37F7F55E18181BB40014B5BC /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37F7F55D18181BB40014B5BC /* Storyboard.storyboard */; };
 		37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7F56018181CCE0014B5BC /* RootViewController.m */; };
 		37F7F56418181D720014B5BC /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7F56318181D720014B5BC /* CoreData.m */; };
+		CD29C30E18203FC700BEBD57 /* OrderItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD29C30D18203FC700BEBD57 /* OrderItemsViewController.m */; };
 		CD65A2C41819B5EF00422B43 /* MenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD65A2C31819B5EF00422B43 /* MenuItemCell.m */; };
 		CD65A2C71819B66200422B43 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD65A2C61819B66200422B43 /* ViewController.m */; };
 		CD65A2CA1819B6C100422B43 /* MenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CD65A2C91819B6C100422B43 /* MenuItem.m */; };
@@ -106,6 +107,8 @@
 		37F7F56018181CCE0014B5BC /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		37F7F56218181D720014B5BC /* CoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreData.h; sourceTree = "<group>"; };
 		37F7F56318181D720014B5BC /* CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreData.m; sourceTree = "<group>"; };
+		CD29C30C18203FC700BEBD57 /* OrderItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderItemsViewController.h; sourceTree = "<group>"; };
+		CD29C30D18203FC700BEBD57 /* OrderItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemsViewController.m; sourceTree = "<group>"; };
 		CD65A2C11819B5AC00422B43 /* TouchProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TouchProtocol.h; path = iServe/TouchProtocol.h; sourceTree = "<group>"; };
 		CD65A2C21819B5EF00422B43 /* MenuItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItemCell.h; sourceTree = "<group>"; };
 		CD65A2C31819B5EF00422B43 /* MenuItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItemCell.m; sourceTree = "<group>"; };
@@ -230,6 +233,8 @@
 			isa = PBXGroup;
 			children = (
 				37F7F55D18181BB40014B5BC /* Storyboard.storyboard */,
+				CD29C30C18203FC700BEBD57 /* OrderItemsViewController.h */,
+				CD29C30D18203FC700BEBD57 /* OrderItemsViewController.m */,
 				37F7F55F18181CCE0014B5BC /* RootViewController.h */,
 				37F7F56018181CCE0014B5BC /* RootViewController.m */,
 				37F7F56218181D720014B5BC /* CoreData.h */,
@@ -377,6 +382,7 @@
 				CD65A2C41819B5EF00422B43 /* MenuItemCell.m in Sources */,
 				37F7F53E18181AFA0014B5BC /* iServe.xcdatamodeld in Sources */,
 				37A24EF0181F30C800A203FA /* UIItemData.m in Sources */,
+				CD29C30E18203FC700BEBD57 /* OrderItemsViewController.m in Sources */,
 				CD65A2C71819B66200422B43 /* ViewController.m in Sources */,
 				37A24EFF181F30C900A203FA /* MenuItemData.m in Sources */,
 				37A24EFC181F30C900A203FA /* Images.m in Sources */,

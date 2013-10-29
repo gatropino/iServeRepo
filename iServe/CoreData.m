@@ -321,6 +321,8 @@ id observer2;
     return menu;
 }
 
+
+
 -(void)ParseSaveObject:(id)ObjectToSave
 {
     
@@ -332,34 +334,36 @@ id observer2;
 
 }
 
-/*
--(NSArray *)fetchUIFilter
+
+-(NSArray *)fetchMenuItems
 {
     NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"MenuItemData" inManagedObjectContext:context];
+    NSFetchRequest *fetchRequest = [NSFetchRequest new];
+
+    fetchRequest.entity = entityDescription;
+
+    NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
     
-    fr.entity = [NSEntityDescription entityForName:@"MenuItemData" inManagedObjectContext:context];
-    fr.resultType = NSDictionaryResultType;
-    
-    NSExpressionDescription *sumOfCheeseDescription = [[NSExpressionDescription alloc] init];
-    [sumOfCheeseDescription setName:@"TotalOfUIFilterAttribute"];
-    
-    [sumOfCheeseDescription setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"cheese"]]]];
-    
-    //is equal to the attribute "type" that you are trying to receive
-    [sumOfCheeseDescription setExpressionResultType:NSInteger16AttributeType];
-    
-    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfCheeseDescription];
-    
-    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
-    
-    NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
-    
-    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfUIFilterAttribute"] integerValue];
-    
-    return pizzaAttributeTotal;
+    return results;
+
 }
-*/
+
+
+-(NSArray *)fetchUIItems
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UIItemData" inManagedObjectContext:context];
+    NSFetchRequest *fetchRequest = [NSFetchRequest new];
+   
+    fetchRequest.entity = entityDescription;
+
+    NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+    
+    return results;
+
+    
+}
 
 -(Pizza *)createPizzaObject
 {
