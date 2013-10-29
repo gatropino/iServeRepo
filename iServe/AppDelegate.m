@@ -23,6 +23,12 @@
 
     _managedObjectContext = [self managedObjectContext];
     [CoreData myData].managedObjectContext = _managedObjectContext;
+    
+    [Parse setApplicationId:@"nb8HeneXAVYo0yRHaDgnTmlRCBGDot3za5iKtl5u"
+                  clientKey:@"hVefaKEyVOPysOln8mL6gLxKmDAfQYHH4cQHd0Q4"];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    //[[CoreData myData] ParseSaveObject:@"test"];
     return YES;
 }
 

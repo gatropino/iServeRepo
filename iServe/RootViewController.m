@@ -32,7 +32,6 @@
     
     [[CoreData myData] quantityOfCheese:@3 quantityOfSausage:@0 quantityOfPepperoni:@0];
     
-
     
     /*
     //tested and works

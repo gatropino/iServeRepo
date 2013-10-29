@@ -59,10 +59,10 @@ id observer2;
     NSArray *availArray = [managedObjectContext executeFetchRequest:searchRequest error:nil];
 
     if ([availArray count] <= 0) {
-        AvailableIngredients *availIngrediants = (AvailableIngredients *) [NSEntityDescription insertNewObjectForEntityForName:@"AvailableIngredients" inManagedObjectContext:[self managedObjectContext]];
-        availIngrediants.sausage = @5;
-        availIngrediants.cheese = @5;
-        availIngrediants.pepperoni = [NSNumber numberWithInt:5];
+        AvailableIngredients *availIngredients = (AvailableIngredients *) [NSEntityDescription insertNewObjectForEntityForName:@"AvailableIngredients" inManagedObjectContext:[self managedObjectContext]];
+        availIngredients.sausage = @5;
+        availIngredients.cheese = @5;
+        availIngredients.pepperoni = [NSNumber numberWithInt:5];
         [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
     }
     else
@@ -320,6 +320,18 @@ id observer2;
     
     return menu;
 }
+
+-(void)ParseSaveObject:(id)ObjectToSave
+{
+    
+    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
+    [testObject setObject:@"bar" forKey:@"foo"];
+    [testObject save];
+    
+    NSLog(@"passed parse");
+
+}
+
 /*
 -(NSArray *)fetchUIFilter
 {
