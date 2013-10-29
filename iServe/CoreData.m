@@ -320,6 +320,18 @@ id observer2;
     
     return menu;
 }
+
+-(void)ParseSaveObject:(id)ObjectToSave
+{
+    
+    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
+    [testObject setObject:@"bar" forKey:@"foo"];
+    [testObject save];
+    
+    NSLog(@"passed parse");
+
+}
+
 /*
 -(NSArray *)fetchUIFilter
 {
