@@ -243,7 +243,7 @@ id observer2;
         availIngrediants.sausage =
         availIngrediants.pepperoni = (availIngrediants.pepperoni.integerValue - pepperoniToppings);
         [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
-         */
+        */
     }
 
     
@@ -252,6 +252,102 @@ id observer2;
     
     return pizzaToBeBuilt;
 }
+
+-(MenuItemData *)makeNewMenuItemFromData_parentName:(NSString *)parentName name:(NSString *)name titleToDisplay:(NSString *)titleToDisplay imageLocation:(NSString *)imageLocation type:(NSString *)type localIDNumber:(NSString *)localIDNumber instanceOf:(NSString *)instanceOf destination:(NSString *)destination receives:(NSString *)receives restaurant:(NSString *)restaurant table:(NSString *)table customer:(NSString *)customer filterRestaurant:(NSString *)filterRestaurant filterTable:(NSString *)filterTable filterCustomer:(NSString *)filterCustomer isSelected:(BOOL)isSelected canDrag:(BOOL)canDrag placeInstancesInHorizontalLine:(BOOL)placeInstancesInHorizontalLine isSeated:(BOOL)isSeated filterIsSeated:(BOOL)filterIsSeated defaultPositionX:(float)defaultPositionX defaultPositionY:(float)defaultPositionY buildMode:(NSNumber *)buildMode
+{
+    
+    MenuItemData *menu = (MenuItemData *) [NSEntityDescription insertNewObjectForEntityForName:@"MenuItemData" inManagedObjectContext:[self managedObjectContext]];
+    
+    menu.parentName = parentName;
+    menu.name = name;
+    menu.titleToDisplay = titleToDisplay;
+    menu.imageLocation = imageLocation;
+    menu.type = type;
+    menu.localIDNumber = localIDNumber;
+    menu.instanceOf = instanceOf;
+    menu.destination = destination;
+    menu.receives = receives;
+    menu.restaurant = restaurant;
+    menu.table = table;
+    menu.customer = customer;
+    menu.filterRestaurant = filterRestaurant;
+    menu.filterTable = filterTable;
+    menu.filterCustomer = filterCustomer;
+    menu.isSelected = [NSNumber numberWithBool:isSelected];
+    menu.canDrag = [NSNumber numberWithBool:canDrag];
+    menu.placeInstancesInHorizontalLine = [NSNumber numberWithBool:placeInstancesInHorizontalLine];
+    menu.isSeated = [NSNumber numberWithBool:isSeated];
+    menu.filterIsSeated = [NSNumber numberWithBool:filterIsSeated];
+    menu.defaultPositionX = [NSNumber numberWithFloat:defaultPositionX];
+    menu.defaultPositionY = [NSNumber numberWithFloat:defaultPositionY];
+    menu.buildMode = buildMode;
+
+    [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
+
+    return menu;
+}
+
+-(MenuItemData *)makeNewUIItem_parentName:(NSString *)parentName name:(NSString *)name titleToDisplay:(NSString *)titleToDisplay imageLocation:(NSString *)imageLocation type:(NSString *)type localIDNumber:(NSString *)localIDNumber instanceOf:(NSString *)instanceOf destination:(NSString *)destination receives:(NSString *)receives restaurant:(NSString *)restaurant table:(NSString *)table customer:(NSString *)customer filterRestaurant:(NSString *)filterRestaurant filterTable:(NSString *)filterTable filterCustomer:(NSString *)filterCustomer isSelected:(BOOL)isSelected canDrag:(BOOL)canDrag placeInstancesInHorizontalLine:(BOOL)placeInstancesInHorizontalLine isSeated:(BOOL)isSeated filterIsSeated:(BOOL)filterIsSeated defaultPositionX:(float)defaultPositionX defaultPositionY:(float)defaultPositionY buildMode:(NSNumber *)buildMode
+{
+    
+    MenuItemData *menu = (MenuItemData *) [NSEntityDescription insertNewObjectForEntityForName:@"UIItemData" inManagedObjectContext:[self managedObjectContext]];
+    
+    menu.parentName = parentName;
+    menu.name = name;
+    menu.titleToDisplay = titleToDisplay;
+    menu.imageLocation = imageLocation;
+    menu.type = type;
+    menu.localIDNumber = localIDNumber;
+    menu.instanceOf = instanceOf;
+    menu.destination = destination;
+    menu.receives = receives;
+    menu.restaurant = restaurant;
+    menu.table = table;
+    menu.customer = customer;
+    menu.filterRestaurant = filterRestaurant;
+    menu.filterTable = filterTable;
+    menu.filterCustomer = filterCustomer;
+    menu.isSelected = [NSNumber numberWithBool:isSelected];
+    menu.canDrag = [NSNumber numberWithBool:canDrag];
+    menu.placeInstancesInHorizontalLine = [NSNumber numberWithBool:placeInstancesInHorizontalLine];
+    menu.isSeated = [NSNumber numberWithBool:isSeated];
+    menu.filterIsSeated = [NSNumber numberWithBool:filterIsSeated];
+    menu.defaultPositionX = [NSNumber numberWithFloat:defaultPositionX];
+    menu.defaultPositionY = [NSNumber numberWithFloat:defaultPositionY];
+    menu.buildMode = buildMode;
+    
+    [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
+    
+    return menu;
+}
+/*
+-(NSArray *)fetchUIFilter
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    
+    fr.entity = [NSEntityDescription entityForName:@"MenuItemData" inManagedObjectContext:context];
+    fr.resultType = NSDictionaryResultType;
+    
+    NSExpressionDescription *sumOfCheeseDescription = [[NSExpressionDescription alloc] init];
+    [sumOfCheeseDescription setName:@"TotalOfUIFilterAttribute"];
+    
+    [sumOfCheeseDescription setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"cheese"]]]];
+    
+    //is equal to the attribute "type" that you are trying to receive
+    [sumOfCheeseDescription setExpressionResultType:NSInteger16AttributeType];
+    
+    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfCheeseDescription];
+    
+    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    
+    NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
+    
+    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfUIFilterAttribute"] integerValue];
+    
+    return pizzaAttributeTotal;
+}
+*/
 
 -(Pizza *)createPizzaObject
 {
@@ -262,5 +358,68 @@ id observer2;
 
     return newPizza;
 }
+
+/*
+ [[CoreData myData] parentName:@"" name:@"" titleToDisplay:@"UIFILTER" imageLocation:@"" type:@"UIFilter" localIDNumber:@"" instanceOf:@"" destination:@"" receives:@"nothing ever" restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" filterRestaurant:@"lklkj" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:FALSE isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:200 buildMode:@0];
+ 
+ [[CoreData myData] parentName:@"" name:@"" titleToDisplay:@"UIDESTINATION" imageLocation:@"" type:@"UIDestination" localIDNumber:@"" instanceOf:@"" destination:@"" receives:@"ALL" restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" filterRestaurant:@"kjhkjh" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:FALSE isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:300 buildMode:@0];
+ 
+ // ??? SHOULD HARD CODE IT SO CAN'T GIVE A FILTER A DESTINATION
+ 
+ [[CoreData myData] parentName:@"Main Menu" name:@"Coke" titleToDisplay:@"COKE?" imageLocation:@"" type:@"MenuItem" localIDNumber:@"" instanceOf:@"" destination:@"" receives:@"ALL" restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:FALSE isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:500 buildMode:@0];
+ 
+ 
+ 
+ 
+ 
+ NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+ 
+ NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
+ [searchRequest setEntity:[NSEntityDescription entityForName:@"MenuItemData" inManagedObjectContext:context]];
+ 
+ NSArray *menuArray2 = [context executeFetchRequest:searchRequest error:nil];
+ 
+ // filter data (STUPID FIX)
+ NSMutableArray *menuArray = [NSMutableArray new];
+ 
+ for(int x = 0; x<[menuArray2 count]; x++){
+ 
+ if([ [(MenuItemData *)[menuArray2 objectAtIndex:x] type] isEqualToString:@"MenuItem"] || [[(MenuItemData *)[menuArray2 objectAtIndex:x] type] isEqualToString:@"MenuBranch"])
+ {
+ 
+ [menuArray addObject:[menuArray2 objectAtIndex:x]];
+ }
+ 
+ }
+ 
+ 
+ 
+ 
+ NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+ 
+ NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
+ [searchRequest setEntity:[NSEntityDescription entityForName:@"MenuItemData" inManagedObjectContext:context]];
+ 
+ NSArray *MenuArray2 = [context executeFetchRequest:searchRequest error:nil];
+ 
+ // filter data (STUPID FIX)
+ NSMutableArray *MenuArray = [NSMutableArray new];
+ 
+ for(int x = 0; x<[MenuArray2 count]; x++){
+ 
+ if([ [(MenuItemData *)[MenuArray2 objectAtIndex:x] type] isEqualToString:@"UIFilter"] || [[(MenuItemData *)[MenuArray2 objectAtIndex:x] type] isEqualToString:@"UIDestination"])
+ {
+ 
+ [MenuArray addObject:[MenuArray2 objectAtIndex:x]];
+ }
+ 
+ 
+ }
+
+ 
+ 
+ 
+
+*/
 
 @end

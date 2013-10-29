@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		375606EC18188C4000E5C930 /* Pizza.m in Sources */ = {isa = PBXBuildFile; fileRef = 375606EB18188C4000E5C930 /* Pizza.m */; };
-		375606F218188C4100E5C930 /* Images.m in Sources */ = {isa = PBXBuildFile; fileRef = 375606F118188C4100E5C930 /* Images.m */; };
-		375606F518188C4100E5C930 /* Food.m in Sources */ = {isa = PBXBuildFile; fileRef = 375606F418188C4100E5C930 /* Food.m */; };
-		375606F918188C8C00E5C930 /* AvailableIngredients.m in Sources */ = {isa = PBXBuildFile; fileRef = 375606F818188C8C00E5C930 /* AvailableIngredients.m */; };
+		37A24EF0181F30C800A203FA /* UIItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EEF181F30C800A203FA /* UIItemData.m */; };
+		37A24EF3181F30C900A203FA /* AvailableIngredients.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EF2181F30C900A203FA /* AvailableIngredients.m */; };
+		37A24EF6181F30C900A203FA /* Pizza.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EF5181F30C900A203FA /* Pizza.m */; };
+		37A24EF9181F30C900A203FA /* Food.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EF8181F30C900A203FA /* Food.m */; };
+		37A24EFC181F30C900A203FA /* Images.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EFB181F30C900A203FA /* Images.m */; };
+		37A24EFF181F30C900A203FA /* MenuItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EFE181F30C900A203FA /* MenuItemData.m */; };
 		37F7F52918181AFA0014B5BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52818181AFA0014B5BC /* Foundation.framework */; };
 		37F7F52B18181AFA0014B5BC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52A18181AFA0014B5BC /* CoreGraphics.framework */; };
 		37F7F52D18181AFA0014B5BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52C18181AFA0014B5BC /* UIKit.framework */; };
@@ -49,14 +51,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		375606EA18188C4000E5C930 /* Pizza.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pizza.h; sourceTree = "<group>"; };
-		375606EB18188C4000E5C930 /* Pizza.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pizza.m; sourceTree = "<group>"; };
-		375606F018188C4100E5C930 /* Images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Images.h; sourceTree = "<group>"; };
-		375606F118188C4100E5C930 /* Images.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Images.m; sourceTree = "<group>"; };
-		375606F318188C4100E5C930 /* Food.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Food.h; sourceTree = "<group>"; };
-		375606F418188C4100E5C930 /* Food.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Food.m; sourceTree = "<group>"; };
-		375606F718188C8C00E5C930 /* AvailableIngredients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailableIngredients.h; sourceTree = "<group>"; };
-		375606F818188C8C00E5C930 /* AvailableIngredients.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvailableIngredients.m; sourceTree = "<group>"; };
+		37A24EEE181F30C800A203FA /* UIItemData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIItemData.h; path = ../UIItemData.h; sourceTree = "<group>"; };
+		37A24EEF181F30C800A203FA /* UIItemData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIItemData.m; path = ../UIItemData.m; sourceTree = "<group>"; };
+		37A24EF1181F30C900A203FA /* AvailableIngredients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AvailableIngredients.h; path = ../AvailableIngredients.h; sourceTree = "<group>"; };
+		37A24EF2181F30C900A203FA /* AvailableIngredients.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AvailableIngredients.m; path = ../AvailableIngredients.m; sourceTree = "<group>"; };
+		37A24EF4181F30C900A203FA /* Pizza.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pizza.h; path = ../Pizza.h; sourceTree = "<group>"; };
+		37A24EF5181F30C900A203FA /* Pizza.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Pizza.m; path = ../Pizza.m; sourceTree = "<group>"; };
+		37A24EF7181F30C900A203FA /* Food.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Food.h; path = ../Food.h; sourceTree = "<group>"; };
+		37A24EF8181F30C900A203FA /* Food.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Food.m; path = ../Food.m; sourceTree = "<group>"; };
+		37A24EFA181F30C900A203FA /* Images.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Images.h; path = ../Images.h; sourceTree = "<group>"; };
+		37A24EFB181F30C900A203FA /* Images.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Images.m; path = ../Images.m; sourceTree = "<group>"; };
+		37A24EFD181F30C900A203FA /* MenuItemData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuItemData.h; path = ../MenuItemData.h; sourceTree = "<group>"; };
+		37A24EFE181F30C900A203FA /* MenuItemData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuItemData.m; path = ../MenuItemData.m; sourceTree = "<group>"; };
 		37F7F52518181AFA0014B5BC /* iServe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iServe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37F7F52818181AFA0014B5BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		37F7F52A18181AFA0014B5BC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -122,14 +128,18 @@
 		375606F618188C5400E5C930 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				375606F718188C8C00E5C930 /* AvailableIngredients.h */,
-				375606F818188C8C00E5C930 /* AvailableIngredients.m */,
-				375606EA18188C4000E5C930 /* Pizza.h */,
-				375606EB18188C4000E5C930 /* Pizza.m */,
-				375606F318188C4100E5C930 /* Food.h */,
-				375606F418188C4100E5C930 /* Food.m */,
-				375606F018188C4100E5C930 /* Images.h */,
-				375606F118188C4100E5C930 /* Images.m */,
+				37A24EFD181F30C900A203FA /* MenuItemData.h */,
+				37A24EFE181F30C900A203FA /* MenuItemData.m */,
+				37A24EFA181F30C900A203FA /* Images.h */,
+				37A24EFB181F30C900A203FA /* Images.m */,
+				37A24EF7181F30C900A203FA /* Food.h */,
+				37A24EF8181F30C900A203FA /* Food.m */,
+				37A24EF4181F30C900A203FA /* Pizza.h */,
+				37A24EF5181F30C900A203FA /* Pizza.m */,
+				37A24EF1181F30C900A203FA /* AvailableIngredients.h */,
+				37A24EF2181F30C900A203FA /* AvailableIngredients.m */,
+				37A24EEE181F30C800A203FA /* UIItemData.h */,
+				37A24EEF181F30C800A203FA /* UIItemData.m */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -323,17 +333,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				375606F918188C8C00E5C930 /* AvailableIngredients.m in Sources */,
-				375606EC18188C4000E5C930 /* Pizza.m in Sources */,
 				37F7F53B18181AFA0014B5BC /* AppDelegate.m in Sources */,
 				CD65A2C41819B5EF00422B43 /* MenuItemCell.m in Sources */,
 				37F7F53E18181AFA0014B5BC /* iServe.xcdatamodeld in Sources */,
+				37A24EF0181F30C800A203FA /* UIItemData.m in Sources */,
 				CD65A2C71819B66200422B43 /* ViewController.m in Sources */,
+				37A24EFF181F30C900A203FA /* MenuItemData.m in Sources */,
+				37A24EFC181F30C900A203FA /* Images.m in Sources */,
 				37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */,
-				375606F518188C4100E5C930 /* Food.m in Sources */,
 				37F7F56418181D720014B5BC /* CoreData.m in Sources */,
 				CD65A2CA1819B6C100422B43 /* MenuItem.m in Sources */,
-				375606F218188C4100E5C930 /* Images.m in Sources */,
+				37A24EF3181F30C900A203FA /* AvailableIngredients.m in Sources */,
+				37A24EF9181F30C900A203FA /* Food.m in Sources */,
+				37A24EF6181F30C900A203FA /* Pizza.m in Sources */,
 				37F7F53718181AFA0014B5BC /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

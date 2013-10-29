@@ -1,17 +1,18 @@
 //
-//  AvailableIngredients.m
+//  Pizza.m
 //  iServe
 //
-//  Created by Greg Tropino on 10/23/13.
+//  Created by Greg Tropino on 10/28/13.
 //  Copyright (c) 2013 Greg Tropino. All rights reserved.
 //
 
-#import "AvailableIngredients.h"
+#import "Pizza.h"
 
 
-@implementation AvailableIngredients
+@implementation Pizza
 
 @dynamic cheese;
+@dynamic image;
 @dynamic pepperoni;
 @dynamic sausage;
 

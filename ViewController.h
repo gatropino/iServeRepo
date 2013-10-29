@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TouchProtocol.h"
+#import "CoreData.h"
 
 @interface ViewController : UIViewController <TouchProtocol>
 

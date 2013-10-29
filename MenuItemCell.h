@@ -31,9 +31,9 @@
 @property float defaultPositionX;   
 @property float defaultPositionY;
 @property BOOL placeInstancesInHorizontalLine;
-@property UIColor *defaultColor;
-@property UIColor *highlightedColor;
-@property UIColor *dragColor;
+@property UIColor *defaultColor;  // FIX ME, either do perform selector based on string or ?????
+@property UIColor *highlightedColor;  // FIX ME
+@property UIColor *dragColor;  // FIX ME
 
 // instance tracking variables providing intuitive access
 @property NSString *restaurant;
@@ -47,9 +47,12 @@
 @property NSString *filterCustomer;
 @property BOOL filterIsSeated;
 
-@property id<TouchProtocol>delegate;
+@property id<TouchProtocol>delegate;  // ??????????????
 @property int buildMode;  // 0 = build mode off  1 = can drag from menu to create instance  2 = instance created 
                           // create enum, or more trouble than worth
+
+@property NSManagedObject *MenuItemCellObject;
+
 @end
 
 //TO ADD
