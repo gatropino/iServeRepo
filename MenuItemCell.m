@@ -57,6 +57,7 @@
     } else if([self.type isEqualToString:@"MenuBranch"]) {
             
             // fetch subdirectory and update screen
+            [delegate addMenuSelectionToHistory:self.name];
             [delegate viewSubMenu:(MenuItemCell *)self];
         
 
@@ -66,7 +67,7 @@
             [self toggleThisBlocksColor];
         
     } else { 
-        NSLog(@"Error in naming conventions"); }
+        NSLog(@"Custom Screen Item"); }
     
     
     
@@ -160,7 +161,11 @@
                 [delegate unhighlightUIObjects];
                 [delegate unhighlightMenu]; 
             
-        } else if ([self.type isEqualToString:@"MenuBrach"]){}
+        } else if ([self.type isEqualToString:@"MenuBrach"]){
+        
+        } else { NSLog(@"custom field");  }
+        
+        
         
     }
 }

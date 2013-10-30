@@ -42,13 +42,17 @@
 		37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7F56018181CCE0014B5BC /* RootViewController.m */; };
 		37F7F56418181D720014B5BC /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7F56318181D720014B5BC /* CoreData.m */; };
 		CD29C30E18203FC700BEBD57 /* OrderItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD29C30D18203FC700BEBD57 /* OrderItemsViewController.m */; };
+		CD50829D1820725F003FECED /* DefaultData.m in Sources */ = {isa = PBXBuildFile; fileRef = CD50829C1820725F003FECED /* DefaultData.m */; };
 		CD65A2C41819B5EF00422B43 /* MenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD65A2C31819B5EF00422B43 /* MenuItemCell.m */; };
 		CD65A2C71819B66200422B43 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD65A2C61819B66200422B43 /* ViewController.m */; };
-		CD65A2CA1819B6C100422B43 /* MenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CD65A2C91819B6C100422B43 /* MenuItem.m */; };
 		CD65A2CE1819B75000422B43 /* bud.png in Resources */ = {isa = PBXBuildFile; fileRef = CD65A2CB1819B75000422B43 /* bud.png */; };
 		CD65A2CF1819B75000422B43 /* coke.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD65A2CC1819B75000422B43 /* coke.jpg */; };
 		CD65A2D01819B75000422B43 /* sprite.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CD65A2CD1819B75000422B43 /* sprite.jpg */; };
 		CD65A2D21819B79400422B43 /* MenuItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD65A2D11819B79400422B43 /* MenuItemCell.xib */; };
+		CDE8F4981820A35200BBB203 /* cup.png in Resources */ = {isa = PBXBuildFile; fileRef = CDE8F4971820A35200BBB203 /* cup.png */; };
+		CDF9DC471820CFEB0074DC0F /* vegieAndMeatPizza.png in Resources */ = {isa = PBXBuildFile; fileRef = CDF9DC451820CFEB0074DC0F /* vegieAndMeatPizza.png */; };
+		CDF9DC481820CFEB0074DC0F /* vegiePizza.png in Resources */ = {isa = PBXBuildFile; fileRef = CDF9DC461820CFEB0074DC0F /* vegiePizza.png */; };
+		CDF9DC4A1820D07B0074DC0F /* pizzaStart.png in Resources */ = {isa = PBXBuildFile; fileRef = CDF9DC491820D07B0074DC0F /* pizzaStart.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,17 +113,21 @@
 		37F7F56318181D720014B5BC /* CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreData.m; sourceTree = "<group>"; };
 		CD29C30C18203FC700BEBD57 /* OrderItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderItemsViewController.h; sourceTree = "<group>"; };
 		CD29C30D18203FC700BEBD57 /* OrderItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemsViewController.m; sourceTree = "<group>"; };
+		CD50829B1820725F003FECED /* DefaultData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultData.h; sourceTree = "<group>"; };
+		CD50829C1820725F003FECED /* DefaultData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultData.m; sourceTree = "<group>"; };
 		CD65A2C11819B5AC00422B43 /* TouchProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TouchProtocol.h; path = iServe/TouchProtocol.h; sourceTree = "<group>"; };
 		CD65A2C21819B5EF00422B43 /* MenuItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItemCell.h; sourceTree = "<group>"; };
 		CD65A2C31819B5EF00422B43 /* MenuItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItemCell.m; sourceTree = "<group>"; };
 		CD65A2C51819B66100422B43 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		CD65A2C61819B66200422B43 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		CD65A2C81819B6C100422B43 /* MenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItem.h; sourceTree = "<group>"; };
-		CD65A2C91819B6C100422B43 /* MenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItem.m; sourceTree = "<group>"; };
 		CD65A2CB1819B75000422B43 /* bud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bud.png; sourceTree = "<group>"; };
 		CD65A2CC1819B75000422B43 /* coke.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = coke.jpg; sourceTree = "<group>"; };
 		CD65A2CD1819B75000422B43 /* sprite.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sprite.jpg; sourceTree = "<group>"; };
 		CD65A2D11819B79400422B43 /* MenuItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuItemCell.xib; sourceTree = "<group>"; };
+		CDE8F4971820A35200BBB203 /* cup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cup.png; sourceTree = "<group>"; };
+		CDF9DC451820CFEB0074DC0F /* vegieAndMeatPizza.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vegieAndMeatPizza.png; sourceTree = "<group>"; };
+		CDF9DC461820CFEB0074DC0F /* vegiePizza.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vegiePizza.png; sourceTree = "<group>"; };
+		CDF9DC491820D07B0074DC0F /* pizzaStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaStart.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,11 +194,15 @@
 				CD65A2C31819B5EF00422B43 /* MenuItemCell.m */,
 				CD65A2C51819B66100422B43 /* ViewController.h */,
 				CD65A2C61819B66200422B43 /* ViewController.m */,
+				CD50829B1820725F003FECED /* DefaultData.h */,
+				CD50829C1820725F003FECED /* DefaultData.m */,
+				CDF9DC451820CFEB0074DC0F /* vegieAndMeatPizza.png */,
+				CDF9DC461820CFEB0074DC0F /* vegiePizza.png */,
+				CDF9DC491820D07B0074DC0F /* pizzaStart.png */,
 				CD65A2CB1819B75000422B43 /* bud.png */,
+				CDE8F4971820A35200BBB203 /* cup.png */,
 				CD65A2CC1819B75000422B43 /* coke.jpg */,
 				CD65A2CD1819B75000422B43 /* sprite.jpg */,
-				CD65A2C81819B6C100422B43 /* MenuItem.h */,
-				CD65A2C91819B6C100422B43 /* MenuItem.m */,
 				37F7F53018181AFA0014B5BC /* iServe */,
 				37F7F54D18181AFA0014B5BC /* iServeTests */,
 				37F7F52718181AFA0014B5BC /* Frameworks */,
@@ -354,12 +366,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				37F7F53518181AFA0014B5BC /* InfoPlist.strings in Resources */,
+				CDF9DC471820CFEB0074DC0F /* vegieAndMeatPizza.png in Resources */,
 				CD65A2CF1819B75000422B43 /* coke.jpg in Resources */,
+				CDE8F4981820A35200BBB203 /* cup.png in Resources */,
 				CD65A2D21819B79400422B43 /* MenuItemCell.xib in Resources */,
 				CD65A2CE1819B75000422B43 /* bud.png in Resources */,
 				37F7F54018181AFA0014B5BC /* Images.xcassets in Resources */,
 				CD65A2D01819B75000422B43 /* sprite.jpg in Resources */,
+				CDF9DC4A1820D07B0074DC0F /* pizzaStart.png in Resources */,
 				37F7F55E18181BB40014B5BC /* Storyboard.storyboard in Resources */,
+				CDF9DC481820CFEB0074DC0F /* vegiePizza.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,10 +401,10 @@
 				CD29C30E18203FC700BEBD57 /* OrderItemsViewController.m in Sources */,
 				CD65A2C71819B66200422B43 /* ViewController.m in Sources */,
 				37A24EFF181F30C900A203FA /* MenuItemData.m in Sources */,
+				CD50829D1820725F003FECED /* DefaultData.m in Sources */,
 				37A24EFC181F30C900A203FA /* Images.m in Sources */,
 				37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */,
 				37F7F56418181D720014B5BC /* CoreData.m in Sources */,
-				CD65A2CA1819B6C100422B43 /* MenuItem.m in Sources */,
 				37A24EF3181F30C900A203FA /* AvailableIngredients.m in Sources */,
 				37A24EF9181F30C900A203FA /* Food.m in Sources */,
 				37A24EF6181F30C900A203FA /* Pizza.m in Sources */,
