@@ -14,6 +14,7 @@
 #import "Images.h"
 #import "MenuItemData.h"
 #import "UIItemData.h"
+#import "PlacedOrder.h"
 
 @interface CoreData : NSObject <NSFetchedResultsControllerDelegate>
 
@@ -32,6 +33,8 @@
 -(void)ParseSaveObject:(id)ObjectToSave;
 -(NSArray *)fetchMenuItems;
 -(NSArray *)fetchUIItems;
+-(AvailableIngredients *)getAvailableIngrediants;
+-(void)placeOrderSprites:(NSNumber *)sprites orderedCokes:(NSNumber *)cokes orderedCheese:(NSNumber *)cheese orderedPepperoni:(NSNumber *)pepperoni orderedSausage:(NSNumber *)sausages;
 
 
 -(MenuItemData *)makeNewUIItem_parentName:(NSString *)parentName name:(NSString *)name titleToDisplay:(NSString *)titleToDisplay imageLocation:(NSString *)imageLocation type:(NSString *)type localIDNumber:(NSString *)localIDNumber instanceOf:(NSString *)instanceOf destination:(NSString *)destination receives:(NSString *)receives restaurant:(NSString *)restaurant table:(NSString *)table customer:(NSString *)customer filterRestaurant:(NSString *)filterRestaurant filterTable:(NSString *)filterTable filterCustomer:(NSString *)filterCustomer isSelected:(BOOL)isSelected canDrag:(BOOL)canDrag placeInstancesInHorizontalLine:(BOOL)placeInstancesInHorizontalLine isSeated:(BOOL)isSeated filterIsSeated:(BOOL)filterIsSeated defaultPositionX:(float)defaultPositionX defaultPositionY:(float)defaultPositionY buildMode:(NSNumber *)buildMode;

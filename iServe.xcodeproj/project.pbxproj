@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		37A24EF0181F30C800A203FA /* UIItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EEF181F30C800A203FA /* UIItemData.m */; };
-		37A24EF3181F30C900A203FA /* AvailableIngredients.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EF2181F30C900A203FA /* AvailableIngredients.m */; };
 		37A24EF6181F30C900A203FA /* Pizza.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EF5181F30C900A203FA /* Pizza.m */; };
 		37A24EF9181F30C900A203FA /* Food.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EF8181F30C900A203FA /* Food.m */; };
 		37A24EFC181F30C900A203FA /* Images.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EFB181F30C900A203FA /* Images.m */; };
@@ -23,6 +22,9 @@
 		37A24F0F18200AC600A203FA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37A24F0E18200AC600A203FA /* Security.framework */; };
 		37A24F1118200ACC00A203FA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37A24F1018200ACC00A203FA /* StoreKit.framework */; };
 		37A24F1318200AD800A203FA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37A24F1218200AD800A203FA /* SystemConfiguration.framework */; };
+		37A24F1C1821506D00A203FA /* PlacedOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24F1B1821506D00A203FA /* PlacedOrder.m */; };
+		37A24F1F182158A700A203FA /* ViewSingleOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24F1E182158A700A203FA /* ViewSingleOrderViewController.m */; };
+		37A24F22182170C800A203FA /* AvailableIngredients.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24F21182170C800A203FA /* AvailableIngredients.m */; };
 		37F7F52918181AFA0014B5BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52818181AFA0014B5BC /* Foundation.framework */; };
 		37F7F52B18181AFA0014B5BC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52A18181AFA0014B5BC /* CoreGraphics.framework */; };
 		37F7F52D18181AFA0014B5BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52C18181AFA0014B5BC /* UIKit.framework */; };
@@ -64,8 +66,6 @@
 /* Begin PBXFileReference section */
 		37A24EEE181F30C800A203FA /* UIItemData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIItemData.h; path = ../UIItemData.h; sourceTree = "<group>"; };
 		37A24EEF181F30C800A203FA /* UIItemData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIItemData.m; path = ../UIItemData.m; sourceTree = "<group>"; };
-		37A24EF1181F30C900A203FA /* AvailableIngredients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AvailableIngredients.h; path = ../AvailableIngredients.h; sourceTree = "<group>"; };
-		37A24EF2181F30C900A203FA /* AvailableIngredients.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AvailableIngredients.m; path = ../AvailableIngredients.m; sourceTree = "<group>"; };
 		37A24EF4181F30C900A203FA /* Pizza.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pizza.h; path = ../Pizza.h; sourceTree = "<group>"; };
 		37A24EF5181F30C900A203FA /* Pizza.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Pizza.m; path = ../Pizza.m; sourceTree = "<group>"; };
 		37A24EF7181F30C900A203FA /* Food.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Food.h; path = ../Food.h; sourceTree = "<group>"; };
@@ -84,6 +84,12 @@
 		37A24F0E18200AC600A203FA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		37A24F1018200ACC00A203FA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		37A24F1218200AD800A203FA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		37A24F1A1821506D00A203FA /* PlacedOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacedOrder.h; sourceTree = "<group>"; };
+		37A24F1B1821506D00A203FA /* PlacedOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacedOrder.m; sourceTree = "<group>"; };
+		37A24F1D182158A700A203FA /* ViewSingleOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewSingleOrderViewController.h; sourceTree = "<group>"; };
+		37A24F1E182158A700A203FA /* ViewSingleOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewSingleOrderViewController.m; sourceTree = "<group>"; };
+		37A24F20182170C800A203FA /* AvailableIngredients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailableIngredients.h; sourceTree = "<group>"; };
+		37A24F21182170C800A203FA /* AvailableIngredients.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvailableIngredients.m; sourceTree = "<group>"; };
 		37F7F52518181AFA0014B5BC /* iServe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iServe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37F7F52818181AFA0014B5BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		37F7F52A18181AFA0014B5BC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -161,6 +167,10 @@
 		375606F618188C5400E5C930 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				37A24F20182170C800A203FA /* AvailableIngredients.h */,
+				37A24F21182170C800A203FA /* AvailableIngredients.m */,
+				37A24F1A1821506D00A203FA /* PlacedOrder.h */,
+				37A24F1B1821506D00A203FA /* PlacedOrder.m */,
 				37A24EFD181F30C900A203FA /* MenuItemData.h */,
 				37A24EFE181F30C900A203FA /* MenuItemData.m */,
 				37A24EFA181F30C900A203FA /* Images.h */,
@@ -169,8 +179,6 @@
 				37A24EF8181F30C900A203FA /* Food.m */,
 				37A24EF4181F30C900A203FA /* Pizza.h */,
 				37A24EF5181F30C900A203FA /* Pizza.m */,
-				37A24EF1181F30C900A203FA /* AvailableIngredients.h */,
-				37A24EF2181F30C900A203FA /* AvailableIngredients.m */,
 				37A24EEE181F30C800A203FA /* UIItemData.h */,
 				37A24EEF181F30C800A203FA /* UIItemData.m */,
 			);
@@ -235,6 +243,8 @@
 				37F7F55D18181BB40014B5BC /* Storyboard.storyboard */,
 				CD29C30C18203FC700BEBD57 /* OrderItemsViewController.h */,
 				CD29C30D18203FC700BEBD57 /* OrderItemsViewController.m */,
+				37A24F1D182158A700A203FA /* ViewSingleOrderViewController.h */,
+				37A24F1E182158A700A203FA /* ViewSingleOrderViewController.m */,
 				37F7F55F18181CCE0014B5BC /* RootViewController.h */,
 				37F7F56018181CCE0014B5BC /* RootViewController.m */,
 				37F7F56218181D720014B5BC /* CoreData.h */,
@@ -385,12 +395,14 @@
 				CD29C30E18203FC700BEBD57 /* OrderItemsViewController.m in Sources */,
 				CD65A2C71819B66200422B43 /* ViewController.m in Sources */,
 				37A24EFF181F30C900A203FA /* MenuItemData.m in Sources */,
+				37A24F22182170C800A203FA /* AvailableIngredients.m in Sources */,
+				37A24F1F182158A700A203FA /* ViewSingleOrderViewController.m in Sources */,
 				37A24EFC181F30C900A203FA /* Images.m in Sources */,
 				37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */,
 				37F7F56418181D720014B5BC /* CoreData.m in Sources */,
 				CD65A2CA1819B6C100422B43 /* MenuItem.m in Sources */,
-				37A24EF3181F30C900A203FA /* AvailableIngredients.m in Sources */,
 				37A24EF9181F30C900A203FA /* Food.m in Sources */,
+				37A24F1C1821506D00A203FA /* PlacedOrder.m in Sources */,
 				37A24EF6181F30C900A203FA /* Pizza.m in Sources */,
 				37F7F53718181AFA0014B5BC /* main.m in Sources */,
 			);

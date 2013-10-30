@@ -57,7 +57,7 @@ id observer2;
     [searchRequest setEntity:[NSEntityDescription entityForName:@"AvailableIngredients" inManagedObjectContext:managedObjectContext]];
     
     NSArray *availArray = [managedObjectContext executeFetchRequest:searchRequest error:nil];
-
+    
     if ([availArray count] <= 0) {
         AvailableIngredients *availIngredients = (AvailableIngredients *) [NSEntityDescription insertNewObjectForEntityForName:@"AvailableIngredients" inManagedObjectContext:[self managedObjectContext]];
         availIngredients.sausage = @5;
@@ -75,6 +75,30 @@ id observer2;
         [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
     }
 }
+
+-(AvailableIngredients *)getAvailableIngrediants
+{
+    NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
+    [searchRequest setEntity:[NSEntityDescription entityForName:@"AvailableIngredients" inManagedObjectContext:managedObjectContext]];
+    
+    NSArray *availArray = [managedObjectContext executeFetchRequest:searchRequest error:nil];
+    
+    if ([availArray count] <= 0) {
+        AvailableIngredients *availIngredients = (AvailableIngredients *) [NSEntityDescription insertNewObjectForEntityForName:@"AvailableIngredients" inManagedObjectContext:[self managedObjectContext]];
+        availIngredients.sausage = @5;
+        availIngredients.cheese = @5;
+        availIngredients.pepperoni = [NSNumber numberWithInt:5];  //same as @5
+        [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
+        return availIngredients;
+    }
+    else
+    {
+        NSArray *searchedArray = [managedObjectContext executeFetchRequest:searchRequest error:nil];
+        AvailableIngredients *ingredients = [searchedArray objectAtIndex:0];
+        return ingredients;
+    }
+}
+
 
 -(NSArray *)fetchAllPizzasMade
 {
@@ -201,54 +225,50 @@ id observer2;
     return fetchedResultsController;
 }
 
+-(void)placeOrderSprites:(NSNumber *)sprites orderedCokes:(NSNumber *)cokes orderedCheese:(NSNumber *)cheese orderedPepperoni:(NSNumber *)pepperoni orderedSausage:(NSNumber *)sausages
+{
+    PlacedOrder *orderToBePlaced = (PlacedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"PlacedOrder" inManagedObjectContext:[self managedObjectContext]];
+    
+    orderToBePlaced.cheese = cheese;
+    orderToBePlaced.sausage = sausages;
+    orderToBePlaced.pepperoni = pepperoni;
+    orderToBePlaced.sprite = sprites;
+    orderToBePlaced.coke = cokes;
+    
+    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+    [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    NSLog(@"%@",[DateFormatter stringFromDate:[NSDate date]]);
+    
+    orderToBePlaced.timeOfOrder = [NSDate date];
+    
+    AvailableIngredients *ingrediants = [self getAvailableIngrediants];
+    
+    if (!ingrediants.ticketNumber) {
+        ingrediants.ticketNumber = @0;
+    }
+    ingrediants.ticketNumber = @([ingrediants.ticketNumber floatValue] + [@1 floatValue]);
+    
+    orderToBePlaced.ticketNumber = ingrediants.ticketNumber;
+}
+
 -(Pizza *)quantityOfCheese:(NSNumber *)cheeseToppings quantityOfSausage:(NSNumber *)sausageToppings quantityOfPepperoni:(NSNumber *)pepperoniToppings
 {
     Pizza *pizzaToBeBuilt;
     
-    pizzaToBeBuilt = (Pizza *) [NSEntityDescription insertNewObjectForEntityForName:@"Pizza" inManagedObjectContext:[self managedObjectContext]];
+    pizzaToBeBuilt = (Pizza *)[NSEntityDescription insertNewObjectForEntityForName:@"Pizza" inManagedObjectContext:[self managedObjectContext]];
     
     pizzaToBeBuilt.cheese = cheeseToppings;
     pizzaToBeBuilt.sausage = sausageToppings;
     pizzaToBeBuilt.pepperoni= pepperoniToppings;
     
     
-    NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
-    [searchRequest setEntity:[NSEntityDescription entityForName:@"AvailableIngredients" inManagedObjectContext:managedObjectContext]];
+    AvailableIngredients *availIngrediants = [self getAvailableIngrediants];
     
-    NSArray *availArray = [managedObjectContext executeFetchRequest:searchRequest error:nil];
-    
-    AvailableIngredients *availIngrediants;
-    if ([availArray count] <= 0) {
-        availIngrediants = (AvailableIngredients *) [NSEntityDescription insertNewObjectForEntityForName:@"AvailableIngredients" inManagedObjectContext:[self managedObjectContext]];
-        availIngrediants.sausage = @5;
-        availIngrediants.cheese = @5;
-        availIngrediants.pepperoni = [NSNumber numberWithInt:5];
-
-        [self resetPizzaInventoryLevels];
-    
-    }
-    else
-    {
-        /*
-        int cheeseTemp = availIngrediants.cheese;
-        NSInteger *cheeseTemp2 = availIngrediants.cheeseToppings;
-        
-        NSInteger *cheeseTemp4 = cheeseToppings.integerValue;
-        
-        NSNumber *cheeseTemp3 = availIngrediants.cheeseToppings;
-        NSInteger *sausageTemp = (availIngrediants.sausage.integerValue - sausageToppings.integerValue);
-        NSArray *searchedArray = [managedObjectContext executeFetchRequest:searchRequest error:nil];
-        availIngrediants = [searchedArray objectAtIndex:0];
-        availIngrediants.cheese =
-        availIngrediants.sausage =
-        availIngrediants.pepperoni = (availIngrediants.pepperoni.integerValue - pepperoniToppings);
-        [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
-        */
-    }
-
+    availIngrediants.cheese = @([availIngrediants.cheese floatValue] - [cheeseToppings floatValue]);
+    availIngrediants.sausage = @([availIngrediants.sausage floatValue] - [sausageToppings floatValue]);
+    availIngrediants.pepperoni = @([availIngrediants.pepperoni floatValue] - [pepperoniToppings floatValue]);
     
     [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
-    
     
     return pizzaToBeBuilt;
 }
@@ -281,9 +301,9 @@ id observer2;
     menu.defaultPositionX = [NSNumber numberWithFloat:defaultPositionX];
     menu.defaultPositionY = [NSNumber numberWithFloat:defaultPositionY];
     menu.buildMode = buildMode;
-
+    
     [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
-
+    
     return menu;
 }
 
@@ -331,7 +351,7 @@ id observer2;
     [testObject save];
     
     NSLog(@"passed parse");
-
+    
 }
 
 
@@ -340,13 +360,13 @@ id observer2;
     NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"MenuItemData" inManagedObjectContext:context];
     NSFetchRequest *fetchRequest = [NSFetchRequest new];
-
+    
     fetchRequest.entity = entityDescription;
-
+    
     NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
     
     return results;
-
+    
 }
 
 
@@ -355,13 +375,13 @@ id observer2;
     NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UIItemData" inManagedObjectContext:context];
     NSFetchRequest *fetchRequest = [NSFetchRequest new];
-   
+    
     fetchRequest.entity = entityDescription;
-
+    
     NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
     
     return results;
-
+    
     
 }
 
@@ -371,7 +391,7 @@ id observer2;
     Pizza *newPizza = (Pizza *) [NSEntityDescription insertNewObjectForEntityForName:@"Pizza" inManagedObjectContext:[self managedObjectContext]];
     
     [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
-
+    
     return newPizza;
 }
 
@@ -431,11 +451,11 @@ id observer2;
  
  
  }
-
  
  
  
-
-*/
+ 
+ 
+ */
 
 @end

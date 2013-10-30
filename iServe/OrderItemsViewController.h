@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CoreData.h"
+#import "ViewSingleOrderViewController.h"
 
-@interface OrderItemsViewController : UITableViewController
+@interface OrderItemsViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 
 @end

@@ -823,7 +823,7 @@
 
 -(void)makeSomeData
 {
-    /*
+    
     [[CoreData myData] makeNewMenuItemFromData_parentName:@"Main Menu" name:@"Drinks" titleToDisplay:@"" imageLocation:@"coke.jpg" type:@"MenuBranch"  localIDNumber:@"" instanceOf:@"" destination:@"a" receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0];
 
     [[CoreData myData] makeNewMenuItemFromData_parentName:@"Drinks" name:@"Drinks" titleToDisplay:@"" imageLocation:@"bud.png" type:@"MenuItem"  localIDNumber:@"" instanceOf:@"" destination:@"a" receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0];
@@ -849,7 +849,7 @@
             [[CoreData myData] makeNewUIItem_parentName:@"" name:@"UIFilter1" titleToDisplay:@"Table2" imageLocation:@"" type:@"UIFilter" localIDNumber:@"" instanceOf:@"" destination:@"Dest1" receives:@"" restaurant:@"ALWAYS SHOW"  table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" filterRestaurant:@"" filterTable:@"table2" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:true isSeated:FALSE filterIsSeated:FALSE defaultPositionX:300 defaultPositionY:500 buildMode:@0];
     
             [[CoreData myData] makeNewUIItem_parentName:@"" name:@"UIFilter1" titleToDisplay:@"Rest" imageLocation:@"" type:@"UIFilter" localIDNumber:@"" instanceOf:@"" destination:@"Dest1" receives:@"" restaurant:@"ALWAYS SHOW"  table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" filterRestaurant:@"" filterTable:@"table2" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:true isSeated:FALSE filterIsSeated:FALSE defaultPositionX:500 defaultPositionY:500 buildMode:@0];
-*/
+
     
 }
 
