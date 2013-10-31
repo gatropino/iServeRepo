@@ -8,43 +8,26 @@
 
 #import "OrderItemsViewController.h"
 
-@interface OrderItemsViewController ()
-{
-    
-    IBOutlet UITableView *myTableView;
-    
-}
-
-@end
-
 @implementation OrderItemsViewController
-
 @synthesize fetchedResultsController, managedObjectContext;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     managedObjectContext = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     
     [super viewDidLoad];
-
+    
+    NSError *error = nil;
+    if (![[self fetchedResultsController] performFetch:&error])
+    {
+        NSLog(@"Holy Error Batman! %@", error);
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-
-
-
 
 -(void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
@@ -56,10 +39,10 @@
     [self.tableView endUpdates];
 }
 
-
 -(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
-    switch (type) {
+    switch (type)
+    {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
@@ -85,7 +68,8 @@
 
 -(void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
-    switch (type) {
+    switch (type)
+    {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
@@ -131,7 +115,8 @@
         [context deleteObject:orderToDelete];
         
         NSError *error = nil;
-        if (![context save:&error]) {
+        if (![context save:&error])
+        {
             NSLog(@"Error! %@", error);
         }
     }
@@ -139,28 +124,30 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    NSLog(@"%d", [[self.fetchedResultsController sections]count]);
     return [[self.fetchedResultsController sections]count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+    NSLog(@"%lu", (unsigned long)[secInfo numberOfObjects]);
     return [secInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    UITableViewCell *cell = [myTableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     PlacedOrder *order = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     order = [fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"Ticket %@ placed at %@", order.ticketNumber, order.timeOfOrder];
+    NSDate *passedDate = order.timeOfOrder;
+    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+    [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+    NSLog(@"%@",[DateFormatter stringFromDate:passedDate]);
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"Ticket %@ placed at %@", order.ticketNumber, [DateFormatter stringFromDate:passedDate]];
     
     return cell;
 }
@@ -176,7 +163,6 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
-    
     if ([[segue identifier] isEqualToString:@"viewOrder"])
     {
         ViewSingleOrderViewController *vsovc = segue.destinationViewController;
@@ -185,8 +171,6 @@
         vsovc.currentOrder = selectedOrder;
     }
     
-    
 }
-
 
 @end

@@ -196,7 +196,9 @@ id observer2;
 {
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Pizza" inManagedObjectContext:managedObjectContext];
     
-    NSLog(@"%@", entity.properties);
+    NSLog(@"%@", entity.properties); //shows a list of ALL the attributes of the entity
+    NSLog(@"%@", entity.name); //gets the name of the actual entity
+    
     
     return entity.properties;
 }
@@ -225,16 +227,19 @@ id observer2;
     return fetchedResultsController;
 }
 
--(void)placeOrderSprites:(NSNumber *)sprites orderedCokes:(NSNumber *)cokes orderedCheese:(NSNumber *)cheese orderedPepperoni:(NSNumber *)pepperoni orderedSausage:(NSNumber *)sausages
+-(void)placeOrderWithArray:(NSMutableArray *)mutableArray
 {
     PlacedOrder *orderToBePlaced = (PlacedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"PlacedOrder" inManagedObjectContext:[self managedObjectContext]];
     
+    /*
     orderToBePlaced.cheese = cheese;
     orderToBePlaced.sausage = sausages;
     orderToBePlaced.pepperoni = pepperoni;
     orderToBePlaced.sprite = sprites;
     orderToBePlaced.coke = cokes;
-    
+     */
+    orderToBePlaced.orderedFromTable = @2;
+    NSLog(@"%@", orderToBePlaced.orderedFromTable);
     NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
     [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
     NSLog(@"%@",[DateFormatter stringFromDate:[NSDate date]]);
@@ -249,6 +254,20 @@ id observer2;
     ingrediants.ticketNumber = @([ingrediants.ticketNumber floatValue] + [@1 floatValue]);
     
     orderToBePlaced.ticketNumber = ingrediants.ticketNumber;
+    
+    [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
+}
+
+-(NSArray *)fetchOrders
+{
+    
+    NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
+    [searchRequest setEntity:[NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext]];
+    
+    NSArray *matchedObjects = [managedObjectContext executeFetchRequest:searchRequest error:nil];
+    //creates a list of ALL pizzas created, would work well for a list of all pizzas made/sold but need it to show only ONE pizza, fix later
+    return matchedObjects;
+    
 }
 
 -(Pizza *)quantityOfCheese:(NSNumber *)cheeseToppings quantityOfSausage:(NSNumber *)sausageToppings quantityOfPepperoni:(NSNumber *)pepperoniToppings
@@ -275,7 +294,6 @@ id observer2;
 
 -(MenuItemData *)makeNewMenuItemFromData_parentName:(NSString *)parentName name:(NSString *)name titleToDisplay:(NSString *)titleToDisplay imageLocation:(NSString *)imageLocation type:(NSString *)type localIDNumber:(NSString *)localIDNumber instanceOf:(NSString *)instanceOf destination:(NSString *)destination receives:(NSString *)receives restaurant:(NSString *)restaurant table:(NSString *)table customer:(NSString *)customer filterRestaurant:(NSString *)filterRestaurant filterTable:(NSString *)filterTable filterCustomer:(NSString *)filterCustomer isSelected:(BOOL)isSelected canDrag:(BOOL)canDrag placeInstancesInHorizontalLine:(BOOL)placeInstancesInHorizontalLine isSeated:(BOOL)isSeated filterIsSeated:(BOOL)filterIsSeated defaultPositionX:(float)defaultPositionX defaultPositionY:(float)defaultPositionY buildMode:(NSNumber *)buildMode
 {
-    
     MenuItemData *menu = (MenuItemData *) [NSEntityDescription insertNewObjectForEntityForName:@"MenuItemData" inManagedObjectContext:[self managedObjectContext]];
     
     menu.parentName = parentName;
@@ -345,13 +363,11 @@ id observer2;
 
 -(void)ParseSaveObject:(id)ObjectToSave
 {
-    
     PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
     [testObject setObject:@"bar" forKey:@"foo"];
     [testObject save];
     
     NSLog(@"passed parse");
-    
 }
 
 

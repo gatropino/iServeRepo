@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "OrderItemsViewController.h"
 
 @implementation AppDelegate
 
@@ -16,11 +17,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //Not working for some reason, look into later, but may not need since CoreData.h will be singleton, maybe transfer managedObjectContext there instead?
-    //UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
-    //RootViewController *rvc = (RootViewController *)[[nav viewControllers] objectAtIndex:0];;
-    //rvc.managedObjectContext = self.managedObjectContext;
-
     _managedObjectContext = [self managedObjectContext];
     [CoreData myData].managedObjectContext = _managedObjectContext;
     
@@ -43,11 +39,11 @@
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
-        } 
+        }
     }
 }
 
@@ -94,7 +90,7 @@
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
-    }    
+    }
     
     return _persistentStoreCoordinator;
 }

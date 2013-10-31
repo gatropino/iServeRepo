@@ -14,7 +14,7 @@
 
 @implementation ViewSingleOrderViewController
 
-@synthesize currentOrder, timeLabel, ticketNumberLabel, textView;
+@synthesize currentOrder, timeLabel, ticketNumberLabel, textView, tableLabel, quantityTotalLabel;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,31 +37,34 @@
     NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
     [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
     NSLog(@"%@",[DateFormatter stringFromDate:passedDate]);
-
+    
     timeLabel.text = [DateFormatter stringFromDate:passedDate];
-    
-    NSLog(@"%@", [NSString stringWithFormat:@"%@", currentOrder.timeOfOrder]);
-    
+    tableLabel.text = [NSString stringWithFormat:@"%@", currentOrder.orderedFromTable];
     ticketNumberLabel.text = [NSString stringWithFormat:@"%@", currentOrder.ticketNumber];
     
+    NSNumber *total = @([currentOrder.cheese floatValue] + [currentOrder.pepperoni floatValue] + [currentOrder.sausage floatValue] + [currentOrder.coke floatValue] + [currentOrder.sprite floatValue]);
+    quantityTotalLabel.text = [NSString stringWithFormat:@"%@", total];
     
-    if (currentOrder.cheese > 0) {
-        temp1 = [NSString stringWithFormat:@"Pizza:       Cheese           %@ \n", currentOrder.cheese];
+    
+    if (currentOrder.cheese.intValue > 0) {
+        temp1 = [NSString stringWithFormat:@"   Pizza:              Cheese                  %@\n", currentOrder.cheese];
     }
-    if (currentOrder.pepperoni > 0) {
-        temp2 = [NSString stringWithFormat:@"Pizza:       Pepperoni        %@ \n", currentOrder.pepperoni];
+    if (currentOrder.pepperoni.intValue > 0) {
+        temp2 = [NSString stringWithFormat:@"   Pizza:              Pepperoni              %@\n", currentOrder.pepperoni];
     }
-    if (currentOrder.sausage > 0) {
-        temp3 = [NSString stringWithFormat:@"Pizza:       Sausage          %@ \n", currentOrder.sausage];
+    if (currentOrder.sausage.intValue > 0) {
+        temp3 = [NSString stringWithFormat:@"   Pizza:              Sausage                %@\n", currentOrder.sausage];
     }
-    if (currentOrder.sprite > 0) {
-        temp4 = [NSString stringWithFormat:@"Drink:       Sprite           %@ \n", currentOrder.sprite];
+    if (currentOrder.sprite.intValue > 0) {
+        temp4 = [NSString stringWithFormat:@"   Drink:              Sprite                     %@\n", currentOrder.sprite];
     }
-    if (currentOrder.coke > 0) {
-        temp5 = [NSString stringWithFormat:@"Drink:       Coke             %@ \n", currentOrder.coke];
+    if (currentOrder.coke.intValue > 0) {
+        temp5 = [NSString stringWithFormat:@"   Drink:              Coke                      %@\n", currentOrder.coke];
     }
-
-    textView.text = [NSString stringWithFormat:@"%@%@%@%@%@", temp1, temp2, temp3, temp4, temp5];
+    
+    textView.text = [NSString stringWithFormat:@"%@%@%@%@%@", temp1 ?: @"", temp2 ?: @"", temp3 ?: @"", temp4 ?: @"", temp5 ?: @""];
+    textView.font = [UIFont systemFontOfSize:25];
+    
 }
 
 
