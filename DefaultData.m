@@ -317,8 +317,8 @@
     
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
                                                               name:@"Veggie Pizza"
-                                                    titleToDisplay:@"Veggie Pizza"
-                                                     imageLocation:@"" 
+                                                    titleToDisplay:@"Veggie Pizza" 
+                                                     imageLocation:@""
                                                               type:@"MenuItem"
      
                                                      localIDNumber:@"" instanceOf:@"" 
