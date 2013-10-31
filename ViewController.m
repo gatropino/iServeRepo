@@ -956,7 +956,7 @@
         
         for(MenuItemCell *z in uiObjects){
             
-            if ([z.type isEqualToString:@"Menu Item"]){
+            if ([z.type isEqualToString:@"UIInstance"]){
                 z.canDrag = TRUE; }
             else {
                 z.canDrag = FALSE; }
@@ -1002,6 +1002,13 @@
 
 }
 
+-(void)copyObjectAndItsContents
+{
+
+
+
+
+}
 
 // HAVE CELL RUN DETAIL DISPLAY
 
