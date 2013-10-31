@@ -999,6 +999,10 @@
 
     for(MenuItemCell *z in listOfConfirmedOrders){
         NSLog(@"%@", z.titleToDisplay ); }
+    
+    [[CoreData myData] placeOrderWithArray:listOfConfirmedOrders];
+    
+    // this bitch sucks
 
 }
 
