@@ -19,5 +19,7 @@
 @dynamic ticketNumber;
 @dynamic timeOfOrder;
 @dynamic orderedFromTable;
+@dynamic veggie;
+@dynamic budweiser;
 
 @end

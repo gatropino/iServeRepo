@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSString *temp1, *temp2, *temp3, *temp4, *temp5;
+    NSString *temp1, *temp2, *temp3, *temp4, *temp5, *temp6, *temp7;
     
     NSDate *passedDate = currentOrder.timeOfOrder;
     
@@ -55,14 +55,20 @@
     if (currentOrder.sausage.intValue > 0) {
         temp3 = [NSString stringWithFormat:@"   Pizza:              Sausage                %@\n", currentOrder.sausage];
     }
+    if (currentOrder.veggie.intValue > 0) {
+        temp4 = [NSString stringWithFormat:@"   Pizza:              Veggie                     %@\n", currentOrder.veggie];
+    }
     if (currentOrder.sprite.intValue > 0) {
-        temp4 = [NSString stringWithFormat:@"   Drink:              Sprite                     %@\n", currentOrder.sprite];
+        temp5 = [NSString stringWithFormat:@"   Drink:              Sprite                     %@\n", currentOrder.sprite];
     }
     if (currentOrder.coke.intValue > 0) {
-        temp5 = [NSString stringWithFormat:@"   Drink:              Coke                      %@\n", currentOrder.coke];
+        temp6 = [NSString stringWithFormat:@"   Drink:              Coke                      %@\n", currentOrder.coke];
     }
-    
-    textView.text = [NSString stringWithFormat:@"%@%@%@%@%@", temp1 ?: @"", temp2 ?: @"", temp3 ?: @"", temp4 ?: @"", temp5 ?: @""];
+    if (currentOrder.budweiser.intValue > 0) {
+        temp7 = [NSString stringWithFormat:@"   Drink:              Budweiser               %@\n", currentOrder.budweiser];
+    }
+
+    textView.text = [NSString stringWithFormat:@"%@%@%@%@%@%@%@", temp1 ?: @"", temp2 ?: @"", temp3 ?: @"", temp4 ?: @"", temp5 ?: @"",temp6 ?: @"",temp7 ?: @""];
     textView.font = [UIFont systemFontOfSize:25];
     
 }

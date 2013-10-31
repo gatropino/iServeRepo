@@ -45,14 +45,16 @@
         <attribute name="sausage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="PlacedOrder" representedClassName="PlacedOrder" syncable="YES">
+        <attribute name="budweiser" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="cheese" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="coke" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="orderedFromTable" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="orderedFromTable" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pepperoni" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="sausage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="sprite" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="ticketNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="timeOfOrder" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="veggie" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="UIItemData" representedClassName="UIItemData" syncable="YES">
         <attribute name="buildMode" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -85,7 +87,7 @@
         <element name="Images" positionX="0" positionY="0" width="0" height="0"/>
         <element name="MenuItemData" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Pizza" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="UIItemData" positionX="0" positionY="0" width="0" height="0"/>
         <element name="PlacedOrder" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="UIItemData" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

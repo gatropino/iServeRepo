@@ -7,6 +7,7 @@
 //
 
 #import "CoreData.h"
+#import "MenuItemCell.h"
 
 @implementation CoreData
 static CoreData* sMyData;
@@ -231,14 +232,63 @@ id observer2;
 {
     PlacedOrder *orderToBePlaced = (PlacedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"PlacedOrder" inManagedObjectContext:[self managedObjectContext]];
     
-    /*
-    orderToBePlaced.cheese = cheese;
-    orderToBePlaced.sausage = sausages;
-    orderToBePlaced.pepperoni = pepperoni;
-    orderToBePlaced.sprite = sprites;
-    orderToBePlaced.coke = cokes;
-     */
-    orderToBePlaced.orderedFromTable = @2;
+    int coke = 0, sprite = 0, cheese = 0, pepperoni = 0, veggie = 0, budweiser = 0, sausage = 0;
+    NSString *tempTableString;
+    for (int x = 0; x < [mutableArray count]; x++)
+    {
+        MenuItemCell *tempMenuItemCell = [mutableArray objectAtIndex:x];
+        if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Coke"])
+        {
+            coke++;
+            break;
+        }
+        else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Sprite"])
+        {
+            sprite++;
+            break;
+        }
+        else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Budweiser"])
+        {
+            budweiser++;
+            break;
+        }
+        else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Cheese Pizza"])
+        {
+            cheese++;
+            break;
+        }
+        else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Pepperoni Pizza"])
+        {
+            pepperoni++;
+            break;
+        }
+        else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Veggie Pizza"])
+        {
+            veggie++;
+            break;
+        }
+        else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Sausage Pizza"])
+        {
+            sausage++;
+            break;
+        }
+        else
+        {
+            NSLog(@"Didn't find a titleToDisplay that is equal to %@", tempMenuItemCell.titleToDisplay);
+        }
+
+        tempTableString = tempMenuItemCell.table;
+    }
+    
+    orderToBePlaced.cheese = [NSNumber numberWithInt:cheese];
+    orderToBePlaced.sausage = [NSNumber numberWithInt:sausage];
+    orderToBePlaced.pepperoni = [NSNumber numberWithInt:pepperoni];
+    orderToBePlaced.sprite = [NSNumber numberWithInt:sprite];
+    orderToBePlaced.coke = [NSNumber numberWithInt:coke];
+    orderToBePlaced.veggie = [NSNumber numberWithInt:veggie];
+    orderToBePlaced.budweiser = [NSNumber numberWithInt:budweiser];
+    
+    orderToBePlaced.orderedFromTable = tempTableString;
     NSLog(@"%@", orderToBePlaced.orderedFromTable);
     NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
     [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
