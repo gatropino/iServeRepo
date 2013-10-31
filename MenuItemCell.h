@@ -40,6 +40,7 @@
 @property NSString *table;
 @property NSString *customer;
 @property BOOL isSeated;
+@property BOOL orderConfirmed;
 
 // for objects able to initiate actions (could subclass, but then would require time to rewrite code)
 @property NSString *filterRestaurant;

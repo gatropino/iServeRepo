@@ -10,6 +10,6 @@
 
 @interface DefaultData : NSObject
 
-+(void)sampleData;
++(void)getDefaultData;
 
 @end
