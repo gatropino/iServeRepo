@@ -39,10 +39,10 @@
     NSLog(@"%@",[DateFormatter stringFromDate:passedDate]);
     
     timeLabel.text = [DateFormatter stringFromDate:passedDate];
-    tableLabel.text = [NSString stringWithFormat:@"%@", currentOrder.orderedFromTable];
+    tableLabel.text = currentOrder.orderedFromTable;
     ticketNumberLabel.text = [NSString stringWithFormat:@"%@", currentOrder.ticketNumber];
     
-    NSNumber *total = @([currentOrder.cheese floatValue] + [currentOrder.pepperoni floatValue] + [currentOrder.sausage floatValue] + [currentOrder.coke floatValue] + [currentOrder.sprite floatValue]);
+    NSNumber *total = @([currentOrder.cheese floatValue] + [currentOrder.pepperoni floatValue] + [currentOrder.sausage floatValue] + [currentOrder.coke floatValue] + [currentOrder.sprite floatValue] + [currentOrder.budweiser floatValue] + [currentOrder.veggie floatValue]);
     quantityTotalLabel.text = [NSString stringWithFormat:@"%@", total];
     
     
@@ -56,7 +56,7 @@
         temp3 = [NSString stringWithFormat:@"   Pizza:              Sausage                %@\n", currentOrder.sausage];
     }
     if (currentOrder.veggie.intValue > 0) {
-        temp4 = [NSString stringWithFormat:@"   Pizza:              Veggie                     %@\n", currentOrder.veggie];
+        temp4 = [NSString stringWithFormat:@"   Pizza:              Veggie                    %@\n", currentOrder.veggie];
     }
     if (currentOrder.sprite.intValue > 0) {
         temp5 = [NSString stringWithFormat:@"   Drink:              Sprite                     %@\n", currentOrder.sprite];
@@ -65,7 +65,7 @@
         temp6 = [NSString stringWithFormat:@"   Drink:              Coke                      %@\n", currentOrder.coke];
     }
     if (currentOrder.budweiser.intValue > 0) {
-        temp7 = [NSString stringWithFormat:@"   Drink:              Budweiser               %@\n", currentOrder.budweiser];
+        temp7 = [NSString stringWithFormat:@"   Drink:              Budweiser             %@\n", currentOrder.budweiser];
     }
 
     textView.text = [NSString stringWithFormat:@"%@%@%@%@%@%@%@", temp1 ?: @"", temp2 ?: @"", temp3 ?: @"", temp4 ?: @"", temp5 ?: @"",temp6 ?: @"",temp7 ?: @""];

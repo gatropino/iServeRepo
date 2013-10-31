@@ -240,37 +240,30 @@ id observer2;
         if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Coke"])
         {
             coke++;
-            break;
         }
         else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Sprite"])
         {
             sprite++;
-            break;
         }
         else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Budweiser"])
         {
             budweiser++;
-            break;
         }
         else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Cheese Pizza"])
         {
             cheese++;
-            break;
         }
         else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Pepperoni Pizza"])
         {
             pepperoni++;
-            break;
         }
         else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Veggie Pizza"])
         {
             veggie++;
-            break;
         }
         else if ([tempMenuItemCell.titleToDisplay isEqualToString:@"Sausage Pizza"])
         {
             sausage++;
-            break;
         }
         else
         {

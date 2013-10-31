@@ -126,7 +126,9 @@
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)mainMenuButtonPressed:(id)sender;
 - (IBAction)confirmOrderButtonPressed:(id)sender;
- 
+
+
+
 -(void)buildMenuByFindingChildrenOfParent:(NSString *)nameOfParent; 
 -(void)makeInstance:(MenuItemCell *)sender objectBeingHit:(MenuItemCell *)objectBeingHit;
 
@@ -978,6 +980,10 @@
 }
 
 
+
+
+
+
 -(void)confirmOrderAndSendToCoreData
 {
 
@@ -999,6 +1005,8 @@
 
     for(MenuItemCell *z in listOfConfirmedOrders){
         NSLog(@"%@", z.titleToDisplay ); }
+    
+    [[CoreData myData] placeOrderWithArray:listOfConfirmedOrders];
 
 }
 
