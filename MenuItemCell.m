@@ -4,7 +4,7 @@
 #import "ViewController.h"
 
 @implementation MenuItemCell
-  @synthesize textLabel, imageView, name, parentName, type, titleToDisplay, imageLocation, delegate, canDrag, defaultColor, isSelected, defaultPositionX, defaultPositionY, destination, receives, highlightedColor, dragColor, instanceOf, localIDNumber, restaurant, table, customer, isSeated, filterRestaurant, filterCustomer, filterTable, filterIsSeated, placeInstancesInHorizontalLine, buildMode;
+  @synthesize textLabel, imageView, name, parentName, type, titleToDisplay, imageLocation, delegate, canDrag, defaultColor, isSelected, defaultPositionX, defaultPositionY, destination, receives, highlightedColor, dragColor, instanceOf, localIDNumber, restaurant, table, customer, isSeated, filterRestaurant, filterCustomer, filterTable, filterIsSeated, placeInstancesInHorizontalLine, buildMode, orderConfirmed;
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -13,9 +13,12 @@
     if ([self.type isEqualToString:@"UIDestination"]) {
         
             if(buildMode == 0){  
-    NSLog(@"the color error is here"); 
                 [self toggleThisBlocksColor];
                 [delegate unhighlightMenu]; }
+            else {
+            
+            
+            }
         
         
     // if type = UIFilter       

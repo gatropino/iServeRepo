@@ -11,7 +11,7 @@
 
 @implementation DefaultData
 
-+(void)sampleData
++(void)getDefaultData
 {
 
     // UIDestination Cells
@@ -21,7 +21,8 @@
                                  imageLocation:@"cup.png" 
                                           type:@"UIDestination" 
     
-                                 localIDNumber:@"" instanceOf:@"" 
+                                 localIDNumber:@"" 
+                                    instanceOf:@"Prototype" 
                                    
                                    destination:@"" 
                                       receives:@"" 
@@ -34,7 +35,7 @@
                                    filterTable:@"" 
                                 filterCustomer:@"" 
                                     
-                                    isSelected:false canDrag:false placeInstancesInHorizontalLine:true isSeated:false filterIsSeated:false 
+                                    isSelected:false canDrag:false placeInstancesInHorizontalLine:TRUE isSeated:false filterIsSeated:false 
                               
                               defaultPositionX:250 
                               defaultPositionY:150 
@@ -48,7 +49,8 @@
                                   imageLocation:@"" 
                                            type:@"UIDestination" 
      
-                                  localIDNumber:@"" instanceOf:@"" 
+                                  localIDNumber:@"" 
+                                     instanceOf:@"Prototype" 
      
                                     destination:@"" 
                                        receives:@"" 
@@ -73,13 +75,14 @@
                                   imageLocation:@"" 
                                            type:@"UIDestination" 
      
-                                  localIDNumber:@"" instanceOf:@"" 
+                                  localIDNumber:@"" 
+                                     instanceOf:@"Prototype" 
      
                                     destination:@"" 
                                        receives:@"ALL" 
      
                                      restaurant:@"" 
-                                          table:@"table 1"  
+                                          table:@"Main View"  
                                        customer:@""    
      
                                filterRestaurant:@"" 
@@ -93,6 +96,33 @@
                                       buildMode:@0    ];
     
 
+    [[CoreData myData] makeNewUIItem_parentName:@"" 
+                                           name:@"Trash" 
+                                 titleToDisplay:@"TRASH" 
+                                  imageLocation:@"" 
+                                           type:@"UIDestination" 
+     
+                                  localIDNumber:@"" 
+                                     instanceOf:@"Prototype" 
+     
+                                    destination:@"" 
+                                       receives:@"ALL" 
+     
+                                     restaurant:@"" 
+                                          table:@"table"  
+                                       customer:@""    
+     
+                               filterRestaurant:@"" 
+                                    filterTable:@"" 
+                                 filterCustomer:@"" 
+     
+                                     isSelected:false canDrag:false placeInstancesInHorizontalLine:TRUE isSeated:false filterIsSeated:false 
+     
+                               defaultPositionX:600 
+                               defaultPositionY:650 
+                                      buildMode:@0    ];
+    
+    
     
     // UIView Cells
     [[CoreData myData] makeNewUIItem_parentName:@"Respective Tables" 
@@ -101,7 +131,8 @@
                                   imageLocation:@"" 
                                            type:@"UIFilter" 
      
-                                  localIDNumber:@"" instanceOf:@"" 
+                                  localIDNumber:@"" 
+                                     instanceOf:@"" 
      
                                     destination:@"" 
                                        receives:@"" 
@@ -111,7 +142,7 @@
                                        customer:@""  
      
                                filterRestaurant:@"" 
-                                    filterTable:@"all" 
+                                    filterTable:@"Main View" 
                                  filterCustomer:@"" 
      
                                      isSelected:false canDrag:false placeInstancesInHorizontalLine:true isSeated:false filterIsSeated:false 
@@ -124,17 +155,18 @@
     
     [[CoreData myData] makeNewUIItem_parentName:@"" 
                                            name:@"Table 1" 
-                                 titleToDisplay:@"Table 1" 
+                                 titleToDisplay:@"Table" 
                                   imageLocation:@"" 
                                            type:@"UIFilter" 
      
-                                  localIDNumber:@"" instanceOf:@"" 
+                                  localIDNumber:@"" 
+                                     instanceOf:@"Prototype" 
      
                                     destination:@"" 
                                        receives:@"" 
      
-                                     restaurant:@"Restaurant 1" 
-                                          table:@""  
+                                     restaurant:@"" 
+                                          table:@"Main View"  
                                        customer:@""  
      
                                filterRestaurant:@"" 
@@ -144,7 +176,32 @@
                                      isSelected:false canDrag:false placeInstancesInHorizontalLine:true isSeated:false filterIsSeated:false 
      
                                defaultPositionX:100 
-                               defaultPositionY:670 
+                               defaultPositionY:400 
+                                      buildMode:@0    ];
+    
+    [[CoreData myData] makeNewUIItem_parentName:@"" 
+                                           name:@"Table 2" 
+                                 titleToDisplay:@"Table 2" 
+                                  imageLocation:@"" 
+                                           type:@"UIFilter" 
+     
+                                  localIDNumber:@"" instanceOf:@"" 
+     
+                                    destination:@"" 
+                                       receives:@"" 
+     
+                                     restaurant:@"" 
+                                          table:@"Main View"  
+                                       customer:@""  
+     
+                               filterRestaurant:@"" 
+                                    filterTable:@"table 2" 
+                                 filterCustomer:@"" 
+     
+                                     isSelected:false canDrag:false placeInstancesInHorizontalLine:true isSeated:false filterIsSeated:false 
+     
+                               defaultPositionX:200 
+                               defaultPositionY:200 
                                       buildMode:@0    ];
     
     
