@@ -316,8 +316,8 @@
                                                           receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
-                                                              name:@"Vegie Pizza" 
-                                                    titleToDisplay:@"Vegie Pizza" 
+                                                              name:@"Veggie Pizza" 
+                                                    titleToDisplay:@"Veggie Pizza" 
                                                      imageLocation:@"" 
                                                               type:@"MenuItem"
      

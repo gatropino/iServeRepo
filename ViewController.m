@@ -721,8 +721,6 @@
 -(void)dropBuildObject:(MenuItemCell *)sender
 {
     
-    NSLog(@"in drop file ok");
-    
     // create new instance
     MenuItemCell *menuBlock = [self makeBlockView_Name: sender.name
                                          imageLocation: sender.imageLocation
@@ -747,12 +745,20 @@
     menuBlock.restaurant = restaurant;
     menuBlock.table = table;    
     menuBlock.customer = customer;
-    
-    menuBlock.filterRestaurant = sender.filterRestaurant;
-    menuBlock.filterTable = sender.filterTable;
-    menuBlock.filterCustomer = sender.filterCustomer;
+        
     menuBlock.filterIsSeated = sender.filterIsSeated;
     
+    
+    // BE CAREFUL IN THIS SECTION!!!!
+    menuBlock.filterRestaurant = sender.filterRestaurant;
+    menuBlock.filterTable = [NSString stringWithFormat:@"%@%i",sender.filterTable, localIDNumberCounter];
+    menuBlock.filterCustomer = sender.filterCustomer; 
+
+    localIDNumberCounter += 1;
+    // xxxxxxxxxxxxxx
+    
+             
+             
     menuBlock.buildMode = 2; 
     
         // 0 = build mode off  1 = can drag from menu to create instance  2 = instance created 
@@ -768,6 +774,7 @@
     // send menu item back to menu bar
     sender.frame = CGRectMake(sender.defaultPositionX, sender.defaultPositionY, sender.frame.size.width, sender.frame.size.height);
     
+     NSLog(@"instance created %@ table: %@    filter: %@",menuBlock.name, menuBlock.table, menuBlock.filterTable ); 
 }
 
 - (IBAction)deleteMeForTestingOnly:(id)sender 
@@ -915,10 +922,12 @@
             menuBlock.filterTable = [NSString stringWithFormat:@"%@ %i", z.name, localIDNumberCounter];
             menuBlock.filterCustomer = z.filterCustomer;
             menuBlock.filterIsSeated = z.filterIsSeated;
-         NSLog(@"there%@", menuBlock.filterTable );             
+             
             menuBlock.buildMode = 1;
             
             counter +=1; }
+    
+//             NSLog(@"there%@", menuBlock.filterTable );
    // }
     
 }
@@ -990,8 +999,7 @@
 
     for(MenuItemCell *z in listOfConfirmedOrders){
         NSLog(@"%@", z.titleToDisplay ); }
-    
-    [[CoreData myData] placeOrderWithArray: listOfConfirmedOrders];
+
 }
 
 
