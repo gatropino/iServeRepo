@@ -18,7 +18,6 @@
 -(void)unhighlightMenu;
 -(void)unhighlightUIObjects;
 -(void)dropBuildObject:(id)sender;
--(void)addMenuSelectionToHistory:(NSString *)menuSelection;
 -(void)deselectClipBoardItems;
 
 // filters

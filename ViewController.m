@@ -74,8 +74,9 @@
 
 // arrays
 @property NSMutableArray *menuItemsGlobal;
-@property NSMutableArray *menuItemsCurrent;
+@property NSMutableArray *menuItemsCurrent;         // ie, data in reuse cells
 @property NSMutableArray *menuItemHistory;
+@property NSArray *menuData;                        // from core data
 
 @property NSMutableArray *uiObjectsOnScreen;
 @property NSMutableArray *uiObjects;
@@ -85,7 +86,7 @@
 @property NSMutableArray *clipboardBlankCells;
 @property NSMutableArray *uiBuildMenuPrototypeCells;
 
-// views (for reuse)        (or should make and destroy?)
+// views (for reuse)        
 @property EditMenuItemCellDetailView *detailView;
 
 // colors
@@ -109,6 +110,7 @@
 @property float itemPositionXStarting;
 
 @property int numberOfMenuItemsOnPage;
+@property int pageNumber;
 @property int localIDNumberCounter;           // replace with Core Data
 
 // filters/search par
@@ -130,6 +132,7 @@
 @property float timeDrinksOrdered;
 
 @property (strong, nonatomic) IBOutlet UIButton *editScreenButton;
+@property (strong, nonatomic) IBOutlet UIButton *nextPageButton;
 
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)mainMenuButtonPressed:(id)sender;
@@ -138,10 +141,12 @@
 - (IBAction)viewClipBoardPasteMenuButtonPressed:(id)sender;
 - (IBAction)renameItemButtonPressed:(id)sender;
 - (IBAction)closeOrderButtonPressed:(id)sender;
+- (IBAction)nextPageButtonPressed:(id)sender;
 
 -(void)setupScreen;
 -(void)getDefaultSettings;
 -(void)setupMenu;
+-(void)setupMenuBackgroundImages; 
 -(void)clearMenu;
 -(void)createUIItems;
 -(void)sortUIItemsOnScreen;
@@ -153,6 +158,7 @@
 -(void)clearClipBoard;
 -(void)copyNestedContentInUIFilters:(MenuItemCell *)parentCell;
 -(void)buildMenuByFindingChildrenOfParent:(NSString *)nameOfParent; 
+-(void)buildMenuByFindingChildrenOfParent_HelperMethod:(NSString *)nameOfParent;
 -(void)makeInstance:(MenuItemCell *)sender objectBeingHit:(MenuItemCell *)objectBeingHit;
 -(void)makeInstanceOfChild:(MenuItemCell *)sender childsTableNumber:(NSString *)childsTableNumber;
 -(void)dropBuildObjectCopyChildren:(MenuItemCell *)parentCell childsTableNumber:(NSString *)childsTableNumber;
@@ -164,7 +170,7 @@
 
 @implementation ViewController
 
-@synthesize uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems, menuItemsGlobal, yDefualtStartingPosition, menuItemsCurrent, uiItemPadding, localIDNumberCounter, restaurant, table, customer, isSeated, uiObjects, buildModeOn, menuItemHistory, uiBuildMenuPrototypeCells, uiItemHeight, uiItemWidth, copiedItems, clipboardBlankCells, editScreenButton, detailView, copiedChildren;
+@synthesize uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems, menuItemsGlobal, yDefualtStartingPosition, menuItemsCurrent, uiItemPadding, localIDNumberCounter, restaurant, table, customer, isSeated, uiObjects, buildModeOn, menuItemHistory, uiBuildMenuPrototypeCells, uiItemHeight, uiItemWidth, copiedItems, clipboardBlankCells, editScreenButton, detailView, copiedChildren, pageNumber, nextPageButton, menuData;
 
 
 #pragma mark Setup
@@ -185,6 +191,7 @@
     
     
     [self getDefaultSettings];
+    [self setupMenuBackgroundImages];
     [self setupMenu];
     [self setupClipboard];
     [self createPizzaImage];
@@ -220,13 +227,13 @@
     
     // set sizes
     menuItemWidth = 100;
-    menuItemHeight = 100;
+    menuItemHeight = 60;
     menuItemPadding = 2;
     
     uiItemWidth = 100;
     uiItemHeight = 100;
     uiItemPadding = 5;
-    yDefualtStartingPosition = 22;
+    yDefualtStartingPosition = 139;
     
     // check screen size
     CGRect screenBound = [[UIScreen mainScreen] bounds];
@@ -235,15 +242,15 @@
     CGFloat screenWidth = screenSize.height;
     
     itemPositionXStarting = screenWidth - menuItemWidth;
-    numberOfMenuItemsOnPage = screenHeight / (menuItemHeight + menuItemPadding) -1;
+    numberOfMenuItemsOnPage = (screenHeight - 65 - 120 - 2) / (menuItemHeight + menuItemPadding) -1;
     
     // set colors
-    colorDefaultForMenuItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];
+    colorDefaultForMenuItems = [UIColor colorWithRed:(255/255) green:(144/255) blue:(255/255) alpha:1];
     //dodger blue	#1E90FF	(30,144,255)
-    colorDraggingForMenuItems = [UIColor greenColor];
+    colorDraggingForMenuItems = [UIColor grayColor];
     colorHighlightedForMenuItems = [UIColor brownColor];
     
-    colorDefaultForUIItems = [UIColor colorWithRed:30/256 green:144/256 blue:255/255 alpha:.3];     //purplish
+    colorDefaultForUIItems = [UIColor colorWithRed:30/255 green:144/255 blue:255/255 alpha:.3];     //purplish
     colorHighlightedForUIItems = [UIColor redColor];
     colorDraggingForUIItems = [UIColor purpleColor];
     
@@ -333,6 +340,40 @@
     
 }
 
+-(void)setupMenuBackgroundImages    // put image behind menu item, so when drag you see a box (wastes a bit of resources making MenuItemCells, but is a quick and dirty fix)
+{
+    
+    // make menu from blocks (no data), will reuse the cells
+    float yBlockPosition = yDefualtStartingPosition;
+    
+    for(int x = 0; x<numberOfMenuItemsOnPage; x++)  {
+        
+        MenuItemCell *menuBlock = [self makeBlockView_Name: @""
+                                             imageLocation: @""
+                                                parentName: @"no parent set"
+                                                      type: @"background menu block"
+                                              destintation: @"no destination set"
+                                                  receives: @"no receiver set"
+                                            titleToDisplay: @""
+                                   
+                                                    xValue: itemPositionXStarting
+                                                    yValue: yBlockPosition
+                                                        ht: menuItemHeight
+                                                        wd: menuItemWidth
+                                                   canDrag: FALSE
+                                              defaultColor: [UIColor grayColor]  // can't set here
+                                          highlightedColor: [UIColor grayColor]
+                                                 dragColor: [UIColor grayColor]
+                        editExistingBlockInsteadOfCreating: nil];
+        
+        // increment y position
+        yBlockPosition = yBlockPosition + menuItemHeight + menuItemPadding;
+     
+        [self.view addSubview:menuBlock];
+    }
+    
+}
+
 -(void)clearMenu  // same as setup, but does not make the objects, reuses them
 {
     
@@ -352,7 +393,7 @@
                                                                   wd: 0
                                              
                                                              canDrag: FALSE
-                                                        defaultColor: colorDefaultForMenuItems
+                                                        defaultColor: colorDefaultForMenuItems  // can't set here
                                                     highlightedColor: colorDefaultForMenuItems
                                                            dragColor: colorDefaultForMenuItems
                                   editExistingBlockInsteadOfCreating: z   ];
@@ -363,49 +404,75 @@
 
 - (IBAction)mainMenuButtonPressed:(id)sender {
     
-    [self buildMenuByFindingChildrenOfParent:@"Main Menu"];
+    if(buildModeOn==FALSE){
     
-    // make sure that history count isn't getting too big
-    if([menuItemHistory count]>100){
+            [self buildMenuByFindingChildrenOfParent:@"Main Menu"];
     
-        [menuItemHistory removeObjectsInRange:NSMakeRange(0, 30)];
+            // make sure that history count isn't getting too big
+            if([menuItemHistory count]>100){
     
+                        [menuItemHistory removeObjectsInRange:NSMakeRange(0, 70)];  }
     }
 }
-
-
 
 
 - (IBAction)backButtonPressed:(id)sender 
 {
-    // pop off stack
-    if([menuItemHistory count] > 1) { 
-        [menuItemHistory removeLastObject]; 
-        [self buildMenuByFindingChildrenOfParent:[menuItemHistory objectAtIndex: [menuItemHistory count] - 1]]; }
-    else {
-        [self buildMenuByFindingChildrenOfParent:@"Main Menu"];
+ 
+    if(buildModeOn==FALSE){
+        
+            // pop off stack
+            if([menuItemHistory count] > 1) { 
+                    [menuItemHistory removeLastObject]; 
+                    [self buildMenuByFindingChildrenOfParent_HelperMethod:[menuItemHistory objectAtIndex: [menuItemHistory count] - 1]]; }
+            else {
+                    [self buildMenuByFindingChildrenOfParent_HelperMethod: @"Main Menu"]; }
     }
 
 }
 
--(void)addMenuSelectionToHistory:(NSString *)menuSelection
-{
-    
-    [menuItemHistory addObject: menuSelection];
-
-}
      
 -(void)buildMenuByFindingChildrenOfParent:(NSString *)nameOfParent
 {
+        
+    // add item to history
+    [menuItemHistory addObject: nameOfParent];
     
-    NSArray *menuData = [[CoreData myData] fetchMenuItems];
+    // show first page
+    pageNumber = 0;
+    
+    // get data from core data
+    menuData = [[CoreData myData] fetchMenuItems];
+    
+    // call function
+    [self buildMenuByFindingChildrenOfParent_HelperMethod:nameOfParent];
+}    
+
+- (IBAction)nextPageButtonPressed:(id)sender {
+    
+    // show first page
+    pageNumber += 1;
+    
+    // get name of parent (all items in menu already have it, so grab one)
+    [self buildMenuByFindingChildrenOfParent_HelperMethod: [[menuItemsCurrent objectAtIndex: 0] parentName]];
+    
+}
+
+-(void)buildMenuByFindingChildrenOfParent_HelperMethod:(NSString *)nameOfParent
+{
 
     // clean out the old menu and store last location
     [self clearMenu];
     
     // for each child of the parent, build a Menu Item
-    int counter = 0;
-    for(MenuItemData *z in menuData){
+    
+    int blockCounter = 0;
+    
+    // figure out when start and when stop
+    
+    for(int x = pageNumber * numberOfMenuItemsOnPage; x < [menuData count]-1 ; x++){
+        
+        MenuItemData *z = [menuData objectAtIndex: x];
         
         if([z.parentName isEqualToString:nameOfParent]){
             
@@ -425,9 +492,14 @@
                                                            defaultColor: colorDefaultForMenuItems
                                                        highlightedColor: colorHighlightedForMenuItems
                                                               dragColor: colorDraggingForMenuItems
-                                     editExistingBlockInsteadOfCreating: [menuItemsCurrent objectAtIndex:counter]];
-            counter +=1;
+                                     editExistingBlockInsteadOfCreating: [menuItemsCurrent objectAtIndex:blockCounter]];
+            if(blockCounter == [menuItemsCurrent count]-1) { return; }
+            
+            blockCounter +=1;
+            
         }
+
+
     }
 }
 
@@ -495,12 +567,12 @@
 -(void)createUIItems  // gets data and imports into MenuCellObjects
 {
     
-    NSArray *menuData = [[CoreData myData] fetchUIItems];
+    NSArray *menuData2 = [[CoreData myData] fetchUIItems];
     
-    for(int x = 0; x<[menuData count]; x++)
+    for(int x = 0; x<[menuData2 count]; x++)
     {
         //fetch data
-        UIItemData *z =[menuData objectAtIndex:x];
+        UIItemData *z =[menuData2 objectAtIndex:x];
         
         MenuItemCell *menuBlock = [self    makeBlockView_Name: z.name
                                                 imageLocation: z.imageLocation
@@ -846,7 +918,7 @@
     
     for(MenuItemCell *z in menuItemsCurrent)
     {
-        z.backgroundColor = colorDefaultForUIItems;
+        z.backgroundColor = colorDefaultForMenuItems;
         z.isSelected = FALSE;
     }
     
