@@ -37,7 +37,7 @@
                                     
                                     isSelected:false canDrag:false placeInstancesInHorizontalLine:TRUE isSeated:false filterIsSeated:false 
                               
-                              defaultPositionX:250 
+                              defaultPositionX:60 
                               defaultPositionY:150 
                                      buildMode:@0    ];
 

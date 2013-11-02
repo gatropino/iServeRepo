@@ -8,7 +8,7 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
+    NSLog(@"ok");
     // if type = UIDestination
     if ([self.type isEqualToString:@"UIDestination"]) {
         
@@ -16,8 +16,8 @@
                 [self toggleThisBlocksColor];
                 [delegate unhighlightMenu]; }
             else {
-            
-            
+
+                [self toggleThisBlocksColor];
             }
         
         
@@ -30,6 +30,13 @@
                 [delegate unhighlightUIObjects];
                 [self toggleThisBlocksColor];
                 [delegate changeFilters:self]; }
+        
+            else {
+        NSLog(@"%i", buildMode);            
+                [self toggleThisBlocksColor];
+                return;
+                
+            }
     
         
     // if in build mode, do not respond to other input    
@@ -135,25 +142,16 @@
                 // check collision
                 [delegate collisionCheck:self x:x y:y transactionComplete:TRUE];
                 [delegate updateScreenLocationsAfterDragAndDrop];
-                [delegate unhighlightUIObjects];
-                [delegate unhighlightMenu]; 
         
         } else if ([self.type isEqualToString:@"UIFilter"] || [self.type isEqualToString:@"UIDestination"]){
                 
                 if(buildMode == 1){
                     
-                    [delegate dropBuildObject:self];
-            
-                    [delegate unhighlightUIObjects];
-                    [delegate unhighlightMenu];}
-            
+                    [delegate dropBuildObject:self];  }
             
                 else if (buildMode == 2){
                     defaultPositionX = self.frame.origin.x;
-                    defaultPositionY = self.frame.origin.y;  
-            
-                    [delegate unhighlightUIObjects];
-                    [delegate unhighlightMenu]; }
+                    defaultPositionY = self.frame.origin.y;  }
             
                 else { return; }
             
@@ -161,14 +159,14 @@
             
                 [delegate collisionCheck:self x:x y:y transactionComplete:TRUE];
                 [delegate updateScreenLocationsAfterDragAndDrop];
-                [delegate unhighlightUIObjects];
-                [delegate unhighlightMenu]; 
             
-        } else if ([self.type isEqualToString:@"MenuBrach"]){
+        } else if ([self.type isEqualToString:@"MenuBranch"]){
         
         } else { NSLog(@"custom field");  }
         
-        
+        [delegate unhighlightUIObjects];
+        [delegate unhighlightMenu];
+        [delegate deselectClipBoardItems]; 
         
     }
 }

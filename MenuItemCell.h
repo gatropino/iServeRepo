@@ -18,6 +18,7 @@
 @property NSString *name; 
 @property NSString *titleToDisplay;     
 @property NSString *imageLocation;
+@property BOOL isCustomPhoto;
 
 @property NSString *type;               // eg. MenuItem, UIDestination, UIInstance, MenuBranch, UIFilter
 @property NSString *localIDNumber;      //     used to define behaviors 

@@ -57,6 +57,8 @@
 		CDF9DC471820CFEB0074DC0F /* vegieAndMeatPizza.png in Resources */ = {isa = PBXBuildFile; fileRef = CDF9DC451820CFEB0074DC0F /* vegieAndMeatPizza.png */; };
 		CDF9DC481820CFEB0074DC0F /* vegiePizza.png in Resources */ = {isa = PBXBuildFile; fileRef = CDF9DC461820CFEB0074DC0F /* vegiePizza.png */; };
 		CDF9DC4A1820D07B0074DC0F /* pizzaStart.png in Resources */ = {isa = PBXBuildFile; fileRef = CDF9DC491820D07B0074DC0F /* pizzaStart.png */; };
+		CDFA9FB2182366CD00A7A8DE /* EditMenuItemCellDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA9FB1182366CD00A7A8DE /* EditMenuItemCellDetailView.m */; };
+		CDFA9FB41823687700A7A8DE /* EditMenuItemCellDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDFA9FB31823687700A7A8DE /* EditMenuItemCellDetailView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +144,9 @@
 		CDF9DC451820CFEB0074DC0F /* vegieAndMeatPizza.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vegieAndMeatPizza.png; sourceTree = "<group>"; };
 		CDF9DC461820CFEB0074DC0F /* vegiePizza.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vegiePizza.png; sourceTree = "<group>"; };
 		CDF9DC491820D07B0074DC0F /* pizzaStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaStart.png; sourceTree = "<group>"; };
+		CDFA9FB0182366CD00A7A8DE /* EditMenuItemCellDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditMenuItemCellDetailView.h; sourceTree = "<group>"; };
+		CDFA9FB1182366CD00A7A8DE /* EditMenuItemCellDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditMenuItemCellDetailView.m; sourceTree = "<group>"; };
+		CDFA9FB31823687700A7A8DE /* EditMenuItemCellDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditMenuItemCellDetailView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,9 +212,12 @@
 			isa = PBXGroup;
 			children = (
 				CD65A2C11819B5AC00422B43 /* TouchProtocol.h */,
-				CD65A2D11819B79400422B43 /* MenuItemCell.xib */,
 				CD65A2C21819B5EF00422B43 /* MenuItemCell.h */,
 				CD65A2C31819B5EF00422B43 /* MenuItemCell.m */,
+				CD65A2D11819B79400422B43 /* MenuItemCell.xib */,
+				CDFA9FB0182366CD00A7A8DE /* EditMenuItemCellDetailView.h */,
+				CDFA9FB1182366CD00A7A8DE /* EditMenuItemCellDetailView.m */,
+				CDFA9FB31823687700A7A8DE /* EditMenuItemCellDetailView.xib */,
 				CD65A2C51819B66100422B43 /* ViewController.h */,
 				CD65A2C61819B66200422B43 /* ViewController.m */,
 				CD50829B1820725F003FECED /* DefaultData.h */,
@@ -400,6 +408,7 @@
 				CDF9DC4A1820D07B0074DC0F /* pizzaStart.png in Resources */,
 				37F7F55E18181BB40014B5BC /* Storyboard.storyboard in Resources */,
 				CDF9DC481820CFEB0074DC0F /* vegiePizza.png in Resources */,
+				CDFA9FB41823687700A7A8DE /* EditMenuItemCellDetailView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +439,7 @@
 				37A24F1F182158A700A203FA /* ViewSingleOrderViewController.m in Sources */,
 				37A24EFC181F30C900A203FA /* Images.m in Sources */,
 				37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */,
+				CDFA9FB2182366CD00A7A8DE /* EditMenuItemCellDetailView.m in Sources */,
 				37F7F56418181D720014B5BC /* CoreData.m in Sources */,
 				37F426261824A3D300A12E6D /* ViewConfirmOrderViewController.m in Sources */,
 				CD50829D1820725F003FECED /* DefaultData.m in Sources */,
