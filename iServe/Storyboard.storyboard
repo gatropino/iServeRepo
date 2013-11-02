@@ -125,7 +125,7 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" title="iServe" id="qqc-d4-3K4">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="HDF-af-nbL">
+                        <barButtonItem key="leftBarButtonItem" id="HDF-af-nbL">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FP1-j7-Pia">
                                 <rect key="frame" x="16" y="5" width="157" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
