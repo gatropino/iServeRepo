@@ -137,6 +137,7 @@
 - (IBAction)copyButtonPressed:(id)sender;
 - (IBAction)viewClipBoardPasteMenuButtonPressed:(id)sender;
 - (IBAction)renameItemButtonPressed:(id)sender;
+- (IBAction)closeOrderButtonPressed:(id)sender;
 
 -(void)setupScreen;
 -(void)getDefaultSettings;
@@ -1046,13 +1047,22 @@
             z.orderConfirmed = TRUE;  }
     
     }
-
+    NSLog(@"%@", table);
     //for(MenuItemCell *z in listOfConfirmedOrders){
     //    NSLog(@"%@", z.titleToDisplay ); }
     
     [[CoreData myData] placeOrderWithArray:listOfConfirmedOrders];
 
 }
+
+
+- (IBAction)closeOrderButtonPressed:(id)sender {
+
+        NSLog(@"%@", table);
+    [[CoreData myData] confirmTicketsByTableName:table];
+
+}
+
 
 
 #pragma mark Copy to Clipboard
@@ -1352,6 +1362,7 @@
     [self.view bringSubviewToFront:detailView];
     
 }
+
                  
 //!!!! FREEZE FILTERS IN normal mode
 
