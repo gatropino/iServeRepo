@@ -48,6 +48,7 @@
     // if type = MenuItem
     } else if ([self.type isEqualToString:@"MenuItem"]) {
         
+            [delegate unhighlightMenu];
             [self toggleThisBlocksColor];
     
             // check to see if UI items highlighted, if so, perform reverse drag and drop
@@ -67,7 +68,6 @@
     } else if([self.type isEqualToString:@"MenuBranch"]) {
             
             // fetch subdirectory and update screen
-            [delegate addMenuSelectionToHistory:self.name];
             [delegate viewSubMenu:(MenuItemCell *)self];
         
 
