@@ -8,6 +8,7 @@
 
 #import "CoreData.h"
 #import "MenuItemCell.h"
+#import "ConfirmedOrder.h"
 
 @implementation CoreData
 static CoreData* sMyData;
@@ -35,7 +36,8 @@ id observer2;
 {
     static dispatch_once_t onceToken;
     
-    dispatch_once(&onceToken, ^{
+    dispatch_once(&onceToken, ^
+    {
         NSLog(@"Dispatch once");
         sMyData = [[CoreData alloc] init];
     });
@@ -46,7 +48,8 @@ id observer2;
 
 -(id)init
 {
-    if (self = [super init]) {
+    if (self = [super init])
+    {
         NSLog(@"instantiating the singleton here: %@", self);
     }
     return self;
@@ -59,7 +62,8 @@ id observer2;
     
     NSArray *availArray = [managedObjectContext executeFetchRequest:searchRequest error:nil];
     
-    if ([availArray count] <= 0) {
+    if ([availArray count] <= 0)
+    {
         AvailableIngredients *availIngredients = (AvailableIngredients *) [NSEntityDescription insertNewObjectForEntityForName:@"AvailableIngredients" inManagedObjectContext:[self managedObjectContext]];
         availIngredients.sausage = @5;
         availIngredients.cheese = @5;
@@ -84,7 +88,8 @@ id observer2;
     
     NSArray *availArray = [managedObjectContext executeFetchRequest:searchRequest error:nil];
     
-    if ([availArray count] <= 0) {
+    if ([availArray count] <= 0)
+    {
         AvailableIngredients *availIngredients = (AvailableIngredients *) [NSEntityDescription insertNewObjectForEntityForName:@"AvailableIngredients" inManagedObjectContext:[self managedObjectContext]];
         availIngredients.sausage = @5;
         availIngredients.cheese = @5;
@@ -111,87 +116,304 @@ id observer2;
     return matchedObjects;
 }
 
--(NSInteger)totalCheesePizzasSold
+-(void)deletePlacedOrderEntitiesByTableName:(NSString *)tableName
 {
     NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"Pizza" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
     fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
     
-    NSExpressionDescription *sumOfCheeseDescription = [[NSExpressionDescription alloc] init];
-    [sumOfCheeseDescription setName:@"TotalOfPizzaAttribute"];
+    NSArray *placedOrderEntities = [context executeFetchRequest:fr error:nil];
     
-    [sumOfCheeseDescription setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"cheese"]]]];
+    for (int x = 0; x < [placedOrderEntities count]; x++)
+    {
+        PlacedOrder *orderToDelete = [placedOrderEntities objectAtIndex:x];
+        [context deleteObject:orderToDelete];
+    }
+}
+
+
+-(NSInteger)summedTablesCheesesByTableName:(NSString *)tableName
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
+    
+    NSExpressionDescription *sumOfAttributes = [[NSExpressionDescription alloc] init];
+    [sumOfAttributes setName:@"TotalOfAttribute"];
+    [sumOfAttributes setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"cheese"]]]];
     
     //is equal to the attribute "type" that you are trying to receive
-    [sumOfCheeseDescription setExpressionResultType:NSInteger16AttributeType];
+    [sumOfAttributes setExpressionResultType:NSInteger16AttributeType];
     
-    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfCheeseDescription];
+    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
     NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
-    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfPizzaAttribute"] integerValue];
+    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfAttribute"] integerValue];
     
     return pizzaAttributeTotal;
 }
 
--(NSInteger)totalSausagePizzasSold
+-(NSInteger)summedTablesVeggiesByTableName:(NSString *)tableName
 {
     NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"Pizza" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
     fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
     
-    NSExpressionDescription *sumOfCheeseDescription = [[NSExpressionDescription alloc] init];
-    [sumOfCheeseDescription setName:@"TotalOfPizzaAttribute"];
-    
-    [sumOfCheeseDescription setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"sausage"]]]];
+    NSExpressionDescription *sumOfAttributes = [[NSExpressionDescription alloc] init];
+    [sumOfAttributes setName:@"TotalOfAttribute"];
+    [sumOfAttributes setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"veggie"]]]];
     
     //is equal to the attribute "type" that you are trying to receive
-    [sumOfCheeseDescription setExpressionResultType:NSInteger16AttributeType];
+    [sumOfAttributes setExpressionResultType:NSInteger16AttributeType];
     
-    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfCheeseDescription];
+    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
     NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
-    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfPizzaAttribute"] integerValue];
+    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfAttribute"] integerValue];
     
     return pizzaAttributeTotal;
 }
 
--(NSInteger)totalPepperoniPizzasSold
+-(NSInteger)summedTablesBudweisersByTableName:(NSString *)tableName
 {
     NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"Pizza" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
     fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
     
-    NSExpressionDescription *sumOfCheeseDescription = [[NSExpressionDescription alloc] init];
-    [sumOfCheeseDescription setName:@"TotalOfPizzaAttribute"];
-    
-    [sumOfCheeseDescription setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"pepperoni"]]]];
+    NSExpressionDescription *sumOfAttributes = [[NSExpressionDescription alloc] init];
+    [sumOfAttributes setName:@"TotalOfAttribute"];
+    [sumOfAttributes setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"budweiser"]]]];
     
     //is equal to the attribute "type" that you are trying to receive
-    [sumOfCheeseDescription setExpressionResultType:NSInteger16AttributeType];
+    [sumOfAttributes setExpressionResultType:NSInteger16AttributeType];
     
-    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfCheeseDescription];
+    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
     NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
-    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfPizzaAttribute"] integerValue];
+    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfAttribute"] integerValue];
     
     return pizzaAttributeTotal;
 }
 
+-(NSInteger)summedTablesCokesByTableName:(NSString *)tableName
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
+    
+    NSExpressionDescription *sumOfAttributes = [[NSExpressionDescription alloc] init];
+    [sumOfAttributes setName:@"TotalOfAttribute"];
+    [sumOfAttributes setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"coke"]]]];
+    
+    //is equal to the attribute "type" that you are trying to receive
+    [sumOfAttributes setExpressionResultType:NSInteger16AttributeType];
+    
+    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
+    
+    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    
+    NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
+    
+    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfAttribute"] integerValue];
+    
+    return pizzaAttributeTotal;
+}
+
+-(NSInteger)summedTablesSpritesByTableName:(NSString *)tableName
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
+    
+    NSExpressionDescription *sumOfAttributes = [[NSExpressionDescription alloc] init];
+    [sumOfAttributes setName:@"TotalOfAttribute"];
+    [sumOfAttributes setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"sprite"]]]];
+    
+    //is equal to the attribute "type" that you are trying to receive
+    [sumOfAttributes setExpressionResultType:NSInteger16AttributeType];
+    
+    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
+    
+    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    
+    NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
+    
+    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfAttribute"] integerValue];
+    
+    return pizzaAttributeTotal;
+}
+
+
+-(NSInteger)summedTablesSausageByTableName:(NSString *)tableName
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
+    
+    NSExpressionDescription *sumOfAttributes = [[NSExpressionDescription alloc] init];
+    [sumOfAttributes setName:@"TotalOfAttribute"];
+    [sumOfAttributes setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"sausage"]]]];
+    
+    //is equal to the attribute "type" that you are trying to receive
+    [sumOfAttributes setExpressionResultType:NSInteger16AttributeType];
+    
+    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
+    
+    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    
+    NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
+    
+    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfAttribute"] integerValue];
+    
+    return pizzaAttributeTotal;
+}
+
+-(NSInteger)summedTablesPepperoniByTableName:(NSString *)tableName
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
+    
+    NSExpressionDescription *sumOfAttributes = [[NSExpressionDescription alloc] init];
+    [sumOfAttributes setName:@"TotalOfAttribute"];
+    [sumOfAttributes setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObject:[NSExpression expressionForKeyPath:@"pepperoni"]]]];
+    
+    //is equal to the attribute "type" that you are trying to receive
+    [sumOfAttributes setExpressionResultType:NSInteger16AttributeType];
+    
+    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
+    
+    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    
+    NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
+    
+    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfAttribute"] integerValue];
+    
+    return pizzaAttributeTotal;
+}
+
+-(NSInteger)summedTablesPizzasByTableName:(NSString *)tableName
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
+    
+    NSExpressionDescription *sumOfAttributes = [[NSExpressionDescription alloc] init];
+    [sumOfAttributes setName:@"TotalOfPizzas"];
+    [sumOfAttributes setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObjects:[NSExpression expressionForKeyPath:@"cheese"], [NSExpression expressionForKeyPath:@"sausage"], [NSExpression expressionForKeyPath:@"veggie"], [NSExpression expressionForKeyPath:@"pepperoni"], nil]]];
+
+    
+    //is equal to the attribute "type" that you are trying to receive
+    [sumOfAttributes setExpressionResultType:NSInteger16AttributeType];
+    
+    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
+    
+    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    
+    NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
+    
+    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfPizzas"] integerValue];
+    
+    return pizzaAttributeTotal;
+}
+
+-(NSInteger)summedTablesDrinksByTableName:(NSString *)tableName
+{
+    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
+    
+    NSExpressionDescription *sumOfAttributes = [[NSExpressionDescription alloc] init];
+    [sumOfAttributes setName:@"TotalOfDrinks"];
+    [sumOfAttributes setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObjects:[NSExpression expressionForKeyPath:@"coke"], [NSExpression expressionForKeyPath:@"budweiser"], [NSExpression expressionForKeyPath:@"sprite"]
+                                                                                          , nil]]];
+    
+    //is equal to the attribute "type" that you are trying to receive
+    [sumOfAttributes setExpressionResultType:NSInteger16AttributeType];
+    
+    fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
+    
+    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    
+    NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
+    
+    NSInteger pizzaAttributeTotal = [[fetchResultsDictionary objectForKey:@"TotalOfDrinks"] integerValue];
+    
+    return pizzaAttributeTotal;
+}
+
+-(void)confirmTicketsByTableName:(NSString *)tableName
+{
+     ConfirmedOrder *confirmOrder = (ConfirmedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"ConfirmedOrder" inManagedObjectContext:[self managedObjectContext]];
+
+    
+    confirmOrder.sprite = [NSNumber numberWithInteger:[self summedTablesSpritesByTableName:tableName]];
+    confirmOrder.coke = [NSNumber numberWithInteger:[self summedTablesCokesByTableName:tableName]];
+    confirmOrder.budweiser = [NSNumber numberWithInteger:[self summedTablesBudweisersByTableName:tableName]];
+    
+    confirmOrder.cheese = [NSNumber numberWithInteger:[self summedTablesCheesesByTableName:tableName]];
+    confirmOrder.sausage = [NSNumber numberWithInteger:[self summedTablesSausageByTableName:tableName]];
+    confirmOrder.pepperoni = [NSNumber numberWithInteger:[self summedTablesPepperoniByTableName:tableName]];
+    confirmOrder.veggie = [NSNumber numberWithInteger:[self summedTablesVeggiesByTableName:tableName]];
+    confirmOrder.orderedFromTable = tableName;
+    
+    
+    confirmOrder.timeOfOrder = [NSDate date];
+
+    [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
+    
+    
+    //need to also delete entities that it pulled from
+}
 
 -(NSArray *)attributesOfPizza
 {
@@ -200,32 +422,7 @@ id observer2;
     NSLog(@"%@", entity.properties); //shows a list of ALL the attributes of the entity
     NSLog(@"%@", entity.name); //gets the name of the actual entity
     
-    
     return entity.properties;
-}
-
--(NSFetchedResultsController *) fetchedResultsController
-{
-    if (fetchedResultsController != nil)
-    {
-        return fetchedResultsController;
-    }
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Pizza"
-                                              inManagedObjectContext:managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"cheese"
-                                                                   ascending:YES
-                                                                    selector:nil];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:nil];
-    fetchedResultsController.delegate = self;
-    
-    return fetchedResultsController;
 }
 
 -(void)placeOrderWithArray:(NSMutableArray *)mutableArray
@@ -404,13 +601,36 @@ id observer2;
 
 
 
--(void)ParseSaveObject:(id)ObjectToSave
+-(void)parseSaveConfirmedOrders:(id)ObjectToSave
 {
-    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-    [testObject setObject:@"bar" forKey:@"foo"];
-    [testObject save];
+    NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
+    [searchRequest setEntity:[NSEntityDescription entityForName:@"ConfirmedOrder" inManagedObjectContext:managedObjectContext]];
     
-    NSLog(@"passed parse");
+    NSArray *matchedObjects = [managedObjectContext executeFetchRequest:searchRequest error:nil];
+    //creates a list of ALL pizzas created, would work well for a list of all pizzas made/sold but need it to show only ONE pizza, fix later
+
+    for (ConfirmedOrder *order in matchedObjects)
+    {
+        PFObject *confirmedOrder = [PFObject objectWithClassName:@"ConfirmedOrder"];
+        
+        confirmedOrder[@"coke"] = [NSString stringWithFormat:@"%@", order.coke];
+        confirmedOrder[@"sprite"] = [NSString stringWithFormat:@"%@", order.sprite];
+        confirmedOrder[@"budweiser"] = [NSString stringWithFormat:@"%@", order.budweiser];
+        confirmedOrder[@"totalDrinks"] = [NSString stringWithFormat:@"%@", order.totalDrinks];
+        
+        confirmedOrder[@"cheese"] = [NSString stringWithFormat:@"%@", order.cheese];
+        confirmedOrder[@"pepperoni"] = [NSString stringWithFormat:@"%@", order.pepperoni];
+        confirmedOrder[@"sausage"] = [NSString stringWithFormat:@"%@", order.sausage];
+        confirmedOrder[@"veggie"] = [NSString stringWithFormat:@"%@", order.veggie];
+        confirmedOrder[@"totalPizzas"] = [NSString stringWithFormat:@"%@", order.totalPizzas];
+        
+        confirmedOrder[@"timeOfOrder"] = [NSString stringWithFormat:@"%@", order.timeOfOrder];
+        confirmedOrder[@"ticketNumber"] = [NSString stringWithFormat:@"%@", order.ticketNumber];
+        confirmedOrder[@"orderedFromTable"] = [NSString stringWithFormat:@"%@", order.orderedFromTable];
+        
+        [confirmedOrder saveEventually];
+    }
+    
 }
 
 

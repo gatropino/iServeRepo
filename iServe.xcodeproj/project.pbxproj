@@ -24,7 +24,9 @@
 		37A24F1318200AD800A203FA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37A24F1218200AD800A203FA /* SystemConfiguration.framework */; };
 		37A24F1C1821506D00A203FA /* PlacedOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24F1B1821506D00A203FA /* PlacedOrder.m */; };
 		37A24F1F182158A700A203FA /* ViewSingleOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24F1E182158A700A203FA /* ViewSingleOrderViewController.m */; };
-		37A24F22182170C800A203FA /* AvailableIngredients.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24F21182170C800A203FA /* AvailableIngredients.m */; };
+		37F4262018249F4C00A12E6D /* ConfirmedOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F4261F18249F4C00A12E6D /* ConfirmedOrder.m */; };
+		37F426231824A3B400A12E6D /* ConfirmOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F426221824A3B400A12E6D /* ConfirmOrderViewController.m */; };
+		37F426261824A3D300A12E6D /* ViewConfirmOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F426251824A3D300A12E6D /* ViewConfirmOrderViewController.m */; };
 		37F7F52918181AFA0014B5BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52818181AFA0014B5BC /* Foundation.framework */; };
 		37F7F52B18181AFA0014B5BC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52A18181AFA0014B5BC /* CoreGraphics.framework */; };
 		37F7F52D18181AFA0014B5BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52C18181AFA0014B5BC /* UIKit.framework */; };
@@ -94,6 +96,12 @@
 		37A24F1E182158A700A203FA /* ViewSingleOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewSingleOrderViewController.m; sourceTree = "<group>"; };
 		37A24F20182170C800A203FA /* AvailableIngredients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailableIngredients.h; sourceTree = "<group>"; };
 		37A24F21182170C800A203FA /* AvailableIngredients.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvailableIngredients.m; sourceTree = "<group>"; };
+		37F4261E18249F4C00A12E6D /* ConfirmedOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmedOrder.h; sourceTree = "<group>"; };
+		37F4261F18249F4C00A12E6D /* ConfirmedOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmedOrder.m; sourceTree = "<group>"; };
+		37F426211824A3B400A12E6D /* ConfirmOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmOrderViewController.h; sourceTree = "<group>"; };
+		37F426221824A3B400A12E6D /* ConfirmOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmOrderViewController.m; sourceTree = "<group>"; };
+		37F426241824A3D300A12E6D /* ViewConfirmOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewConfirmOrderViewController.h; sourceTree = "<group>"; };
+		37F426251824A3D300A12E6D /* ViewConfirmOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewConfirmOrderViewController.m; sourceTree = "<group>"; };
 		37F7F52518181AFA0014B5BC /* iServe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iServe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37F7F52818181AFA0014B5BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		37F7F52A18181AFA0014B5BC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -175,6 +183,8 @@
 		375606F618188C5400E5C930 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				37F4261E18249F4C00A12E6D /* ConfirmedOrder.h */,
+				37F4261F18249F4C00A12E6D /* ConfirmedOrder.m */,
 				37A24F20182170C800A203FA /* AvailableIngredients.h */,
 				37A24F21182170C800A203FA /* AvailableIngredients.m */,
 				37A24F1A1821506D00A203FA /* PlacedOrder.h */,
@@ -253,6 +263,10 @@
 			isa = PBXGroup;
 			children = (
 				37F7F55D18181BB40014B5BC /* Storyboard.storyboard */,
+				37F426211824A3B400A12E6D /* ConfirmOrderViewController.h */,
+				37F426221824A3B400A12E6D /* ConfirmOrderViewController.m */,
+				37F426241824A3D300A12E6D /* ViewConfirmOrderViewController.h */,
+				37F426251824A3D300A12E6D /* ViewConfirmOrderViewController.m */,
 				CD29C30C18203FC700BEBD57 /* OrderItemsViewController.h */,
 				CD29C30D18203FC700BEBD57 /* OrderItemsViewController.m */,
 				37A24F1D182158A700A203FA /* ViewSingleOrderViewController.h */,
@@ -405,17 +419,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				37F7F53B18181AFA0014B5BC /* AppDelegate.m in Sources */,
+				37F4262018249F4C00A12E6D /* ConfirmedOrder.m in Sources */,
 				CD65A2C41819B5EF00422B43 /* MenuItemCell.m in Sources */,
 				37F7F53E18181AFA0014B5BC /* iServe.xcdatamodeld in Sources */,
 				37A24EF0181F30C800A203FA /* UIItemData.m in Sources */,
 				CD29C30E18203FC700BEBD57 /* OrderItemsViewController.m in Sources */,
+				37F426231824A3B400A12E6D /* ConfirmOrderViewController.m in Sources */,
 				CD65A2C71819B66200422B43 /* ViewController.m in Sources */,
 				37A24EFF181F30C900A203FA /* MenuItemData.m in Sources */,
 				37A24F1F182158A700A203FA /* ViewSingleOrderViewController.m in Sources */,
 				37A24EFC181F30C900A203FA /* Images.m in Sources */,
 				37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */,
 				37F7F56418181D720014B5BC /* CoreData.m in Sources */,
-				CD65A2CA1819B6C100422B43 /* MenuItem.m in Sources */,
+				37F426261824A3D300A12E6D /* ViewConfirmOrderViewController.m in Sources */,
 				CD50829D1820725F003FECED /* DefaultData.m in Sources */,
 				37A24EF9181F30C900A203FA /* Food.m in Sources */,
 				37A24F1C1821506D00A203FA /* PlacedOrder.m in Sources */,

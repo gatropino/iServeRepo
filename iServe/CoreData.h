@@ -24,13 +24,22 @@
 +(CoreData *) myData;
 -(void)resetPizzaInventoryLevels;
 -(NSArray *)fetchAllPizzasMade;
--(NSInteger)totalCheesePizzasSold;
--(NSInteger)totalSausagePizzasSold;
--(NSInteger)totalPepperoniPizzasSold;
+
+-(void)deletePlacedOrderEntitiesByTableName:(NSString *)tableName;
+
+-(NSInteger)summedTablesCheesesByTableName:(NSString *)tableName;
+-(NSInteger)summedTablesSausageByTableName:(NSString *)tableName;
+-(NSInteger)summedTablesPepperoniByTableName:(NSString *)tableName;
+-(NSInteger)summedTablesVeggiesByTableName:(NSString *)tableName;
+-(NSInteger)summedTablesBudweisersByTableName:(NSString *)tableName;
+-(NSInteger)summedTablesCokesByTableName:(NSString *)tableName;
+-(NSInteger)summedTablesSpritesByTableName:(NSString *)tableName;
+-(NSInteger)summedTablesPizzasByTableName:(NSString *)tableName;
+-(NSInteger)summedTablesDrinksByTableName:(NSString *)tableName;
+
 -(NSArray *)attributesOfPizza;
 -(Pizza *)quantityOfCheese:(NSNumber *)cheeseToppings quantityOfSausage:(NSNumber *)sausageToppings quantityOfPepperoni:(NSNumber *)pepperoniToppings;
 -(Pizza *)createPizzaObject;
--(void)ParseSaveObject:(id)ObjectToSave;
 -(NSArray *)fetchMenuItems;
 -(NSArray *)fetchUIItems;
 -(AvailableIngredients *)getAvailableIngrediants;

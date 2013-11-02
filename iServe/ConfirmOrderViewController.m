@@ -1,14 +1,21 @@
 //
-//  OrderItemsViewController.m
+//  ConfirmOrderViewController.m
 //  iServe
 //
-//  Created by xcode on 10/29/13.
+//  Created by Greg Tropino on 11/1/13.
 //  Copyright (c) 2013 Greg Tropino. All rights reserved.
 //
 
-#import "OrderItemsViewController.h"
+#import "ConfirmOrderViewController.h"
+#import "ConfirmedOrder.h"
+#import "AppDelegate.h"
+#import "ViewConfirmOrderViewController.h"
 
-@implementation OrderItemsViewController
+@interface ConfirmOrderViewController ()
+
+@end
+
+@implementation ConfirmOrderViewController
 
 @synthesize fetchedResultsController, managedObjectContext;
 
@@ -54,7 +61,7 @@
             
         case NSFetchedResultsChangeUpdate:
         {
-            PlacedOrder *changedOrder = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            ConfirmedOrder *changedOrder = [self.fetchedResultsController objectAtIndexPath:indexPath];
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
             cell.textLabel.text = [NSString stringWithFormat:@"Ticket %@ placed at %@", changedOrder.ticketNumber, changedOrder.timeOfOrder];
         }
@@ -89,11 +96,11 @@
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"PlacedOrder"
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ConfirmedOrder"
                                               inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ticketNumber"
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"totalPizzas"
                                                                    ascending:YES
                                                                     selector:nil];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
@@ -112,7 +119,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         NSManagedObjectContext *context = managedObjectContext;
-        PlacedOrder *orderToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        ConfirmedOrder *orderToDelete = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [context deleteObject:orderToDelete];
         
         NSError *error = nil;
@@ -139,7 +146,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-    PlacedOrder *order = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    ConfirmedOrder *order = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     order = [fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
     
@@ -148,7 +155,7 @@
     [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
     NSLog(@"%@",[DateFormatter stringFromDate:passedDate]);
     
-    cell.textLabel.text = [NSString stringWithFormat:@"Ticket %@ placed at %@", order.ticketNumber, [DateFormatter stringFromDate:passedDate]];
+    cell.textLabel.text = [NSString stringWithFormat:@"Ticket %@ placed at %@ with %@ Drinks and %@ Pizzas", order.ticketNumber, [DateFormatter stringFromDate:passedDate], order.totalDrinks, order.totalPizzas];
     
     return cell;
 }
@@ -164,12 +171,12 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
-    if ([[segue identifier] isEqualToString:@"viewOrder"])
+    if ([[segue identifier] isEqualToString:@"viewConfirmedOrder"])
     {
-        ViewSingleOrderViewController *vsovc = segue.destinationViewController;
+        ViewConfirmOrderViewController *vsovc = segue.destinationViewController;
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        PlacedOrder *selectedOrder = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        vsovc.currentOrder = selectedOrder;
+        ConfirmedOrder *selectedOrder = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        vsovc.currentConfirmedOrder = selectedOrder;
     }
     
 }
