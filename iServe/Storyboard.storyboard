@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="IZz-ak-qr8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="hXs-OZ-KGr">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
@@ -47,26 +47,6 @@
                                     <action selector="backButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="dXP-42-zXc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ht-1n-vds">
-                                <rect key="frame" x="14" y="27" width="98" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Confirm Order">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="confirmOrderButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="fcP-0b-67E"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CfI-n6-fog">
-                                <rect key="frame" x="14" y="77" width="86" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="View Tickets">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="i8Z-NT-hz8" kind="modal" id="dhu-vu-2Pf"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8C5-0B-3a1">
                                 <rect key="frame" x="20" y="500" width="142" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -97,10 +77,47 @@
                                     <action selector="renameItemButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="1uI-RR-FQX"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ht-1n-vds">
+                                <rect key="frame" x="14" y="82" width="82" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Place Order">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="confirmOrderButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="fcP-0b-67E"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
+                    <navigationItem key="navigationItem" id="qqc-d4-3K4">
+                        <nil key="title"/>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FP1-j7-Pia">
+                            <rect key="frame" x="434" y="6" width="157" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="View Active Tickets">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <segue destination="bJC-qO-8At" kind="push" id="asZ-rJ-I7q"/>
+                            </connections>
+                        </button>
+                        <barButtonItem key="rightBarButtonItem" id="Olv-PK-hnw">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5zW-Qg-tF0">
+                                <rect key="frame" x="781" y="5" width="227" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="View Closed Tickets">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Wxf-P9-HOg" kind="push" id="c4p-El-NYz"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="editScreenButton" destination="Mwl-J3-Hs6" id="aM9-iw-SEj"/>
@@ -108,7 +125,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hWr-1W-pzX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1857" y="1095"/>
+            <point key="canvasLocation" x="638" y="1163"/>
         </scene>
         <!--Confirm Order View Controller-->
         <scene sceneID="aBD-r8-ApE">
@@ -121,7 +138,7 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="TKt-77-fuW">
-                                <rect key="frame" x="0.0" y="22" width="1024" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TKt-77-fuW" id="eZS-37-jYW">
                                     <rect key="frame" x="0.0" y="0.0" width="991" height="43"/>
@@ -137,11 +154,12 @@
                             <outlet property="delegate" destination="Wxf-P9-HOg" id="8xH-ja-05W"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="gIN-kB-HND"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eg9-nj-pYi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="898" y="162"/>
+            <point key="canvasLocation" x="1861" y="226"/>
         </scene>
         <!--Order Items View Controller-->
         <scene sceneID="tuS-ua-8hH">
@@ -171,10 +189,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="f6j-I3-2RZ"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0d6-RR-Cu2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="887" y="1168"/>
+            <point key="canvasLocation" x="1861" y="1168"/>
         </scene>
         <!--View Single Order View Controller-->
         <scene sceneID="WdR-WN-uiq">
@@ -286,25 +305,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PCq-Ip-TrZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2243" y="1155"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="5Pu-7L-E4c">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="i8Z-NT-hz8" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="f0N-0V-UIk">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="bJC-qO-8At" kind="relationship" relationship="rootViewController" id="WSp-MG-KUv"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZQv-tm-SoR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-565" y="1244"/>
+            <point key="canvasLocation" x="3217" y="1155"/>
         </scene>
         <!--View Confirm Order View Controller-->
         <scene sceneID="Dmb-sJ-66c">
@@ -417,7 +418,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7kQ-w3-43y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2195" y="162"/>
+            <point key="canvasLocation" x="3217" y="226"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="REs-6e-ctk">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hXs-OZ-KGr" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="k0D-m8-fnd">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="IZz-ak-qr8" kind="relationship" relationship="rootViewController" id="fcG-nT-RXt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b4I-LZ-O3M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-607" y="1163"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
