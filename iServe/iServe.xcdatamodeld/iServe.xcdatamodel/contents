@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12F45" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AvailableIngredients" representedClassName="AvailableIngredients" syncable="YES">
         <attribute name="cheese" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="confirmedTicketNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="pepperoni" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="sausage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="ticketNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -97,12 +98,12 @@
     </entity>
     <elements>
         <element name="AvailableIngredients" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ConfirmedOrder" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Food" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Images" positionX="0" positionY="0" width="0" height="0"/>
         <element name="MenuItemData" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Pizza" positionX="0" positionY="0" width="0" height="0"/>
         <element name="PlacedOrder" positionX="0" positionY="0" width="0" height="0"/>
         <element name="UIItemData" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ConfirmedOrder" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

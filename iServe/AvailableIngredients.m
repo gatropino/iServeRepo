@@ -15,5 +15,6 @@
 @dynamic pepperoni;
 @dynamic sausage;
 @dynamic ticketNumber;
+@dynamic confirmedTicketNumber;
 
 @end

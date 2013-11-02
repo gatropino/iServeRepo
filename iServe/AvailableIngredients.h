@@ -16,5 +16,6 @@
 @property (nonatomic, retain) NSNumber * pepperoni;
 @property (nonatomic, retain) NSNumber * sausage;
 @property (nonatomic, retain) NSNumber * ticketNumber;
+@property (nonatomic, retain) NSNumber * confirmedTicketNumber;
 
 @end

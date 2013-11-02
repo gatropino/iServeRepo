@@ -7,6 +7,7 @@
 //
 
 #import "ViewSingleOrderViewController.h"
+#import "CoreData.h"
 
 @interface ViewSingleOrderViewController ()
 
@@ -14,7 +15,7 @@
 
 @implementation ViewSingleOrderViewController
 
-@synthesize currentOrder, timeLabel, ticketNumberLabel, textView, tableLabel, quantityTotalLabel;
+@synthesize currentOrder, timeLabel, ticketNumberLabel, textView, tableLabel, quantityTotalLabel, dollarTotalLabel;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -45,32 +46,43 @@
     NSNumber *total = @([currentOrder.cheese floatValue] + [currentOrder.pepperoni floatValue] + [currentOrder.sausage floatValue] + [currentOrder.coke floatValue] + [currentOrder.sprite floatValue] + [currentOrder.budweiser floatValue] + [currentOrder.veggie floatValue]);
     quantityTotalLabel.text = [NSString stringWithFormat:@"%@", total];
     
+    NSNumber *cheeseTotal = @([currentOrder.cheese floatValue] * [[CoreData myData].cheesePrice floatValue]);
+    NSNumber *pepperoniTotal = @([currentOrder.pepperoni floatValue] * [[CoreData myData].pepperoniPrice floatValue]);
+    NSNumber *sausageTotal = @([currentOrder.sausage floatValue] * [[CoreData myData].sausagePrice floatValue]);
+    NSNumber *veggieTotal = @([currentOrder.veggie floatValue] * [[CoreData myData].veggiePrice floatValue]);
+    NSNumber *spriteTotal = @([currentOrder.sprite floatValue] * [[CoreData myData].spritePrice floatValue]);
+    NSNumber *cokeTotal = @([currentOrder.coke floatValue] * [[CoreData myData].cokePrice floatValue]);
+    NSNumber *budweiserTotal = @([currentOrder.budweiser floatValue] * [[CoreData myData].budweiserPrice floatValue]);
     
+    NSNumber *grandTotal = @([cheeseTotal floatValue] + [pepperoniTotal floatValue] + [sausageTotal floatValue] + [veggieTotal floatValue] + [spriteTotal floatValue] + [cokeTotal floatValue] + [budweiserTotal floatValue]);
+
     if (currentOrder.cheese.intValue > 0) {
-        temp1 = [NSString stringWithFormat:@"   Pizza:              Cheese                  %@\n", currentOrder.cheese];
+        temp1 = [NSString stringWithFormat:@"   Pizza:           Cheese          %@               %@             %@\n", currentOrder.cheese, [CoreData myData].cheesePrice, cheeseTotal];
     }
     if (currentOrder.pepperoni.intValue > 0) {
-        temp2 = [NSString stringWithFormat:@"   Pizza:              Pepperoni              %@\n", currentOrder.pepperoni];
+        temp2 = [NSString stringWithFormat:@"   Pizza:           Pepperoni      %@              %@           %@\n", currentOrder.pepperoni, [CoreData myData].pepperoniPrice, pepperoniTotal];
     }
     if (currentOrder.sausage.intValue > 0) {
-        temp3 = [NSString stringWithFormat:@"   Pizza:              Sausage                %@\n", currentOrder.sausage];
+        temp3 = [NSString stringWithFormat:@"   Pizza:           Sausage           %@               %@          %@\n", currentOrder.sausage, [CoreData myData].sausagePrice, sausageTotal];
     }
     if (currentOrder.veggie.intValue > 0) {
-        temp4 = [NSString stringWithFormat:@"   Pizza:              Veggie                    %@\n", currentOrder.veggie];
+        temp4 = [NSString stringWithFormat:@"   Pizza:           Veggie            %@              %@           %@\n", currentOrder.veggie, [CoreData myData].veggiePrice, veggieTotal];
     }
     if (currentOrder.sprite.intValue > 0) {
-        temp5 = [NSString stringWithFormat:@"   Drink:              Sprite                     %@\n", currentOrder.sprite];
+        temp5 = [NSString stringWithFormat:@"   Drink:           Sprite             %@               %@             %@\n", currentOrder.sprite, [CoreData myData].spritePrice, spriteTotal];
     }
     if (currentOrder.coke.intValue > 0) {
-        temp6 = [NSString stringWithFormat:@"   Drink:              Coke                      %@\n", currentOrder.coke];
+        temp6 = [NSString stringWithFormat:@"   Drink:           Coke              %@               %@             %@\n", currentOrder.coke, [CoreData myData].cokePrice, cokeTotal];
     }
     if (currentOrder.budweiser.intValue > 0) {
-        temp7 = [NSString stringWithFormat:@"   Drink:              Budweiser             %@\n", currentOrder.budweiser];
+        temp7 = [NSString stringWithFormat:@"   Drink:           Budweiser      %@               %@             %@\n", currentOrder.budweiser, [CoreData myData].budweiserPrice, budweiserTotal];
     }
 
     textView.text = [NSString stringWithFormat:@"%@%@%@%@%@%@%@", temp1 ?: @"", temp2 ?: @"", temp3 ?: @"", temp4 ?: @"", temp5 ?: @"",temp6 ?: @"",temp7 ?: @""];
     textView.font = [UIFont systemFontOfSize:25];
     
+    
+    dollarTotalLabel.text = [NSString stringWithFormat:@"$%@", grandTotal];
 }
 
 

@@ -14,7 +14,7 @@
 static CoreData* sMyData;
 id observer2;
 
-@synthesize fetchedResultsController, managedObjectContext;
+@synthesize fetchedResultsController, managedObjectContext, cokePrice, spritePrice, budweiserPrice, cheesePrice, sausagePrice, pepperoniPrice, veggiePrice;
 
 -(void)testingMethod
 {
@@ -22,7 +22,6 @@ id observer2;
     observer2 = [nc addObserverForName:@"CoreDataTesting" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note)
                  {
                      [self performSelector:@selector(resetPizzaInventoryLevels) withObject:nil];
-                     
                  }];
 }
 
@@ -30,7 +29,6 @@ id observer2;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:observer2];
 }
-
 
 +(CoreData *)myData
 {
@@ -41,8 +39,6 @@ id observer2;
         NSLog(@"Dispatch once");
         sMyData = [[CoreData alloc] init];
     });
-    NSLog(@"returning coredata singleton = %@", sMyData);
-    
     return sMyData;
 }
 
@@ -51,6 +47,15 @@ id observer2;
     if (self = [super init])
     {
         NSLog(@"instantiating the singleton here: %@", self);
+        managedObjectContext = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+        NSLog(@"init context %@", managedObjectContext);
+        spritePrice = @1.50;
+        cokePrice = @1.50;
+        budweiserPrice = @4.50;
+        cheesePrice = @9.50;
+        pepperoniPrice = @11.50;
+        sausagePrice = @11.50;
+        veggiePrice = @12.50;
     }
     return self;
 }
@@ -105,7 +110,6 @@ id observer2;
     }
 }
 
-
 -(NSArray *)fetchAllPizzasMade
 {
     NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
@@ -118,31 +122,51 @@ id observer2;
 
 -(void)deletePlacedOrderEntitiesByTableName:(NSString *)tableName
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    NSLog(@"deletePlacedOrders context %@", managedObjectContext);
     
-    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable MATCHES[cd] %@", tableName];
+    
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
+    [fr setResultType:NSManagedObjectIDResultType];
+
     
-    NSArray *placedOrderEntities = [context executeFetchRequest:fr error:nil];
+    NSError *error;
+    NSArray *placedOrderEntities = [managedObjectContext executeFetchRequest:fr error:&error];
+    NSLog(@"%@", error);
+    //NSMutableArray *mutableFetchResults = [[context executeFetchRequest:fr error:&error] mutableCopy];
+
     
+    for (NSManagedObjectID *order in placedOrderEntities)
+    {
+        //[managedObjectContext deleteObject:order];
+        [managedObjectContext deleteObject:[managedObjectContext objectWithID:order]];
+        
+    }
+    
+    [managedObjectContext save:&error];
+
+    
+    /*
     for (int x = 0; x < [placedOrderEntities count]; x++)
     {
         PlacedOrder *orderToDelete = [placedOrderEntities objectAtIndex:x];
-        [context deleteObject:orderToDelete];
+        [managedObjectContext deleteObject:orderToDelete];
     }
+    */
+    
+    NSLog(@"%@", error);
 }
 
 
 -(NSInteger)summedTablesCheesesByTableName:(NSString *)tableName
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable MATCHES[cd] %@", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     
@@ -155,7 +179,7 @@ id observer2;
     
     fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
-    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    NSArray *pizzaTotalResults = [managedObjectContext executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
@@ -166,11 +190,10 @@ id observer2;
 
 -(NSInteger)summedTablesVeggiesByTableName:(NSString *)tableName
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable MATCHES[cd] %@", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     
@@ -183,7 +206,7 @@ id observer2;
     
     fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
-    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    NSArray *pizzaTotalResults = [managedObjectContext executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
@@ -194,11 +217,10 @@ id observer2;
 
 -(NSInteger)summedTablesBudweisersByTableName:(NSString *)tableName
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable MATCHES[cd] %@", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     
@@ -211,7 +233,7 @@ id observer2;
     
     fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
-    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    NSArray *pizzaTotalResults = [managedObjectContext executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
@@ -222,11 +244,10 @@ id observer2;
 
 -(NSInteger)summedTablesCokesByTableName:(NSString *)tableName
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable MATCHES[cd] %@", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     
@@ -239,7 +260,7 @@ id observer2;
     
     fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
-    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    NSArray *pizzaTotalResults = [managedObjectContext executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
@@ -250,11 +271,10 @@ id observer2;
 
 -(NSInteger)summedTablesSpritesByTableName:(NSString *)tableName
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable MATCHES[cd] %@", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     
@@ -267,7 +287,7 @@ id observer2;
     
     fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
-    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    NSArray *pizzaTotalResults = [managedObjectContext executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
@@ -279,11 +299,10 @@ id observer2;
 
 -(NSInteger)summedTablesSausageByTableName:(NSString *)tableName
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable MATCHES[cd] %@", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     
@@ -296,7 +315,7 @@ id observer2;
     
     fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
-    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    NSArray *pizzaTotalResults = [managedObjectContext executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
@@ -307,11 +326,10 @@ id observer2;
 
 -(NSInteger)summedTablesPepperoniByTableName:(NSString *)tableName
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable MATCHES[cd] %@", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     
@@ -324,7 +342,7 @@ id observer2;
     
     fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
-    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    NSArray *pizzaTotalResults = [managedObjectContext executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
@@ -335,11 +353,11 @@ id observer2;
 
 -(NSInteger)summedTablesPizzasByTableName:(NSString *)tableName
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    //doesnt work for some reason, must be related to multiple sum operators
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable MATCHES[cd] %@", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     
@@ -347,13 +365,12 @@ id observer2;
     [sumOfAttributes setName:@"TotalOfPizzas"];
     [sumOfAttributes setExpression:[NSExpression expressionForFunction:@"sum:" arguments:[NSArray arrayWithObjects:[NSExpression expressionForKeyPath:@"cheese"], [NSExpression expressionForKeyPath:@"sausage"], [NSExpression expressionForKeyPath:@"veggie"], [NSExpression expressionForKeyPath:@"pepperoni"], nil]]];
 
-    
     //is equal to the attribute "type" that you are trying to receive
     [sumOfAttributes setExpressionResultType:NSInteger16AttributeType];
     
     fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
-    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    NSArray *pizzaTotalResults = [managedObjectContext executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
@@ -364,11 +381,11 @@ id observer2;
 
 -(NSInteger)summedTablesDrinksByTableName:(NSString *)tableName
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
+    //doesnt work for some reason, must be related to multiple sum operators
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable = '%@'", tableName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable CONTAINS[cd] %@", tableName];
     
-    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:context];
+    fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     
@@ -382,7 +399,7 @@ id observer2;
     
     fr.propertiesToFetch = [NSArray arrayWithObject:sumOfAttributes];
     
-    NSArray *pizzaTotalResults = [context executeFetchRequest:fr error:nil];
+    NSArray *pizzaTotalResults = [managedObjectContext executeFetchRequest:fr error:nil];
     
     NSDictionary *fetchResultsDictionary = [pizzaTotalResults objectAtIndex:0];
     
@@ -393,26 +410,37 @@ id observer2;
 
 -(void)confirmTicketsByTableName:(NSString *)tableName
 {
-     ConfirmedOrder *confirmOrder = (ConfirmedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"ConfirmedOrder" inManagedObjectContext:[self managedObjectContext]];
-
+    NSLog(@"confirmed tickets context %@", managedObjectContext);
+     ConfirmedOrder *confirmOrder = (ConfirmedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"ConfirmedOrder" inManagedObjectContext:managedObjectContext];
     
     confirmOrder.sprite = [NSNumber numberWithInteger:[self summedTablesSpritesByTableName:tableName]];
     confirmOrder.coke = [NSNumber numberWithInteger:[self summedTablesCokesByTableName:tableName]];
     confirmOrder.budweiser = [NSNumber numberWithInteger:[self summedTablesBudweisersByTableName:tableName]];
+    confirmOrder.totalDrinks = @([confirmOrder.sprite floatValue] + [confirmOrder.coke floatValue] + [confirmOrder.budweiser floatValue]);
     
     confirmOrder.cheese = [NSNumber numberWithInteger:[self summedTablesCheesesByTableName:tableName]];
     confirmOrder.sausage = [NSNumber numberWithInteger:[self summedTablesSausageByTableName:tableName]];
     confirmOrder.pepperoni = [NSNumber numberWithInteger:[self summedTablesPepperoniByTableName:tableName]];
     confirmOrder.veggie = [NSNumber numberWithInteger:[self summedTablesVeggiesByTableName:tableName]];
+    confirmOrder.totalPizzas = @([confirmOrder.cheese floatValue] + [confirmOrder.sausage floatValue] + [confirmOrder.pepperoni floatValue] + [confirmOrder.veggie floatValue]);
+
     confirmOrder.orderedFromTable = tableName;
     
+    AvailableIngredients *ingrediants = [self getAvailableIngrediants];
     
+    if (!ingrediants.confirmedTicketNumber) {
+        ingrediants.confirmedTicketNumber = @0;
+    }
+    ingrediants.confirmedTicketNumber = @([ingrediants.confirmedTicketNumber floatValue] + [@1 floatValue]);
+    
+    confirmOrder.ticketNumber = ingrediants.confirmedTicketNumber;
+
     confirmOrder.timeOfOrder = [NSDate date];
 
     [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
     
-    
-    //need to also delete entities that it pulled from
+    [self deletePlacedOrderEntitiesByTableName:tableName];
+    //crashes on object deletion, maybe first object is not that entity?
 }
 
 -(NSArray *)attributesOfPizza
@@ -427,7 +455,8 @@ id observer2;
 
 -(void)placeOrderWithArray:(NSMutableArray *)mutableArray
 {
-    PlacedOrder *orderToBePlaced = (PlacedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"PlacedOrder" inManagedObjectContext:[self managedObjectContext]];
+    NSLog(@"placedOrders context %@", managedObjectContext);
+    PlacedOrder *orderToBePlaced = (PlacedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     
     int coke = 0, sprite = 0, cheese = 0, pepperoni = 0, veggie = 0, budweiser = 0, sausage = 0;
     NSString *tempTableString;
@@ -636,13 +665,12 @@ id observer2;
 
 -(NSArray *)fetchMenuItems
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"MenuItemData" inManagedObjectContext:context];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"MenuItemData" inManagedObjectContext:managedObjectContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest new];
     
     fetchRequest.entity = entityDescription;
     
-    NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:nil];
     
     return results;
     
@@ -651,13 +679,12 @@ id observer2;
 
 -(NSArray *)fetchUIItems
 {
-    NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UIItemData" inManagedObjectContext:context];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UIItemData" inManagedObjectContext:managedObjectContext];
     NSFetchRequest *fetchRequest = [NSFetchRequest new];
     
     fetchRequest.entity = entityDescription;
     
-    NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+    NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:nil];
     
     return results;
     

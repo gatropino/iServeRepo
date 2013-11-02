@@ -100,8 +100,8 @@
                                               inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"totalPizzas"
-                                                                   ascending:YES
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeOfOrder"
+                                                                   ascending:NO
                                                                     selector:nil];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -176,7 +176,7 @@
         ViewConfirmOrderViewController *vsovc = segue.destinationViewController;
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         ConfirmedOrder *selectedOrder = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        vsovc.currentConfirmedOrder = selectedOrder;
+        vsovc.currentOrder = selectedOrder;
     }
     
 }

@@ -20,6 +20,14 @@
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSNumber *cokePrice;
+@property (strong, nonatomic) NSNumber *spritePrice;
+@property (strong, nonatomic) NSNumber *budweiserPrice;
+@property (strong, nonatomic) NSNumber *cheesePrice;
+@property (strong, nonatomic) NSNumber *sausagePrice;
+@property (strong, nonatomic) NSNumber *pepperoniPrice;
+@property (strong, nonatomic) NSNumber *veggiePrice;
+
 
 +(CoreData *) myData;
 -(void)resetPizzaInventoryLevels;
