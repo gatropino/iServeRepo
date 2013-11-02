@@ -59,6 +59,7 @@
 #import "ViewController.h"
 #import "MenuItemCell.h"
 #import "DefaultData.h"
+#import "EditMenuItemCellDetailView.h"
 #import "TouchProtocol.h"
 
 @interface ViewController ()
@@ -70,7 +71,13 @@
 
 @property NSMutableArray *uiObjectsOnScreen;
 @property NSMutableArray *uiObjects;
+
+@property NSMutableArray *copiedItems;
+@property NSMutableArray *clipboardBlankCells;
 @property NSMutableArray *uiBuildMenuPrototypeCells;
+
+// views (for reuse)        (or should make and destroy?)
+@property EditMenuItemCellDetailView *detailView;
 
 // colors
 @property UIColor *colorDefaultForMenuItems;
@@ -113,6 +120,8 @@
 @property float timeSeated;
 @property float timeDrinksOrdered;
 
+@property (strong, nonatomic) IBOutlet UIButton *editScreenButton;
+
 -(void)setupScreen;
 -(void)getDefaultSettings;
 -(void)setupMenu;
@@ -122,10 +131,16 @@
 -(void)toggleBuilderModeOnOff;
 -(void)createPizzaImage;
 -(void)refreshBuildMenuItems;
+-(void)copyObjectAndItsContents;
+-(void)menuForClipboard;
+-(void)clearClipBoard;
 
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)mainMenuButtonPressed:(id)sender;
 - (IBAction)confirmOrderButtonPressed:(id)sender;
+- (IBAction)copyButtonPressed:(id)sender;
+- (IBAction)viewClipBoardPasteMenuButtonPressed:(id)sender;
+- (IBAction)renameItemButtonPressed:(id)sender;
 
 
 
@@ -139,7 +154,7 @@
 
 @implementation ViewController
 
-@synthesize uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems, menuItemsGlobal, yDefualtStartingPosition, menuItemsCurrent, uiItemPadding, localIDNumberCounter, restaurant, table, customer, isSeated, uiObjects, buildModeOn, menuItemHistory, uiBuildMenuPrototypeCells, uiItemHeight, uiItemWidth;
+@synthesize uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems, menuItemsGlobal, yDefualtStartingPosition, menuItemsCurrent, uiItemPadding, localIDNumberCounter, restaurant, table, customer, isSeated, uiObjects, buildModeOn, menuItemHistory, uiBuildMenuPrototypeCells, uiItemHeight, uiItemWidth, copiedItems, clipboardBlankCells, editScreenButton, detailView;
 
 
 #pragma mark Setup
@@ -161,7 +176,9 @@
     
     [self getDefaultSettings];
     [self setupMenu];
+    [self setupClipboard];
     [self createPizzaImage];
+    [self createDetailViewForReuse];
     
     [self buildMenuByFindingChildrenOfParent:@"Main Menu"];
     [self createUIItems];
@@ -186,11 +203,13 @@
     uiObjects = [NSMutableArray new];
     uiObjectsOnScreen = [NSMutableArray new];
     
+    copiedItems = [NSMutableArray new];
+    clipboardBlankCells = [NSMutableArray new];
     uiBuildMenuPrototypeCells = [NSMutableArray new];
     
     // set sizes
-    menuItemWidth = 80;
-    menuItemHeight = 60;
+    menuItemWidth = 100;
+    menuItemHeight = 100;
     menuItemPadding = 2;
     
     uiItemWidth = 100;
@@ -776,15 +795,24 @@
     // send menu item back to menu bar
     sender.frame = CGRectMake(sender.defaultPositionX, sender.defaultPositionY, sender.frame.size.width, sender.frame.size.height);
     
-     NSLog(@"instance created %@ table: %@    filter: %@",menuBlock.name, menuBlock.table, menuBlock.filterTable ); 
+    // NSLog(@"instance created %@ table: %@    filter: %@",menuBlock.name, menuBlock.table, menuBlock.filterTable ); 
 }
 
-- (IBAction)deleteMeForTestingOnly:(id)sender 
+- (IBAction)editScreenButtonPressed:(id)sender 
 {
     
-
    [self toggleBuilderModeOnOff];
+
+    if (buildModeOn==TRUE){
+        
+ // input coming in, but not changing???
+            NSLog(@"%@", editScreenButton.titleLabel.text);
+        editScreenButton.titleLabel.text =@"Edit Screen Off";
     
+    }else{
+               NSLog(@"%i", buildModeOn);
+        editScreenButton.titleLabel.text = @"Edit Screen"      ;   
+    }
 }
 
 -(void)unhighlightUIObjects
@@ -858,7 +886,7 @@
     [uiBuildMenuPrototypeCells removeAllObjects];
     
     for(MenuItemCell *z in uiObjects){
-    NSLog(@"%@", z.instanceOf);
+                                                                        //NSLog(@"%@", z.instanceOf);
             if([z.instanceOf isEqualToString:@"Prototype"]){
        
                 [uiBuildMenuPrototypeCells addObject: z];  } 
@@ -896,7 +924,7 @@
         
             // need unique id number, so increment localIDcounter
                localIDNumberCounter +=1;
-            NSLog(@"%i", counter);
+                                                                                //NSLog(@"%i", counter);
             __unused MenuItemCell *menuBlock = [self makeBlockView_Name: z.name
                                                           imageLocation: z.imageLocation
                                                              parentName: z.parentName
@@ -934,6 +962,7 @@
     
 }
 
+
 -(void)toggleBuilderModeOnOff
 {
     
@@ -941,6 +970,7 @@
     
     if(buildModeOn) {
         
+        self.view.backgroundColor = [UIColor redColor];
         for(MenuItemCell *z in uiObjects){
             
             z.canDrag = TRUE;
@@ -955,6 +985,8 @@
         [self menuForBuildMode]; }
     
     else {
+        
+        self.view.backgroundColor = [UIColor whiteColor];
         
         for(MenuItemCell *z in uiObjects){
             
@@ -976,12 +1008,9 @@
 
 - (IBAction)confirmOrderButtonPressed:(id)sender {
     
-    [self confirmOrderAndSendToCoreData]; 
+    [self confirmOrderAndSendToCoreData];
+
 }
-
-
-
-
 
 
 -(void)confirmOrderAndSendToCoreData
@@ -994,7 +1023,7 @@
     //  change property to confirmed
     
     for(MenuItemCell *z in uiObjectsOnScreen){
-    
+
         if([z.type isEqualToString:@"UIInstance"] && z.orderConfirmed == FALSE){
         
             [listOfConfirmedOrders addObject: z];
@@ -1003,20 +1032,252 @@
     
     }
 
-    for(MenuItemCell *z in listOfConfirmedOrders){
-        NSLog(@"%@", z.titleToDisplay ); }
+    //for(MenuItemCell *z in listOfConfirmedOrders){
+    //    NSLog(@"%@", z.titleToDisplay ); }
     
     [[CoreData myData] placeOrderWithArray:listOfConfirmedOrders];
 
 }
 
+
+#pragma mark Clipboard Menu
+
+-(void)setupClipboard
+{
+    
+    // make menu from blocks (no data), will reuse the cells
+    float xBlockPosition = uiItemWidth + uiItemPadding;
+    
+    for(int x = 0; x<8; x++)  {
+        
+        MenuItemCell *menuBlock = [self makeBlockView_Name: @""
+                                             imageLocation: @""
+                                                parentName: @"no parent set"
+                                                      type: @"MenuItem"
+                                              destintation: @"no destination set"
+                                                  receives: @"no receiver set"
+                                            titleToDisplay: @""
+                                   
+                                                    xValue: xBlockPosition
+                                                    yValue: 670
+                                                        ht: uiItemHeight
+                                                        wd: uiItemWidth
+                                                   canDrag: FALSE
+                                              defaultColor: colorDefaultForMenuItems
+                                          highlightedColor: colorDefaultForMenuItems
+                                                 dragColor: colorDefaultForMenuItems
+                        editExistingBlockInsteadOfCreating: nil];
+        
+        // increment y position
+        xBlockPosition = xBlockPosition + uiItemWidth + menuItemPadding;
+        
+        [clipboardBlankCells addObject:menuBlock];
+        [self.view addSubview:menuBlock];
+        
+    }
+    
+}
+
+-(void)clearClipBoard  // same as setup, but does not make the objects, reuses them
+{
+    
+    for(MenuItemCell *z in clipboardBlankCells)  {
+        
+        __unused MenuItemCell * menuBlock = [self makeBlockView_Name: @""
+                                                       imageLocation: @""
+                                                          parentName: @"no parent allowed"
+                                                                type: @"MenuItem"
+                                                        destintation: @"no destination set"
+                                                            receives: @"no receiver set"
+                                                      titleToDisplay: @""
+                                             
+                                                              xValue: 0
+                                                              yValue: 0
+                                                                  ht: 0
+                                                                  wd: 0
+                                             
+                                                             canDrag: FALSE
+                                                        defaultColor: colorDefaultForMenuItems
+                                                    highlightedColor: colorDefaultForMenuItems
+                                                           dragColor: colorDefaultForMenuItems
+                                  editExistingBlockInsteadOfCreating: z   ];
+        
+    }
+    
+}
+
+-(void)deselectClipBoardItems
+{
+    for(MenuItemCell *z in clipboardBlankCells)
+    {
+        z.isSelected = FALSE;
+        z.backgroundColor = colorDefaultForMenuItems;
+    }
+
+}
+
+- (IBAction)viewClipBoardPasteMenuButtonPressed:(id)sender {
+    
+    [self menuForClipboard];
+}            
+
+
+
+-(void)menuForClipboard
+{
+    
+    // clean out the old menu
+    [self clearClipBoard];
+    
+    // for each item, create new build menu cell
+    int counter = 0;
+    for(MenuItemCell *z in copiedItems){
+        
+        // need unique id number, so increment localIDcounter
+        localIDNumberCounter +=1;
+        
+        __unused MenuItemCell *menuBlock = [self makeBlockView_Name: z.name
+                                                      imageLocation: z.imageLocation
+                                                         parentName: z.parentName
+                                                               type: z.type
+                                                       destintation: z.destination
+                                                           receives: z.receives
+                                                     titleToDisplay: z.titleToDisplay
+                                            
+                                                             xValue: 0
+                                                             yValue: 0
+                                                                 ht: 0
+                                                                 wd: 0
+                                                            canDrag: TRUE
+                                                       defaultColor: colorDefaultForUIItems
+                                                   highlightedColor: colorHighlightedForUIItems
+                                                          dragColor: colorDraggingForUIItems
+                                 editExistingBlockInsteadOfCreating: [clipboardBlankCells objectAtIndex:counter]];
+        
+        // add additional data
+        menuBlock.restaurant = restaurant;
+        menuBlock.table = [NSString stringWithFormat:@"%@%i", z.name, localIDNumberCounter];
+        menuBlock.customer = customer;
+        
+        menuBlock.filterRestaurant = z.filterRestaurant;
+        menuBlock.filterTable = [NSString stringWithFormat:@"%@ %i", z.name, localIDNumberCounter];
+        menuBlock.filterCustomer = z.filterCustomer;
+        menuBlock.filterIsSeated = z.filterIsSeated;
+        
+        menuBlock.buildMode = 1;
+        
+        counter +=1; 
+    
+        // make alterations
+        // if not in build menu, UIInstances become menu items
+        if(buildModeOn==FALSE && [z.type isEqualToString:@"UIInstance"]){
+                menuBlock.type = @"MenuItem";  }
+        
+        // if in build menu, it will show children of a filter, but they cannot be dragged 
+        //  (you can't add a UIInstance to the clipboard in builder menu, so if they are there, they are children)
+
+        
+// HERE!!!        
+if(buildModeOn==TRUE && [z.type isEqualToString:@"UIInstance"]){
+menuBlock.canDrag = FALSE; }        
+// should properly designate children, what if have nested filters and stuff
+        
+    }
+    
+  //  [self deselectClipBoardItems];
+    
+}
+
+
+#pragma mark Copy to Clipboard
+
+- (IBAction)copyButtonPressed:(id)sender {
+    
+    // copy objects and its contents
+    
+    [copiedItems removeAllObjects];
+    [self copyObjectAndItsContents];       
+    
+    [self unhighlightUIObjects];
+    [self menuForClipboard];
+    
+    
+    // NSLog Output
+    for (MenuItemCell *z in copiedItems){
+        NSLog(@"adding to copied items: %@  table %@  filter %@", z.name, z.table, z.filterTable);}
+}
+
+
 -(void)copyObjectAndItsContents
 {
+    
+    // rem: not passing obj, grabbing selected obj
+    for(MenuItemCell *z in uiObjectsOnScreen){
+        
+        
+        if( (buildModeOn == FALSE && z.isSelected == TRUE &&  [z.type isEqualToString:@"UIInstance"])   ||
+            (buildModeOn == TRUE  && z.isSelected == TRUE && ![z.type isEqualToString:@"UIInstance"]) )    {
+            // can only copy food item instances (could refactor, but hard to follow code)
+            
+            // copy and add objects to array of copied items    
+            [copiedItems addObject: z];
+            
+            if([z.type isEqualToString:@"UIFilter"]) {
+                
+                // copy all children
+                for(MenuItemCell *c in uiObjects){
+                    
+                    
+                    if([c.table isEqualToString:z.filterTable]){
+                        [copiedItems addObject: c ];  } } } } }
+    
+
+    
+}
 
 
+-(void)uifilterDragAndDropCreatesChildren_DroppedItem:(MenuItemCell *)droppedItem createdItem:(MenuItemCell *)createdItem
+{
+
+    for(MenuItemCell *z in copiedItems){
+        
+        
+        
+    
+    }
 
 
 }
+
+
+#pragma mark Edit Detail
+-(void)createDetailViewForReuse
+{
+
+    detailView = [[NSBundle mainBundle] loadNibNamed:@"EditMenuItemCellDetailView" owner:self options:nil][0];
+    [self.view addSubview:detailView];
+    detailView.hidden = TRUE;
+    
+}
+
+- (IBAction)renameItemButtonPressed:(id)sender {
+    
+    for(MenuItemCell *z in uiObjectsOnScreen){
+        
+        if(z.isSelected == TRUE){
+            
+            detailView.menuLabel.text = z.titleToDisplay;
+            detailView.menuImagePreview.image = [UIImage imageNamed: z.imageLocation];
+        }
+    
+    }
+        
+        
+    detailView.hidden = FALSE;
+    [self.view bringSubviewToFront:detailView];
+    
+}
+                 
 
 // HAVE CELL RUN DETAIL DISPLAY
 
