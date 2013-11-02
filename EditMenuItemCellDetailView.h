@@ -7,16 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MenuItemCell.h"
 
-@interface EditMenuItemCellDetailView : UIView
+@interface EditMenuItemCellDetailView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property (strong, nonatomic) IBOutlet UITextField *menuLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *menuImagePreview;
+  @property UIImagePickerController *picker;
 
-- (IBAction)cancelButtonPressed:(id)sender;
-- (IBAction)okButtonPressed:(id)sender;
-- (IBAction)addPhotoButtonPressed:(id)sender;
+  @property MenuItemCell *senderCell;
 
--(void)loadDetailAndDisplay;
+  @property (strong, nonatomic) IBOutlet UITextField *menuLabel;
+  @property (strong, nonatomic) IBOutlet UIImageView *menuImagePreview;
+
+  - (IBAction)cancelButtonPressed:(id)sender;
+  - (IBAction)okButtonPressed:(id)sender;
+  - (IBAction)addPhotoButtonPressed:(id)sender;
+
+  -(void)loadDetailAndDisplay: (MenuItemCell *)senderCell;
 
 @end

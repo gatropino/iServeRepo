@@ -29,6 +29,7 @@
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ceP-Ef-Ug7">
                             <rect key="frame" x="486" y="328" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.89236582880000004" green="0.72755826670000001" blue="0.079527406980000007" alpha="1" colorSpace="calibratedRGB"/>
                             <state key="normal" title="Ok">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -39,9 +40,8 @@
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="akE-Rk-37z">
                             <rect key="frame" x="177" y="328" width="48" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <state key="normal" title="Cancel">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
+                            <color key="backgroundColor" red="0.89236582880000004" green="0.72755826670000001" blue="0.079527406980000007" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="Cancel"/>
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="fXz-Ss-Leq" eventType="touchUpInside" id="ehI-15-YMD"/>
                             </connections>
@@ -53,11 +53,13 @@
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pm4-te-7lM">
                             <rect key="frame" x="461" y="144" width="55" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.89236582880000004" green="0.72755826670000001" blue="0.079527406980000007" alpha="1" colorSpace="calibratedRGB"/>
                             <state key="normal" title="+ Photo">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="addPhotoButtonPressed:" destination="fXz-Ss-Leq" eventType="touchUpInside" id="fE3-B1-vRw"/>
+                                <action selector="selectedPhotoButtonPressed:" destination="fXz-Ss-Leq" eventType="touchUpInside" id="Pem-gV-qJ3"/>
                             </connections>
                         </button>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9j-f5-wMo">
@@ -67,7 +69,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.89236582880000004" green="0.72755826670000001" blue="0.079527406980000007" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.89236582880000004" green="0.72755826670000001" blue="0.079527406980000007" alpha="0.5" colorSpace="calibratedRGB"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
