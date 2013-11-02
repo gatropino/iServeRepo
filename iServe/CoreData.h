@@ -27,15 +27,10 @@
 
 -(void)deletePlacedOrderEntitiesByTableName:(NSString *)tableName;
 
--(NSInteger)summedTablesCheesesByTableName:(NSString *)tableName;
--(NSInteger)summedTablesSausageByTableName:(NSString *)tableName;
--(NSInteger)summedTablesPepperoniByTableName:(NSString *)tableName;
--(NSInteger)summedTablesVeggiesByTableName:(NSString *)tableName;
--(NSInteger)summedTablesBudweisersByTableName:(NSString *)tableName;
--(NSInteger)summedTablesCokesByTableName:(NSString *)tableName;
--(NSInteger)summedTablesSpritesByTableName:(NSString *)tableName;
--(NSInteger)summedTablesPizzasByTableName:(NSString *)tableName;
--(NSInteger)summedTablesDrinksByTableName:(NSString *)tableName;
+-(void)confirmTicketsByTableName:(NSString *)tableName;
+
+-(void)parseSaveConfirmedOrders;
+
 
 -(NSArray *)attributesOfPizza;
 -(Pizza *)quantityOfCheese:(NSNumber *)cheeseToppings quantityOfSausage:(NSNumber *)sausageToppings quantityOfPepperoni:(NSNumber *)pepperoniToppings;

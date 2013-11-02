@@ -601,7 +601,7 @@ id observer2;
 
 
 
--(void)parseSaveConfirmedOrders:(id)ObjectToSave
+-(void)parseSaveConfirmedOrders
 {
     NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
     [searchRequest setEntity:[NSEntityDescription entityForName:@"ConfirmedOrder" inManagedObjectContext:managedObjectContext]];
