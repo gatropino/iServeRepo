@@ -549,7 +549,6 @@ id observer2;
     pizzaToBeBuilt.sausage = sausageToppings;
     pizzaToBeBuilt.pepperoni= pepperoniToppings;
     
-    
     AvailableIngredients *availIngrediants = [self getAvailableIngrediants];
     
     availIngrediants.cheese = @([availIngrediants.cheese floatValue] - [cheeseToppings floatValue]);
@@ -596,7 +595,6 @@ id observer2;
 
 -(MenuItemData *)makeNewUIItem_parentName:(NSString *)parentName name:(NSString *)name titleToDisplay:(NSString *)titleToDisplay imageLocation:(NSString *)imageLocation type:(NSString *)type localIDNumber:(NSString *)localIDNumber instanceOf:(NSString *)instanceOf destination:(NSString *)destination receives:(NSString *)receives restaurant:(NSString *)restaurant table:(NSString *)table customer:(NSString *)customer filterRestaurant:(NSString *)filterRestaurant filterTable:(NSString *)filterTable filterCustomer:(NSString *)filterCustomer isSelected:(BOOL)isSelected canDrag:(BOOL)canDrag placeInstancesInHorizontalLine:(BOOL)placeInstancesInHorizontalLine isSeated:(BOOL)isSeated filterIsSeated:(BOOL)filterIsSeated defaultPositionX:(float)defaultPositionX defaultPositionY:(float)defaultPositionY buildMode:(NSNumber *)buildMode
 {
-    
     MenuItemData *menu = (MenuItemData *) [NSEntityDescription insertNewObjectForEntityForName:@"UIItemData" inManagedObjectContext:[self managedObjectContext]];
     
     menu.parentName = parentName;
@@ -628,15 +626,89 @@ id observer2;
     return menu;
 }
 
+-(void)parseLoadConfirmedOrders
+{
+    NSString *uniqueID = [NSString stringWithFormat:@"%@", [[UIDevice currentDevice] identifierForVendor]];
+    NSLog(@"%@", [[UIDevice currentDevice] identifierForVendor]);
+    
+    AvailableIngredients *ingrediants = [self getAvailableIngrediants];
+    if (!ingrediants.confirmedTicketNumber)
+    {
+        ingrediants.confirmedTicketNumber = @0;
+    }
+    NSString *createdAt = [NSString stringWithFormat:@"%@", ingrediants.createdAt];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"ConfirmedOrder"];
+    [query whereKey:@"uniqueIdentity" notEqualTo:uniqueID];
+    [query whereKey:@"createdAt" greaterThan:createdAt];
+    [query orderByAscending:@"createdAt"];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error)
+        {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %d scores.", objects.count);
+            // Do something with the found objects
+            for (PFObject *object in objects)
+            {
+                ingrediants.createdAt = object.createdAt;
+            
+                int sprite = [[object objectForKey:@"sprite"] intValue];
+                int coke = [[object objectForKey:@"coke"] intValue];
+                int budweiser = [[object objectForKey:@"budweiser"] intValue];
+                int totalDrinks = [[object objectForKey:@"totalDrinks"] intValue];
 
+                int cheese = [[object objectForKey:@"cheese"] intValue];
+                int pepperoni = [[object objectForKey:@"pepperoni"] intValue];
+                int sausage = [[object objectForKey:@"sausage"] intValue];
+                int veggie = [[object objectForKey:@"veggie"] intValue];
+                int totalPizzas = [[object objectForKey:@"totalPizzas"] intValue];
+                
+                ConfirmedOrder *confirmOrder = (ConfirmedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"ConfirmedOrder" inManagedObjectContext:managedObjectContext];
+                
+                ingrediants.confirmedTicketNumber = @([ingrediants.confirmedTicketNumber floatValue] + [@1 floatValue]);
+                
+                //converting string into date
+                NSString *dateString = object[@"timeOfOrder"];
+                NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+                [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+                NSDate *date = [dateFormat dateFromString:dateString];
+                
+                confirmOrder.ticketNumber = ingrediants.confirmedTicketNumber;
+                confirmOrder.timeOfOrder = date;
+                confirmOrder.sprite = [NSNumber numberWithInt:sprite];
+                confirmOrder.coke = [NSNumber numberWithInt:coke];
+                confirmOrder.budweiser = [NSNumber numberWithInt:budweiser];
+                confirmOrder.totalDrinks = [NSNumber numberWithInt:totalDrinks];
+                
+                confirmOrder.cheese = [NSNumber numberWithInt:cheese];
+                confirmOrder.sausage = [NSNumber numberWithInt:sausage];
+                confirmOrder.pepperoni = [NSNumber numberWithInt:pepperoni];
+                confirmOrder.veggie = [NSNumber numberWithInt:veggie];
+                confirmOrder.totalPizzas = [NSNumber numberWithInt:totalPizzas];
+                
+                confirmOrder.orderedFromTable = object[@"orderedFromTable"];
+                
+                [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
+                
+                NSLog(@"%@", object.objectId);
+            }
+        } else
+        {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
+}
 
 -(void)parseSaveConfirmedOrders
 {
     NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
     [searchRequest setEntity:[NSEntityDescription entityForName:@"ConfirmedOrder" inManagedObjectContext:managedObjectContext]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uploaded != YES"];
+    [searchRequest setPredicate:predicate];
     
     NSArray *matchedObjects = [managedObjectContext executeFetchRequest:searchRequest error:nil];
-    //creates a list of ALL pizzas created, would work well for a list of all pizzas made/sold but need it to show only ONE pizza, fix later
 
     for (ConfirmedOrder *order in matchedObjects)
     {
@@ -656,10 +728,12 @@ id observer2;
         confirmedOrder[@"timeOfOrder"] = [NSString stringWithFormat:@"%@", order.timeOfOrder];
         confirmedOrder[@"ticketNumber"] = [NSString stringWithFormat:@"%@", order.ticketNumber];
         confirmedOrder[@"orderedFromTable"] = [NSString stringWithFormat:@"%@", order.orderedFromTable];
+        confirmedOrder[@"uniqueIdentity"] = [NSString stringWithFormat:@"%@",[[UIDevice currentDevice] identifierForVendor]];
+        
+        order.uploaded = [NSNumber numberWithBool:YES];
         
         [confirmedOrder saveEventually];
     }
-    
 }
 
 
@@ -673,7 +747,6 @@ id observer2;
     NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:nil];
     
     return results;
-    
 }
 
 
@@ -687,8 +760,6 @@ id observer2;
     NSArray *results = [managedObjectContext executeFetchRequest:fetchRequest error:nil];
     
     return results;
-    
-    
 }
 
 -(Pizza *)createPizzaObject
@@ -701,67 +772,5 @@ id observer2;
     return newPizza;
 }
 
-/*
- [[CoreData myData] parentName:@"" name:@"" titleToDisplay:@"UIFILTER" imageLocation:@"" type:@"UIFilter" localIDNumber:@"" instanceOf:@"" destination:@"" receives:@"nothing ever" restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" filterRestaurant:@"lklkj" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:FALSE isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:200 buildMode:@0];
- 
- [[CoreData myData] parentName:@"" name:@"" titleToDisplay:@"UIDESTINATION" imageLocation:@"" type:@"UIDestination" localIDNumber:@"" instanceOf:@"" destination:@"" receives:@"ALL" restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" filterRestaurant:@"kjhkjh" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:FALSE isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:300 buildMode:@0];
- 
- // ??? SHOULD HARD CODE IT SO CAN'T GIVE A FILTER A DESTINATION
- 
- [[CoreData myData] parentName:@"Main Menu" name:@"Coke" titleToDisplay:@"COKE?" imageLocation:@"" type:@"MenuItem" localIDNumber:@"" instanceOf:@"" destination:@"" receives:@"ALL" restaurant:@"ALWAYS SHOW" table:@"ALWAYS SHOW" customer:@"ALWAYS SHOW" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:FALSE isSeated:FALSE filterIsSeated:FALSE defaultPositionX:100 defaultPositionY:500 buildMode:@0];
- 
- 
- 
- 
- 
- NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
- 
- NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
- [searchRequest setEntity:[NSEntityDescription entityForName:@"MenuItemData" inManagedObjectContext:context]];
- 
- NSArray *menuArray2 = [context executeFetchRequest:searchRequest error:nil];
- 
- // filter data (STUPID FIX)
- NSMutableArray *menuArray = [NSMutableArray new];
- 
- for(int x = 0; x<[menuArray2 count]; x++){
- 
- if([ [(MenuItemData *)[menuArray2 objectAtIndex:x] type] isEqualToString:@"MenuItem"] || [[(MenuItemData *)[menuArray2 objectAtIndex:x] type] isEqualToString:@"MenuBranch"])
- {
- 
- [menuArray addObject:[menuArray2 objectAtIndex:x]];
- }
- 
- }
- 
- 
- 
- 
- NSManagedObjectContext *context = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
- 
- NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
- [searchRequest setEntity:[NSEntityDescription entityForName:@"MenuItemData" inManagedObjectContext:context]];
- 
- NSArray *MenuArray2 = [context executeFetchRequest:searchRequest error:nil];
- 
- // filter data (STUPID FIX)
- NSMutableArray *MenuArray = [NSMutableArray new];
- 
- for(int x = 0; x<[MenuArray2 count]; x++){
- 
- if([ [(MenuItemData *)[MenuArray2 objectAtIndex:x] type] isEqualToString:@"UIFilter"] || [[(MenuItemData *)[MenuArray2 objectAtIndex:x] type] isEqualToString:@"UIDestination"])
- {
- 
- [MenuArray addObject:[MenuArray2 objectAtIndex:x]];
- }
- 
- 
- }
- 
- 
- 
- 
- 
- */
 
 @end

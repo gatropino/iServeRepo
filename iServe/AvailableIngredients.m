@@ -16,5 +16,6 @@
 @dynamic sausage;
 @dynamic ticketNumber;
 @dynamic confirmedTicketNumber;
+@dynamic createdAt;
 
 @end

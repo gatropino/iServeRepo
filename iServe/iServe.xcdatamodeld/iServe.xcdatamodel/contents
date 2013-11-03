@@ -3,6 +3,7 @@
     <entity name="AvailableIngredients" representedClassName="AvailableIngredients" syncable="YES">
         <attribute name="cheese" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="confirmedTicketNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="pepperoni" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="sausage" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="ticketNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -19,6 +20,7 @@
         <attribute name="timeOfOrder" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="totalDrinks" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="totalPizzas" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="uploaded" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="veggie" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Food" representedClassName="Food" isAbstract="YES" syncable="YES"/>

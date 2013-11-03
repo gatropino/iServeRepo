@@ -2,7 +2,7 @@
 //  ConfirmedOrder.m
 //  iServe
 //
-//  Created by Greg Tropino on 11/1/13.
+//  Created by Greg Tropino on 11/3/13.
 //  Copyright (c) 2013 Greg Tropino. All rights reserved.
 //
 
@@ -14,14 +14,15 @@
 @dynamic budweiser;
 @dynamic cheese;
 @dynamic coke;
+@dynamic orderedFromTable;
 @dynamic pepperoni;
 @dynamic sausage;
 @dynamic sprite;
 @dynamic ticketNumber;
-@dynamic veggie;
-@dynamic orderedFromTable;
 @dynamic timeOfOrder;
 @dynamic totalDrinks;
 @dynamic totalPizzas;
+@dynamic veggie;
+@dynamic uploaded;
 
 @end

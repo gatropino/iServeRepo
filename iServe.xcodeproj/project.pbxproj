@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		378E44941826B6EE007937A9 /* ConfirmedOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 378E44931826B6EE007937A9 /* ConfirmedOrder.m */; };
 		37A24EF0181F30C800A203FA /* UIItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EEF181F30C800A203FA /* UIItemData.m */; };
 		37A24EF6181F30C900A203FA /* Pizza.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EF5181F30C900A203FA /* Pizza.m */; };
 		37A24EF9181F30C900A203FA /* Food.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EF8181F30C900A203FA /* Food.m */; };
@@ -24,7 +25,6 @@
 		37A24F1318200AD800A203FA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37A24F1218200AD800A203FA /* SystemConfiguration.framework */; };
 		37A24F1C1821506D00A203FA /* PlacedOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24F1B1821506D00A203FA /* PlacedOrder.m */; };
 		37A24F1F182158A700A203FA /* ViewSingleOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24F1E182158A700A203FA /* ViewSingleOrderViewController.m */; };
-		37F4262018249F4C00A12E6D /* ConfirmedOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F4261F18249F4C00A12E6D /* ConfirmedOrder.m */; };
 		37F426231824A3B400A12E6D /* ConfirmOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F426221824A3B400A12E6D /* ConfirmOrderViewController.m */; };
 		37F426261824A3D300A12E6D /* ViewConfirmOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F426251824A3D300A12E6D /* ViewConfirmOrderViewController.m */; };
 		37F7F52918181AFA0014B5BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F7F52818181AFA0014B5BC /* Foundation.framework */; };
@@ -72,6 +72,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		378E44921826B6EE007937A9 /* ConfirmedOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmedOrder.h; sourceTree = "<group>"; };
+		378E44931826B6EE007937A9 /* ConfirmedOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmedOrder.m; sourceTree = "<group>"; };
 		37A24EEE181F30C800A203FA /* UIItemData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIItemData.h; path = ../UIItemData.h; sourceTree = "<group>"; };
 		37A24EEF181F30C800A203FA /* UIItemData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIItemData.m; path = ../UIItemData.m; sourceTree = "<group>"; };
 		37A24EF4181F30C900A203FA /* Pizza.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pizza.h; path = ../Pizza.h; sourceTree = "<group>"; };
@@ -98,8 +100,6 @@
 		37A24F1E182158A700A203FA /* ViewSingleOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewSingleOrderViewController.m; sourceTree = "<group>"; };
 		37A24F20182170C800A203FA /* AvailableIngredients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailableIngredients.h; sourceTree = "<group>"; };
 		37A24F21182170C800A203FA /* AvailableIngredients.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvailableIngredients.m; sourceTree = "<group>"; };
-		37F4261E18249F4C00A12E6D /* ConfirmedOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmedOrder.h; sourceTree = "<group>"; };
-		37F4261F18249F4C00A12E6D /* ConfirmedOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmedOrder.m; sourceTree = "<group>"; };
 		37F426211824A3B400A12E6D /* ConfirmOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmOrderViewController.h; sourceTree = "<group>"; };
 		37F426221824A3B400A12E6D /* ConfirmOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmOrderViewController.m; sourceTree = "<group>"; };
 		37F426241824A3D300A12E6D /* ViewConfirmOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewConfirmOrderViewController.h; sourceTree = "<group>"; };
@@ -188,8 +188,8 @@
 		375606F618188C5400E5C930 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				37F4261E18249F4C00A12E6D /* ConfirmedOrder.h */,
-				37F4261F18249F4C00A12E6D /* ConfirmedOrder.m */,
+				378E44921826B6EE007937A9 /* ConfirmedOrder.h */,
+				378E44931826B6EE007937A9 /* ConfirmedOrder.m */,
 				37A24F20182170C800A203FA /* AvailableIngredients.h */,
 				37A24F21182170C800A203FA /* AvailableIngredients.m */,
 				37A24F1A1821506D00A203FA /* PlacedOrder.h */,
@@ -428,7 +428,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				37F7F53B18181AFA0014B5BC /* AppDelegate.m in Sources */,
-				37F4262018249F4C00A12E6D /* ConfirmedOrder.m in Sources */,
 				CD65A2C41819B5EF00422B43 /* MenuItemCell.m in Sources */,
 				37F7F53E18181AFA0014B5BC /* iServe.xcdatamodeld in Sources */,
 				37A24EF0181F30C800A203FA /* UIItemData.m in Sources */,
@@ -442,6 +441,7 @@
 				CDFA9FB2182366CD00A7A8DE /* EditMenuItemCellDetailView.m in Sources */,
 				37F7F56418181D720014B5BC /* CoreData.m in Sources */,
 				37F426261824A3D300A12E6D /* ViewConfirmOrderViewController.m in Sources */,
+				378E44941826B6EE007937A9 /* ConfirmedOrder.m in Sources */,
 				CD50829D1820725F003FECED /* DefaultData.m in Sources */,
 				37A24EF9181F30C900A203FA /* Food.m in Sources */,
 				37A24F1C1821506D00A203FA /* PlacedOrder.m in Sources */,
