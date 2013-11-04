@@ -1,67 +1,68 @@
-//
-//  EditMenuItemCellDetailView.m
-//  iServe
-//
-//  Created by xcode on 10/31/13.
-//  Copyright (c) 2013 Greg Tropino. All rights reserved.
-//
+// NOTES: to reposition detail view, move it around in the xib; remember that this view takes up the whole screen in order to create a semitransparent overlay and to prevent screen interaction
 
 #import "EditMenuItemCellDetailView.h"
 
 @implementation EditMenuItemCellDetailView
-  @synthesize picker, menuImagePreview, menuLabel, senderCell;
+  @synthesize picker, menuImagePreview, menuLabel, senderCell, delegate;
 
-- (IBAction)cancelButtonPressed:(id)sender {
-
-  //  self.isHidden = TRUE;
-}
-
-- (IBAction)okButtonPressed:(id)sender {
-}
-
-- (IBAction)addPhotoButtonPressed:(id)sender {
-}
 
 -(void)loadDetailAndDisplay: (MenuItemCell *)sender;
 {
-
+    // not in init function because reusing view cell
+    
     senderCell = sender;
- 
+    menuLabel.text = senderCell.titleToDisplay;
+    
     if(senderCell.isCustomPhoto == FALSE){
         menuImagePreview.image = [UIImage imageNamed: senderCell.imageLocation];
     }else{
-  
-        NSFileManager *fileManger = [NSFileManager defaultManager];
-        NSURL *documentDirectory = [[fileManger URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-        NSURL *localFileLoc = [documentDirectory URLByAppendingPathComponent:[NSString stringWithFormat:@"%@_%@_photo.png", senderCell.titleToDisplay, [senderCell class]]];
-
-     
-        NSData *imageData = [NSData dataWithContentsOfURL: localFileLoc];
-        menuImagePreview.image = [UIImage imageWithData:imageData];      
+        
+        menuImagePreview.image = senderCell.imageView.image;      
     }
 }
 
 
-#pragma mark PhotoPicker
+- (IBAction)cancelButtonPressed:(id)sender {
 
-- (IBAction)pressedSaveButton:(id)sender {
+    self.hidden = TRUE;
+    [delegate unhighlightUIObjects];
+}
+
+- (IBAction)okButtonPressed:(id)sender {
+        
+    // update text field
+    senderCell.titleToDisplay = menuLabel.text;
+    senderCell.textLabel.text = menuLabel.text;
+    [senderCell reloadInputViews];
     
-    // save image to file and save file location as property of Person
-    NSString *photoName = [NSString stringWithFormat:@"%@_%@_photo.png", senderCell.titleToDisplay, [senderCell class]];
-    senderCell.imageLocation = photoName;
+    senderCell.isCustomPhoto = TRUE;
     
+    // save image to file
     NSFileManager *fileManger = [NSFileManager defaultManager];
     NSURL *documentDirectory = [[fileManger URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    NSString *photoName = [NSString stringWithFormat:@"%@_%@_photo.png", senderCell.titleToDisplay, [senderCell class]];
     NSURL *localFileLoc = [documentDirectory URLByAppendingPathComponent:
                            photoName]; 
     
     NSData *imageData = UIImagePNGRepresentation(menuImagePreview.image);
     [imageData writeToURL:localFileLoc atomically:YES];
+    
+    
+    // set MenuItemCell to image and save image location
+    senderCell.imageView.image = [UIImage imageWithData:imageData];  
+    senderCell.imageLocation = photoName;
+
+    
+    // exit
+    [menuLabel resignFirstResponder];
+    self.hidden = TRUE;
+    
+    [delegate unhighlightUIObjects];
 }
 
 
 
-#pragma mark IMAGE PICKER
+#pragma mark PhotoPicker & Delegate
 
 - (IBAction)selectedPhotoButtonPressed:(id)sender {
     
@@ -78,9 +79,7 @@
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }
     
-// MUST BE NAV????
-    
-    //[self presentViewController:picker animated:YES completion:nil];
+    [delegate pickerHelperMethodLoadsViewController:picker];
     
 }
 

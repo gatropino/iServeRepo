@@ -73,18 +73,21 @@
 @interface ViewController ()
 
 // arrays
-@property NSMutableArray *menuItemsGlobal;
-@property NSMutableArray *menuItemsCurrent;         // ie, data in reuse cells
+@property NSArray        *menuData;                           // from core data
+@property NSMutableArray *uiBuildMenuPrototypeCells;
+@property NSMutableArray *menuItemsCurrent;                   // ie, data in reuse cells
 @property NSMutableArray *menuItemHistory;
-@property NSArray *menuData;                        // from core data
 
 @property NSMutableArray *uiObjectsOnScreen;
 @property NSMutableArray *uiObjects;
 
-@property NSMutableArray *copiedItems;
-@property NSMutableArray *copiedChildren;
-@property NSMutableArray *clipboardBlankCells;
-@property NSMutableArray *uiBuildMenuPrototypeCells;
+@property NSMutableArray *clipboardBlankCells;                // list of cells being reused
+@property NSMutableArray *copiedItems;                        // clipboard contents
+@property NSMutableArray *copiedChildren;                     // will copy children with parents on drag and drop
+@property NSMutableArray *clipboardStoresTrash;               //   unused, for upgrade 
+@property NSMutableArray *clipboardBuilderOnItems;            //   unsued, for upgrade
+
+
 
 // views (for reuse)        
 @property EditMenuItemCellDetailView *detailView;
@@ -131,6 +134,8 @@
 @property float timeSeated;
 @property float timeDrinksOrdered;
 
+@property (strong, nonatomic) IBOutlet UIView *editSidebarView;
+@property (strong, nonatomic) IBOutlet UIView *sequenceView;
 @property (strong, nonatomic) IBOutlet UIButton *editScreenButton;
 @property (strong, nonatomic) IBOutlet UIButton *nextPageButton;
 
@@ -142,26 +147,31 @@
 - (IBAction)renameItemButtonPressed:(id)sender;
 - (IBAction)closeOrderButtonPressed:(id)sender;
 - (IBAction)nextPageButtonPressed:(id)sender;
+- (IBAction)homeButtonPressSoResetFilter:(id)sender;
+- (IBAction)stepInsideButtonPressed:(id)sender;
+- (IBAction)clearClipboardButtonPressed:(id)sender;
+
 
 -(void)setupScreen;
 -(void)getDefaultSettings;
 -(void)setupMenu;
 -(void)setupMenuBackgroundImages; 
 -(void)clearMenu;
--(void)createUIItems;
+-(void)createUIItemsOnLoad;
 -(void)sortUIItemsOnScreen;
 -(void)toggleBuilderModeOnOff;
--(void)createPizzaImage;
 -(void)refreshBuildMenuItems;
--(void)copyObjectAndItsContents;
+-(void)copyObjectAndItsContents_deleteOriginal:(BOOL)pleaseDelete;
+-(void)copyNestedContentInUIFilters:(MenuItemCell *)parentCell;
 -(void)menuForClipboard;
 -(void)clearClipBoard;
--(void)copyNestedContentInUIFilters:(MenuItemCell *)parentCell;
 -(void)buildMenuByFindingChildrenOfParent:(NSString *)nameOfParent; 
 -(void)buildMenuByFindingChildrenOfParent_HelperMethod:(NSString *)nameOfParent;
 -(void)makeInstance:(MenuItemCell *)sender objectBeingHit:(MenuItemCell *)objectBeingHit;
 -(void)makeInstanceOfChild:(MenuItemCell *)sender childsTableNumber:(NSString *)childsTableNumber;
 -(void)dropBuildObjectCopyChildren:(MenuItemCell *)parentCell childsTableNumber:(NSString *)childsTableNumber;
+-(void)loadPizzaImage:(MenuItemCell *)pizzaImage;
+-(void)saveUIBuildData;
 
 -(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destiation receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor editExistingBlockInsteadOfCreating:(MenuItemCell *)block;
 
@@ -170,7 +180,7 @@
 
 @implementation ViewController
 
-@synthesize uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems, menuItemsGlobal, yDefualtStartingPosition, menuItemsCurrent, uiItemPadding, localIDNumberCounter, restaurant, table, customer, isSeated, uiObjects, buildModeOn, menuItemHistory, uiBuildMenuPrototypeCells, uiItemHeight, uiItemWidth, copiedItems, clipboardBlankCells, editScreenButton, detailView, copiedChildren, pageNumber, nextPageButton, menuData;
+  @synthesize uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems, yDefualtStartingPosition, menuItemsCurrent, uiItemPadding, localIDNumberCounter, restaurant, table, customer, isSeated, uiObjects, buildModeOn, menuItemHistory, uiBuildMenuPrototypeCells, uiItemHeight, uiItemWidth, copiedItems, clipboardBlankCells, editScreenButton, detailView, copiedChildren, pageNumber, nextPageButton, menuData, editSidebarView, sequenceView, clipboardBuilderOnItems, clipboardStoresTrash;
 
 
 #pragma mark Setup
@@ -194,13 +204,12 @@
     [self setupMenuBackgroundImages];
     [self setupMenu];
     [self setupClipboard];
-    [self createPizzaImage];
     [self createDetailViewForReuse];
     
     [self buildMenuByFindingChildrenOfParent:@"Main Menu"];
-    [self createUIItems];
+    [self createUIItemsOnLoad];
     [self refreshBuildMenuItems];
-    [self runUIFilter];
+    [self runUIFilterToUpdateScreen];
     
 }
 
@@ -213,17 +222,20 @@
     customer = @"";
     
     // create arrays
-    menuItemsGlobal   = [NSMutableArray new];  
     menuItemsCurrent  = [NSMutableArray new];
     menuItemHistory = [NSMutableArray new];
+    uiBuildMenuPrototypeCells = [NSMutableArray new];
     
     uiObjects = [NSMutableArray new];
     uiObjectsOnScreen = [NSMutableArray new];
     
+    clipboardBlankCells = [NSMutableArray new];
+    clipboardBuilderOnItems = [NSMutableArray new]; 
+    clipboardBuilderOnItems = [NSMutableArray new]; 
+    
     copiedItems = [NSMutableArray new];
     copiedChildren = [NSMutableArray new];
-    clipboardBlankCells = [NSMutableArray new];
-    uiBuildMenuPrototypeCells = [NSMutableArray new];
+
     
     // set sizes
     menuItemWidth = 100;
@@ -232,7 +244,7 @@
     
     uiItemWidth = 100;
     uiItemHeight = 100;
-    uiItemPadding = 5;
+    uiItemPadding = 2;
     yDefualtStartingPosition = 139;
     
     // check screen size
@@ -245,12 +257,12 @@
     numberOfMenuItemsOnPage = (screenHeight - 65 - 120 - 2) / (menuItemHeight + menuItemPadding) -1;
     
     // set colors
-    colorDefaultForMenuItems = [UIColor colorWithRed:(255/255) green:(144/255) blue:(255/255) alpha:1];
-    //dodger blue	#1E90FF	(30,144,255)
+    colorDefaultForMenuItems = [UIColor colorWithRed:210/255.0 green:180/255.0 blue:140/255.0 alpha:1];     //purplish
+
     colorDraggingForMenuItems = [UIColor grayColor];
     colorHighlightedForMenuItems = [UIColor brownColor];
     
-    colorDefaultForUIItems = [UIColor colorWithRed:30/255 green:144/255 blue:255/255 alpha:.3];     //purplish
+    colorDefaultForUIItems = [UIColor colorWithRed:30/255.0 green:144/255.0 blue:255/255.0 alpha:1];     //purplish
     colorHighlightedForUIItems = [UIColor redColor];
     colorDraggingForUIItems = [UIColor purpleColor];
     
@@ -262,47 +274,58 @@
     
 }
 
--(void)createPizzaImage
+-(void)createUIItemsOnLoad  // gets data and imports into MenuCellObjects
 {
-    // create a single pizza image for the screen, a cell that will be reused and modified
-    // it will be hidden by filtering when not in table view
     
-    MenuItemCell *menuBlock = [self    makeBlockView_Name: @"Custom Cell: Pizza Image"
-                                            imageLocation: @"pizzaStart.png"
-                                               parentName: @""
-                                                     type: @"Custom"
-                                             destintation: @""
-                                                 receives: @""
-                                           titleToDisplay: @"+ Pizza"
-                               
-                                                   xValue: 200
-                                                   yValue: 250
-                                                       ht: 300
-                                                       wd: 400
-                               
-                                                  canDrag: FALSE
-                                             defaultColor: colorDefaultForUIItems
-                                         highlightedColor: colorHighlightedForUIItems
-                                                dragColor: colorDraggingForUIItems
-                       editExistingBlockInsteadOfCreating: nil];
+    NSArray *menuData2 = [[CoreData myData] fetchUIItems];
     
-    // add additional data
-    menuBlock.restaurant = @"";
-    menuBlock.table = @"table 1";
-    menuBlock.customer = @"";
-    
-    
-    menuBlock.imageView.frame = CGRectMake(0, 0, menuBlock.frame.size.width, menuBlock.frame.size.height - 15);
-    [menuBlock.imageView reloadInputViews];
-    // store all UI objects in an Array
-    [uiObjects addObject:menuBlock];
-    [uiObjectsOnScreen addObject:menuBlock];
-    [self.view addSubview:menuBlock];
+    for(int x = 0; x<[menuData2 count]; x++)
+    {
+        //get data
+        UIItemData *z =[menuData2 objectAtIndex:x];
+        
+        MenuItemCell *menuBlock = [self    makeBlockView_Name: z.name
+                                                imageLocation: z.imageLocation
+                                                   parentName: z.parentName
+                                                         type: z.type
+                                                 destintation: z.destination
+                                                     receives: z.receives
+                                               titleToDisplay: z.titleToDisplay
+                                   
+                                                       xValue: [z.defaultPositionX floatValue]
+                                                       yValue: [z.defaultPositionY floatValue]
+                                                           ht: uiItemHeight
+                                                           wd: uiItemWidth
+                                   
+                                                      canDrag: FALSE
+                                                 defaultColor: colorDefaultForUIItems
+                                             highlightedColor: colorHighlightedForUIItems
+                                                    dragColor: colorDraggingForUIItems
+                           editExistingBlockInsteadOfCreating: nil];
+        
+        // add additional data
+        menuBlock.restaurant = z.restaurant;
+        menuBlock.table = z.table;
+        menuBlock.customer = z.customer;
+        
+        menuBlock.filterRestaurant = z.filterRestaurant;
+        menuBlock.filterTable = z.filterTable;
+        menuBlock.filterCustomer = z.filterCustomer;
+        menuBlock.filterIsSeated = [z.filterIsSeated boolValue];
+        
+        menuBlock.instanceOf = z.instanceOf;
+        
+        // store all UI objects in an Array
+        [uiObjects addObject:menuBlock];
+        [uiObjectsOnScreen addObject:menuBlock];
+        [self.view addSubview:menuBlock];
+        
+        // mark as confirmed (ie already in core data)
+        menuBlock.orderConfirmed = TRUE;
+        
+    }
     
 }
-
-
-#pragma mark Menu
 
 -(void)setupMenu
 {
@@ -373,6 +396,10 @@
     }
     
 }
+
+
+
+#pragma mark Menu
 
 -(void)clearMenu  // same as setup, but does not make the objects, reuses them
 {
@@ -450,6 +477,9 @@
 
 - (IBAction)nextPageButtonPressed:(id)sender {
     
+    // FIX LATER
+    return;
+    
     // show first page
     pageNumber += 1;
     
@@ -457,6 +487,7 @@
     [self buildMenuByFindingChildrenOfParent_HelperMethod: [[menuItemsCurrent objectAtIndex: 0] parentName]];
     
 }
+
 
 -(void)buildMenuByFindingChildrenOfParent_HelperMethod:(NSString *)nameOfParent
 {
@@ -506,9 +537,6 @@
 -(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destination receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor editExistingBlockInsteadOfCreating:(MenuItemCell *)block
 {
     
-    
-    
-    
     // create menu block (unless editing an old one)
     
     MenuItemCell *menuBlock;
@@ -525,10 +553,25 @@
     
     // set view components
     menuBlock.textLabel.text = titleToDisplay;
-    menuBlock.imageView.image = [UIImage imageNamed: imageLocation];
+    menuBlock.imageLocation = imageLocation;
     
     menuBlock.frame = CGRectMake(x,y,width, height);
     menuBlock.backgroundColor = colorDefaultForMenuItems;
+    
+    if(menuBlock.isCustomPhoto){
+        
+        // get image from file
+        NSFileManager *fileManger = [NSFileManager defaultManager];
+        NSURL *documentDirectory = [[fileManger URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+        NSURL *localFileLoc = [documentDirectory URLByAppendingPathComponent: imageLocation]; 
+        
+        NSData *imageData = [NSData dataWithContentsOfURL: localFileLoc];
+        menuBlock.imageView.image = [UIImage imageWithData:imageData];  
+        
+    }else{
+        
+        menuBlock.imageView.image = [UIImage imageNamed: imageLocation];}
+
     
     // set properties
     menuBlock.delegate = self;
@@ -564,55 +607,6 @@
 
 #pragma mark UIObjects
 
--(void)createUIItems  // gets data and imports into MenuCellObjects
-{
-    
-    NSArray *menuData2 = [[CoreData myData] fetchUIItems];
-    
-    for(int x = 0; x<[menuData2 count]; x++)
-    {
-        //fetch data
-        UIItemData *z =[menuData2 objectAtIndex:x];
-        
-        MenuItemCell *menuBlock = [self    makeBlockView_Name: z.name
-                                                imageLocation: z.imageLocation
-                                                   parentName: z.parentName
-                                                         type: z.type
-                                                 destintation: z.destination
-                                                     receives: z.receives
-                                               titleToDisplay: z.titleToDisplay
-                                   
-                                                       xValue: [z.defaultPositionX floatValue]
-                                                       yValue: [z.defaultPositionY floatValue]
-                                                           ht: uiItemHeight
-                                                           wd: uiItemWidth
-                                   
-                                                      canDrag: FALSE
-                                                 defaultColor: colorDefaultForUIItems
-                                             highlightedColor: colorHighlightedForUIItems
-                                                    dragColor: colorDraggingForUIItems
-                           editExistingBlockInsteadOfCreating: nil];
-        
-        // add additional data
-        menuBlock.restaurant = z.restaurant;
-        menuBlock.table = z.table;
-        menuBlock.customer = z.customer;
-        
-        menuBlock.filterRestaurant = z.filterRestaurant;
-        menuBlock.filterTable = z.filterTable;
-        menuBlock.filterCustomer = z.filterCustomer;
-        menuBlock.filterIsSeated = [z.filterIsSeated boolValue];
-        
-        menuBlock.instanceOf = z.instanceOf;
-        
-        // store all UI objects in an Array
-        [uiObjects addObject:menuBlock];
-        [uiObjectsOnScreen addObject:menuBlock];
-        [self.view addSubview:menuBlock];
-    }
-    
-}
-
 -(void)sortUIItemsOnScreen
 {
     
@@ -633,7 +627,16 @@
     
 }
 
--(void)runUIFilter
+- (IBAction)homeButtonPressSoResetFilter:(id)sender {
+    
+    
+    restaurant = @"";
+    table = @"Main View";
+    customer = @"";
+    [self runUIFilterToUpdateScreen];
+}
+
+-(void)runUIFilterToUpdateScreen
 {
     
     // hide all UIObjectsOnScreen
@@ -668,6 +671,54 @@
 
     }
     
+    // in order to make sure that the pizza image is in the right place, run 
+    [self updateScreenLocationsAfterDragAndDrop];
+    
+}
+
+
+-(void)loadPizzaImage:(MenuItemCell *)pizzaDisplayImage
+{
+    NSLog(@"pizza display ok");
+    
+    // in some situations, the size may be altered, readjust
+    float wd = 200;
+    float ht = 150;
+    
+    // pizzaDisplayImage.frame = CGRectMake(pizzaDisplayImage.frame.origin.x, pizzaDisplayImage.frame.origin.y, wd,  ht);
+    
+    
+    // find the last pizza in the list, ie, in uiObjectsOnScreen (rem: sorted by x,y value)
+    
+    NSString *name;
+    
+    for(int i = [uiObjectsOnScreen count] - 1 ; i >= 0 ; i--){  
+        
+        name = [[uiObjectsOnScreen objectAtIndex: i] name];
+        
+        if([name isEqualToString:@"Pepperoni Pizza"]){
+            
+            pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"pepperoni.png"];
+            return;
+            
+        }else if([name isEqualToString:@"Veggie Pizza"]){
+            
+            pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"veggiePizza.png"];
+            return;
+            
+        }else if([name isEqualToString:@"Cheese Pizza"]){
+            
+            pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"cheese.png"];
+            return;
+        };
+        
+        
+        
+    }
+    
+    pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"pizzaStart.png"];
+    pizzaDisplayImage.imageView.frame = CGRectMake(0, 0, wd,  ht);
+    [pizzaDisplayImage.imageView reloadInputViews];
 }
 
 
@@ -728,10 +779,12 @@
     
     NSMutableArray *copyUIObjectsOnScreen = [NSMutableArray arrayWithArray:uiObjectsOnScreen];
     
-    // fetch UIDestinationObjects
+    // get UIDestinationObjects
     for(MenuItemCell* z in uiObjectsOnScreen){
         
-        if([z.type isEqualToString: @"UIDestination"]){
+        if([z.type isEqualToString: @"Pizza Image Display"]){ [self loadPizzaImage: z];} 
+        
+        else if([z.type isEqualToString: @"UIDestination"]){
             
             int x = z.defaultPositionX;
             int y = z.defaultPositionY;
@@ -760,25 +813,8 @@
             z.frame = CGRectMake(x, y, wd, ht);
             
         }}
-    
-    [self loadPizzaImage];
-    
+
 }
-
--(void)loadPizzaImage
-{
-
-
-    for(MenuItemCell *z in uiObjectsOnScreen)
-    {
-    
-
-    
-    
-    }
-    
-}
-
 
 
 -(void)makeInstance:(MenuItemCell *)sender objectBeingHit:(MenuItemCell *)objectBeingHit
@@ -882,7 +918,7 @@
     
     localIDNumberCounter += 1;
     
-    NSLog(@"parent instance created %@ table: %@    filter: %@",menuBlock.name, menuBlock.table, menuBlock.filterTable ); 
+    //NSLog(@"parent instance created %@ table: %@    filter: %@",menuBlock.name, menuBlock.table, menuBlock.filterTable ); 
 }
 
 
@@ -894,11 +930,11 @@
     if (buildModeOn==TRUE){
         
  // input coming in, but not changing???
-            NSLog(@"%@", editScreenButton.titleLabel.text);
+        //    NSLog(@"%@", editScreenButton.titleLabel.text);
         editScreenButton.titleLabel.text =@"Edit Screen Off";
     
     }else{
-               NSLog(@"%i", buildModeOn);
+        //       NSLog(@"%i", buildModeOn);
         editScreenButton.titleLabel.text = @"Edit Screen"      ;   
     }
 }
@@ -926,7 +962,7 @@
 -(void)viewSubMenu:(MenuItemCell *)sender
 {
     
-    // fetch items for parentName = sender.name (ie, look for the children)
+    // get items for parentName = sender.name (ie, look for the children)
     [self buildMenuByFindingChildrenOfParent: sender.name];
     
 }
@@ -958,7 +994,7 @@
     customer = mit.filterCustomer;
     isSeated = mit.filterIsSeated;
     
-    [self runUIFilter];
+    [self runUIFilterToUpdateScreen];
     
 }
 
@@ -969,7 +1005,7 @@
 {
 
     // clear old objects and search uiObjects for anything with instanceOf field == @"Prototype"
-    //  (all of these items should also be UIFilter or UIDestination cells, but no need to waste proc. cycles)
+    //  (all of these items should also be UIFilter or UIDestination cells)
     
     [uiBuildMenuPrototypeCells removeAllObjects];
     
@@ -995,22 +1031,6 @@
     int counter = 0;
     for(MenuItemCell *z in uiBuildMenuPrototypeCells){
  
-        //filter for item looking at (same basic code as in run filters)
-        
-      /*  if(([restaurant isEqualToString:@""]   ||                   // ie, the filter is off
-            [z.restaurant isEqualToString:restaurant]   ||          // the value = the same as the filter
-            [z.restaurant isEqualToString:@""])                     // or the value is marked as always show
-           &&
-           ([table isEqualToString:@""]  ||
-            [z.table isEqualToString:table]   ||
-            [z.table isEqualToString:@""])
-           &&
-           ([customer isEqualToString:@""]  ||
-            [z.customer isEqualToString:customer]  ||
-            [z.customer isEqualToString:@""]))   {*/
-               
-        
-            // need unique id number, so increment localIDcounter
                localIDNumberCounter +=1;
                                                                                 //NSLog(@"%i", counter);
             __unused MenuItemCell *menuBlock = [self makeBlockView_Name: z.name
@@ -1045,11 +1065,20 @@
             
             counter +=1; }
     
-//             NSLog(@"there%@", menuBlock.filterTable );
-   // }
-    
 }
 
+
+- (IBAction)stepInsideButtonPressed:(id)sender {
+    
+    for(MenuItemCell *z in uiObjectsOnScreen){
+        
+        if(buildModeOn == TRUE  && z.isSelected == TRUE && [z.type isEqualToString:@"UIFilter"]){
+                [self unhighlightUIObjects];
+                [self changeFilters:z]; 
+                return;}
+    }
+            
+}
 
 -(void)toggleBuilderModeOnOff
 {
@@ -1061,6 +1090,7 @@
         self.view.backgroundColor = [UIColor redColor];
         for(MenuItemCell *z in uiObjects){
             
+            [self clearClipBoard];
             z.canDrag = TRUE;
             z.buildMode = 2;  // menu items not in uiObjects
             
@@ -1086,13 +1116,69 @@
             z.buildMode = 0;  
     
             
-            [self buildMenuByFindingChildrenOfParent:@"Main Menu"]; }
+            [self buildMenuByFindingChildrenOfParent:@"Main Menu"]; 
+            [self clearClipBoard]; 
+        }
+        
+        // save changes in core data
+        [self saveUIBuildData];
+
+        
     }
     
 }
 
 
-#pragma mark TIME SEQUENCES
+-(void)saveUIBuildData
+{
+    
+    for(MenuItemCell *z in uiObjects){
+        
+        if(([z.type isEqualToString:@"UIDestination"] ||
+            [z.type isEqualToString:@"UIFilter"]      ||
+            [z.type isEqualToString:@"Pizza Image Display"])
+                    &&
+             !z.orderConfirmed) {    // if not already saved (ie order confirmed) save in coredata
+            
+    
+                       [[CoreData myData] makeNewUIItem_parentName:z.parentName
+                                                              name:z.name 
+                                                    titleToDisplay:z.titleToDisplay 
+                                                     imageLocation:z.imageLocation 
+                                                              type:z.type
+                                                     localIDNumber:z.localIDNumber 
+                                                        instanceOf:z.instanceOf 
+                                                       destination:z.destination 
+                                                          receives:z.receives 
+                                                        restaurant:z.restaurant
+                                                             table:z.table
+                                                          customer:z.customer
+                                                  filterRestaurant:z.filterRestaurant
+                                                       filterTable:z.filterTable 
+                                                    filterCustomer:z.filterCustomer
+                                                        isSelected:z.isSelected
+                                                           canDrag:z.canDrag 
+                                    placeInstancesInHorizontalLine:z.placeInstancesInHorizontalLine 
+                                                          isSeated:z.isSeated 
+                                                    filterIsSeated:z.filterIsSeated
+                                                  defaultPositionX:z.defaultPositionX
+                                                  defaultPositionY:z.defaultPositionY
+                                                         buildMode:[NSNumber numberWithInt:z.buildMode] ];  
+                        z.orderConfirmed = TRUE;
+        }
+    }
+    
+}
+
+#pragma mark Sequence
+- (IBAction)sequenceButtonPressed:(id)sender {
+        
+    [self.view bringSubviewToFront:sequenceView];
+}
+- (IBAction)editMenuButtonPressed:(id)sender {
+         
+    [self.view bringSubviewToFront:editSidebarView];
+}
 
 - (IBAction)confirmOrderButtonPressed:(id)sender {
     
@@ -1119,7 +1205,7 @@
             z.orderConfirmed = TRUE;  }
     
     }
-    NSLog(@"%@", table);
+    //NSLog(@"%@", table);
     //for(MenuItemCell *z in listOfConfirmedOrders){
     //    NSLog(@"%@", z.titleToDisplay ); }
     
@@ -1130,25 +1216,46 @@
 
 - (IBAction)closeOrderButtonPressed:(id)sender {
 
-        NSLog(@"%@", table);
     [[CoreData myData] confirmTicketsByTableName:table];
+    [self clearTableButtonPressed:nil];
 
 }
 
 
 
-#pragma mark Copy to Clipboard
+#pragma mark Copy & Delete
 
 - (IBAction)copyButtonPressed:(id)sender {
 
-    [self copyObjectAndItsContents];       
+    [self copyObjectAndItsContents_deleteOriginal:FALSE];       
 
 }
 
+- (IBAction)deleteButtonPressed:(id)sender {
+    
+    [self copyObjectAndItsContents_deleteOriginal:TRUE];
+    [self updateScreenLocationsAfterDragAndDrop];
+    
+}
 
--(void)copyObjectAndItsContents
-{
+- (IBAction)clearTableButtonPressed:(id)sender {
+    
+    for(MenuItemCell *z in uiObjectsOnScreen){
         
+        if([z.type isEqualToString:@"UIInstance"]) {
+                z.isSelected = TRUE; }
+    }
+    
+    [self copyObjectAndItsContents_deleteOriginal:TRUE];
+    [self updateScreenLocationsAfterDragAndDrop];
+    
+}
+
+
+-(void)copyObjectAndItsContents_deleteOriginal:(BOOL)pleaseDelete
+{
+     
+    // empty clipboard
     [copiedItems removeAllObjects];
     [copiedChildren removeAllObjects];
     
@@ -1157,24 +1264,51 @@
         
         if( (buildModeOn == FALSE && z.isSelected == TRUE &&  [z.type isEqualToString:@"UIInstance"])   ||
             (buildModeOn == TRUE  && z.isSelected == TRUE && ![z.type isEqualToString:@"UIInstance"]) )    {
-            // can only copy food item instances (could refactor, but hard to follow code)
-            
+                                                                    // can only copy food item instances (could refactor, but hard to follow code)
             // copy and add objects to array of copied items    
             [copiedItems addObject: z];
-
+            
             // save record of children
-            [self copyNestedContentInUIFilters: z]; }
+            [self copyNestedContentInUIFilters:z]; 
+        
+        // notify user is failed    
+        }else if(z.isSelected == TRUE){
+ 
+
+                [UIView animateWithDuration:.6 animations:
+                    ^{ z.backgroundColor = [UIColor redColor]; } completion:^(BOOL finished) {
+                    
+                    
+                            [UIView animateWithDuration:.6 animations:
+                                ^{z.backgroundColor = [UIColor blackColor];} completion:
+                                ^(BOOL finished) { [self unhighlightUIObjects];}];
+
+                }];
+        
+        }
     }    
+    
+    // if pleaseDelete is on, then delete from screen and from array of all objects
+    if(pleaseDelete==TRUE){
+        
+        for(MenuItemCell *z in copiedItems){
+            z.hidden = TRUE;                    
+            [uiObjects removeObject:z];
+            [uiObjectsOnScreen removeObject:z];}
+        for(MenuItemCell *z in copiedChildren){
+            [uiObjects removeObject:z];  }
+    }
+    
     
     [self unhighlightUIObjects];
     [self menuForClipboard];
     
     // NSLog Output
-    for (MenuItemCell *z in copiedItems){
-        NSLog(@"adding to copied items: %@  table %@  filter %@", z.name, z.table, z.filterTable);}
+    //for (MenuItemCell *z in copiedItems){
+    //    NSLog(@"adding to copied items: %@  table %@  filter %@", z.name, z.table, z.filterTable);}
     
-    for (MenuItemCell *z in copiedChildren){
-        NSLog(@"adding to copied items: %@  table %@  filter %@", z.name, z.table, z.filterTable);}    
+    //for (MenuItemCell *z in copiedChildren){
+    //    NSLog(@"adding to copied items: %@  table %@  filter %@", z.name, z.table, z.filterTable);}    
 }
 
 -(void)copyNestedContentInUIFilters:(MenuItemCell *)parentCell
@@ -1189,7 +1323,7 @@
                 
                                 [copiedChildren addObject: c ];  
                     
-                                [self copyNestedContentInUIFilters: c];  } 
+                                [self copyNestedContentInUIFilters:c];   } 
             } 
     
     } 
@@ -1203,7 +1337,7 @@
 {
     
     // make menu from blocks (no data), will reuse the cells
-    float xBlockPosition = uiItemWidth + uiItemPadding;
+    float xBlockPosition = uiItemWidth + menuItemPadding;
     
     for(int x = 0; x<8; x++)  {
         
@@ -1216,7 +1350,7 @@
                                             titleToDisplay: @""
                                    
                                                     xValue: xBlockPosition
-                                                    yValue: 670
+                                                    yValue: 668
                                                         ht: uiItemHeight
                                                         wd: uiItemWidth
                                                    canDrag: FALSE
@@ -1233,6 +1367,12 @@
         
     }
     
+}
+
+
+- (IBAction)clearClipboardButtonPressed:(id)sender {
+    
+    [self clearClipBoard];
 }
 
 -(void)clearClipBoard  // same as setup, but does not make the objects, reuses them
@@ -1402,7 +1542,7 @@
     [self.view addSubview:menuBlock];
     menuBlock.hidden = TRUE;
     
-    NSLog(@"child created %@ table: %@    filter: %@",menuBlock.name, menuBlock.table, menuBlock.filterTable ); 
+    //NSLog(@"child created %@ table: %@    filter: %@",menuBlock.name, menuBlock.table, menuBlock.filterTable ); 
 }
 
 
@@ -1414,6 +1554,7 @@
     detailView = [[NSBundle mainBundle] loadNibNamed:@"EditMenuItemCellDetailView" owner:self options:nil][0];
     [self.view addSubview:detailView];
     detailView.hidden = TRUE;
+    detailView.delegate = self;
     
 }
 
@@ -1423,24 +1564,26 @@
         
         if(z.isSelected == TRUE){
             
+            detailView.hidden = FALSE;
+            [self.view bringSubviewToFront:detailView];
+            
             [detailView loadDetailAndDisplay: z];
-            break;
-        }
+
+            break; }
     
     }
-        
-        
-    detailView.hidden = FALSE;
-    [self.view bringSubviewToFront:detailView];
     
 }
 
                  
-//!!!! FREEZE FILTERS IN normal mode
+-(void)pickerHelperMethodLoadsViewController:(UIImagePickerController *)picker
+{
 
-// HAVE CELL RUN DETAIL DISPLAY
+    [self presentViewController:picker animated:YES completion:nil];
 
-// AND A RESIZE DISPLAY
+}
+
+
 
 // LOOK AT SCALING (SO CAN ASK)
 

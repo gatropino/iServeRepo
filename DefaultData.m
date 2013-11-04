@@ -37,8 +37,8 @@
                                     
                                     isSelected:false canDrag:false placeInstancesInHorizontalLine:TRUE isSeated:false filterIsSeated:false 
                               
-                              defaultPositionX:60 
-                              defaultPositionY:150 
+                              defaultPositionX:550
+                              defaultPositionY:200 
                                      buildMode:@0    ];
 
 
@@ -65,92 +65,9 @@
      
                                      isSelected:false canDrag:false placeInstancesInHorizontalLine:FALSE isSeated:false filterIsSeated:false 
      
-                               defaultPositionX:650 
-                               defaultPositionY:300 
+                               defaultPositionX:670 
+                               defaultPositionY:200 
                                       buildMode:@0    ];
-    
-    [[CoreData myData] makeNewUIItem_parentName:@"" 
-                                           name:@"Trash" 
-                                 titleToDisplay:@"TRASH" 
-                                  imageLocation:@"" 
-                                           type:@"UIDestination" 
-     
-                                  localIDNumber:@"" 
-                                     instanceOf:@"Prototype" 
-     
-                                    destination:@"" 
-                                       receives:@"ALL" 
-     
-                                     restaurant:@"" 
-                                          table:@"Main View"  
-                                       customer:@""    
-     
-                               filterRestaurant:@"" 
-                                    filterTable:@"" 
-                                 filterCustomer:@"" 
-     
-                                     isSelected:false canDrag:false placeInstancesInHorizontalLine:TRUE isSeated:false filterIsSeated:false 
-     
-                               defaultPositionX:600 
-                               defaultPositionY:650 
-                                      buildMode:@0    ];
-    
-
-    [[CoreData myData] makeNewUIItem_parentName:@"" 
-                                           name:@"Trash" 
-                                 titleToDisplay:@"TRASH" 
-                                  imageLocation:@"" 
-                                           type:@"UIDestination" 
-     
-                                  localIDNumber:@"" 
-                                     instanceOf:@"Prototype" 
-     
-                                    destination:@"" 
-                                       receives:@"ALL" 
-     
-                                     restaurant:@"" 
-                                          table:@"table"  
-                                       customer:@""    
-     
-                               filterRestaurant:@"" 
-                                    filterTable:@"" 
-                                 filterCustomer:@"" 
-     
-                                     isSelected:false canDrag:false placeInstancesInHorizontalLine:TRUE isSeated:false filterIsSeated:false 
-     
-                               defaultPositionX:600 
-                               defaultPositionY:650 
-                                      buildMode:@0    ];
-    
-    
-    
-    // UIView Cells
-    [[CoreData myData] makeNewUIItem_parentName:@"Respective Tables" 
-                                           name:@"Restaurant" 
-                                 titleToDisplay:@"Restaurant View" 
-                                  imageLocation:@"" 
-                                           type:@"UIFilter" 
-     
-                                  localIDNumber:@"" 
-                                     instanceOf:@"" 
-     
-                                    destination:@"" 
-                                       receives:@"" 
-     
-                                     restaurant:@"" 
-                                          table:@""  
-                                       customer:@""  
-     
-                               filterRestaurant:@"" 
-                                    filterTable:@"Main View" 
-                                 filterCustomer:@"" 
-     
-                                     isSelected:false canDrag:false placeInstancesInHorizontalLine:true isSeated:false filterIsSeated:false 
-     
-                               defaultPositionX:0 
-                               defaultPositionY:670 
-                                      buildMode:@0    ];
-    
     
     
     [[CoreData myData] makeNewUIItem_parentName:@"" 
@@ -175,45 +92,36 @@
      
                                      isSelected:false canDrag:false placeInstancesInHorizontalLine:true isSeated:false filterIsSeated:false 
      
-                               defaultPositionX:100 
-                               defaultPositionY:400 
+                               defaultPositionX:300 
+                               defaultPositionY:300 
                                       buildMode:@0    ];
     
+    
     [[CoreData myData] makeNewUIItem_parentName:@"" 
-                                           name:@"Table 2" 
-                                 titleToDisplay:@"Table 2" 
-                                  imageLocation:@"" 
-                                           type:@"UIFilter" 
+                                           name:@"Pizza Image Display" 
+                                 titleToDisplay:@"" 
+                                  imageLocation:@"pizzaStart.png" 
+                                           type:@"Pizza Image Display" 
      
-                                  localIDNumber:@"" instanceOf:@"" 
+                                  localIDNumber:@"" 
+                                     instanceOf:@"" 
      
                                     destination:@"" 
                                        receives:@"" 
      
                                      restaurant:@"" 
-                                          table:@"Main View"  
+                                          table:@"table 1"  
                                        customer:@""  
      
                                filterRestaurant:@"" 
-                                    filterTable:@"table 2" 
+                                    filterTable:@"" 
                                  filterCustomer:@"" 
      
                                      isSelected:false canDrag:false placeInstancesInHorizontalLine:true isSeated:false filterIsSeated:false 
      
-                               defaultPositionX:200 
+                               defaultPositionX:250 
                                defaultPositionY:200 
                                       buildMode:@0    ];
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -292,7 +200,7 @@
     
     //MENU ITEMS PIZZA
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
-                                                              name:@"Cheese" 
+                                                              name:@"Cheese Pizza" 
                                                     titleToDisplay:@"Cheese Pizza" 
                                                      imageLocation:@"" 
                                                               type:@"MenuItem"
@@ -315,18 +223,18 @@
      
                                                           receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
+
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
-                                                              name:@"Veggie Pizza"
+                                                              name:@"Veggie Pizza" 
                                                     titleToDisplay:@"Veggie Pizza" 
-                                                     imageLocation:@""
+                                                     imageLocation:@"" 
                                                               type:@"MenuItem"
      
                                                      localIDNumber:@"" instanceOf:@"" 
      
                                                        destination:@"Pizza" 
      
-                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
-    
+                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];    
     
     
     

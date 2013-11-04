@@ -55,6 +55,7 @@
 
 @property NSManagedObject *MenuItemCellObject;
 
+
 @end
 
 //TO ADD
