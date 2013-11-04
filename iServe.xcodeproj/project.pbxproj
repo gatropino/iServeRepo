@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		378E44941826B6EE007937A9 /* ConfirmedOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 378E44931826B6EE007937A9 /* ConfirmedOrder.m */; };
+		378E44961826C21B007937A9 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 378E44951826C21B007937A9 /* SpriteKit.framework */; };
+		378E44991826C7BB007937A9 /* SKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 378E44981826C7BB007937A9 /* SKViewController.m */; };
+		378E449C1826D541007937A9 /* MyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 378E449B1826D541007937A9 /* MyScene.m */; };
+		379F705E1826E899003CAD2D /* sample_iPod.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 379F705D1826E899003CAD2D /* sample_iPod.m4v */; };
 		37A24EF0181F30C800A203FA /* UIItemData.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EEF181F30C800A203FA /* UIItemData.m */; };
 		37A24EF6181F30C900A203FA /* Pizza.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EF5181F30C900A203FA /* Pizza.m */; };
 		37A24EF9181F30C900A203FA /* Food.m in Sources */ = {isa = PBXBuildFile; fileRef = 37A24EF8181F30C900A203FA /* Food.m */; };
@@ -74,6 +78,12 @@
 /* Begin PBXFileReference section */
 		378E44921826B6EE007937A9 /* ConfirmedOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmedOrder.h; sourceTree = "<group>"; };
 		378E44931826B6EE007937A9 /* ConfirmedOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmedOrder.m; sourceTree = "<group>"; };
+		378E44951826C21B007937A9 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		378E44971826C7BB007937A9 /* SKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKViewController.h; sourceTree = "<group>"; };
+		378E44981826C7BB007937A9 /* SKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKViewController.m; sourceTree = "<group>"; };
+		378E449A1826D541007937A9 /* MyScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScene.h; sourceTree = "<group>"; };
+		378E449B1826D541007937A9 /* MyScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScene.m; sourceTree = "<group>"; };
+		379F705D1826E899003CAD2D /* sample_iPod.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_iPod.m4v; sourceTree = "<group>"; };
 		37A24EEE181F30C800A203FA /* UIItemData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIItemData.h; path = ../UIItemData.h; sourceTree = "<group>"; };
 		37A24EEF181F30C800A203FA /* UIItemData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIItemData.m; path = ../UIItemData.m; sourceTree = "<group>"; };
 		37A24EF4181F30C900A203FA /* Pizza.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pizza.h; path = ../Pizza.h; sourceTree = "<group>"; };
@@ -154,6 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				378E44961826C21B007937A9 /* SpriteKit.framework in Frameworks */,
 				37A24F1318200AD800A203FA /* SystemConfiguration.framework in Frameworks */,
 				37A24F1118200ACC00A203FA /* StoreKit.framework in Frameworks */,
 				37A24F0F18200AC600A203FA /* Security.framework in Frameworks */,
@@ -248,6 +259,7 @@
 		37F7F52718181AFA0014B5BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				378E44951826C21B007937A9 /* SpriteKit.framework */,
 				37A24F1218200AD800A203FA /* SystemConfiguration.framework */,
 				37A24F1018200ACC00A203FA /* StoreKit.framework */,
 				37A24F0E18200AC600A203FA /* Security.framework */,
@@ -271,6 +283,10 @@
 			isa = PBXGroup;
 			children = (
 				37F7F55D18181BB40014B5BC /* Storyboard.storyboard */,
+				378E44971826C7BB007937A9 /* SKViewController.h */,
+				378E44981826C7BB007937A9 /* SKViewController.m */,
+				378E449A1826D541007937A9 /* MyScene.h */,
+				378E449B1826D541007937A9 /* MyScene.m */,
 				37F426211824A3B400A12E6D /* ConfirmOrderViewController.h */,
 				37F426221824A3B400A12E6D /* ConfirmOrderViewController.m */,
 				37F426241824A3D300A12E6D /* ViewConfirmOrderViewController.h */,
@@ -287,6 +303,7 @@
 				37F7F53A18181AFA0014B5BC /* AppDelegate.m */,
 				37F7F53F18181AFA0014B5BC /* Images.xcassets */,
 				37F7F53C18181AFA0014B5BC /* iServe.xcdatamodeld */,
+				379F705D1826E899003CAD2D /* sample_iPod.m4v */,
 				375606F618188C5400E5C930 /* Entities */,
 				37F7F53118181AFA0014B5BC /* Supporting Files */,
 			);
@@ -407,6 +424,7 @@
 				CD65A2D01819B75000422B43 /* sprite.jpg in Resources */,
 				CDF9DC4A1820D07B0074DC0F /* pizzaStart.png in Resources */,
 				37F7F55E18181BB40014B5BC /* Storyboard.storyboard in Resources */,
+				379F705E1826E899003CAD2D /* sample_iPod.m4v in Resources */,
 				CDF9DC481820CFEB0074DC0F /* vegiePizza.png in Resources */,
 				CDFA9FB41823687700A7A8DE /* EditMenuItemCellDetailView.xib in Resources */,
 			);
@@ -439,10 +457,12 @@
 				37A24EFC181F30C900A203FA /* Images.m in Sources */,
 				37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */,
 				CDFA9FB2182366CD00A7A8DE /* EditMenuItemCellDetailView.m in Sources */,
+				378E449C1826D541007937A9 /* MyScene.m in Sources */,
 				37F7F56418181D720014B5BC /* CoreData.m in Sources */,
 				37F426261824A3D300A12E6D /* ViewConfirmOrderViewController.m in Sources */,
 				378E44941826B6EE007937A9 /* ConfirmedOrder.m in Sources */,
 				CD50829D1820725F003FECED /* DefaultData.m in Sources */,
+				378E44991826C7BB007937A9 /* SKViewController.m in Sources */,
 				37A24EF9181F30C900A203FA /* Food.m in Sources */,
 				37A24F1C1821506D00A203FA /* PlacedOrder.m in Sources */,
 				37A24EF6181F30C900A203FA /* Pizza.m in Sources */,

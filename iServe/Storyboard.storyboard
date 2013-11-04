@@ -366,7 +366,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PCq-Ip-TrZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3217" y="1155"/>
+            <point key="canvasLocation" x="3217" y="1168"/>
         </scene>
         <!--View Confirm Order View Controller-->
         <scene sceneID="Dmb-sJ-66c">
@@ -506,6 +506,26 @@
             </objects>
             <point key="canvasLocation" x="3217" y="226"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="RJr-nH-u2x">
+            <objects>
+                <viewController id="Hxg-mM-ynG" customClass="SKViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9qb-mp-971"/>
+                        <viewControllerLayoutGuide type="bottom" id="a0D-sZ-8gB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WJZ-vr-7z9" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NYz-uJ-9SL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-875" y="380"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="REs-6e-ctk">
             <objects>
@@ -523,7 +543,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b4I-LZ-O3M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1112" y="1329"/>
+            <point key="canvasLocation" x="-1118" y="1323"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
