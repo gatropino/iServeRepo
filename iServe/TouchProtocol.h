@@ -20,7 +20,8 @@
 -(void)dropBuildObject:(id)sender;
 -(void)deselectClipBoardItems;
 
-// filters
+-(void)pickerHelperMethodLoadsViewController:(UIImagePickerController *)picker;
+
 -(void)changeFilters:(id)mit;
 
 @end
