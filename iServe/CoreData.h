@@ -28,17 +28,18 @@
 @property (strong, nonatomic) NSNumber *pepperoniPrice;
 @property (strong, nonatomic) NSNumber *veggiePrice;
 
+-(void)updateUIItemDataEntitiesByTableName:(NSString *)tableName defaultPositionX:(float)defaultPositionX defaultPositionY:(float)defaultPositionY titleToDisplay:(NSString*)titleToDisplay imageLocation:(NSString *)imageLocation;
+-(void)deleteUIItemDataEntitiesByTableName:(NSString *)tableName;
 
 +(CoreData *) myData;
 -(void)resetPizzaInventoryLevels;
 -(NSArray *)fetchAllPizzasMade;
 
 -(void)deletePlacedOrderEntitiesByTableName:(NSString *)tableName;
-
 -(void)confirmTicketsByTableName:(NSString *)tableName;
 
 -(void)parseSaveConfirmedOrders;
-
+-(void)parseLoadConfirmedOrders;
 
 -(NSArray *)attributesOfPizza;
 -(Pizza *)quantityOfCheese:(NSNumber *)cheeseToppings quantityOfSausage:(NSNumber *)sausageToppings quantityOfPepperoni:(NSNumber *)pepperoniToppings;

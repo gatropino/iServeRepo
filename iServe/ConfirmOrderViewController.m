@@ -24,7 +24,7 @@
     managedObjectContext = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
     
     [super viewDidLoad];
-    
+
     NSError *error = nil;
     if (![[self fetchedResultsController] performFetch:&error])
     {
@@ -132,14 +132,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"%d", [[self.fetchedResultsController sections]count]);
     return [[self.fetchedResultsController sections]count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> secInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    NSLog(@"%lu", (unsigned long)[secInfo numberOfObjects]);
     return [secInfo numberOfObjects];
 }
 
@@ -163,10 +161,7 @@
 -(NSString *) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
-    
-    //  id <NSFetchedResultsSectionInfo> sectionInfo = [[fetchedResultsController sections] objectAtIndex:section];
-    //return [sectionInfo name];
-}
+    }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

@@ -131,24 +131,16 @@ id observer2;
     fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     [fr setResultType:NSManagedObjectIDResultType];
-
     
     NSError *error;
     NSArray *placedOrderEntities = [managedObjectContext executeFetchRequest:fr error:&error];
     NSLog(@"%@", error);
-    //NSMutableArray *mutableFetchResults = [[context executeFetchRequest:fr error:&error] mutableCopy];
 
-    
     for (NSManagedObjectID *order in placedOrderEntities)
     {
-        //[managedObjectContext deleteObject:order];
         [managedObjectContext deleteObject:[managedObjectContext objectWithID:order]];
-        
     }
-    
     [managedObjectContext save:&error];
-
-    
     /*
     for (int x = 0; x < [placedOrderEntities count]; x++)
     {
@@ -156,6 +148,59 @@ id observer2;
         [managedObjectContext deleteObject:orderToDelete];
     }
     */
+    
+    NSLog(@"%@", error);
+}
+
+-(void)deleteUIItemDataEntitiesByTableName:(NSString *)tableName
+{
+    NSLog(@"deletePlacedOrders context %@", managedObjectContext);
+    
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name MATCHES[cd] %@", tableName];
+    
+    fr.entity = [NSEntityDescription entityForName:@"UIItemData" inManagedObjectContext:managedObjectContext];
+    fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
+    [fr setResultType:NSManagedObjectIDResultType];
+    
+    NSError *error;
+    NSArray *UIItemDataEntitiesArray = [managedObjectContext executeFetchRequest:fr error:&error];
+    NSLog(@"%@", error);
+    
+    for (NSManagedObjectID *order in UIItemDataEntitiesArray)
+    {
+        [managedObjectContext deleteObject:[managedObjectContext objectWithID:order]];
+    }
+    [managedObjectContext save:&error];
+    
+    NSLog(@"%@", error);
+}
+
+-(void)updateUIItemDataEntitiesByTableName:(NSString *)tableName defaultPositionX:(float)defaultPositionX defaultPositionY:(float)defaultPositionY titleToDisplay:(NSString*)titleToDisplay imageLocation:(NSString *)imageLocation
+{
+    NSLog(@"deletePlacedOrders context %@", managedObjectContext);
+    
+    NSFetchRequest *fr = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name MATCHES[cd] %@", tableName];
+    
+    fr.entity = [NSEntityDescription entityForName:@"UIItemData" inManagedObjectContext:managedObjectContext];
+    fr.resultType = NSDictionaryResultType;
+    [fr setPredicate:predicate];
+    
+    NSError *error;
+    NSArray *UIItemDataEntitiesArray = [managedObjectContext executeFetchRequest:fr error:&error];
+    NSLog(@"%@", error);
+    
+    for (UIItemData *data in UIItemDataEntitiesArray)
+    {
+        data.defaultPositionX = [NSNumber numberWithFloat:defaultPositionX];
+        data.defaultPositionY = [NSNumber numberWithFloat:defaultPositionX];
+        data.titleToDisplay = titleToDisplay;
+        data.imageLocation = imageLocation;
+    }
+    
+    [managedObjectContext save:&error];
     
     NSLog(@"%@", error);
 }
