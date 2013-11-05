@@ -183,14 +183,13 @@ id observer2;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localIDNumber MATCHES[cd] %@", tableName];
     
     fr.entity = [NSEntityDescription entityForName:@"UIItemData" inManagedObjectContext:managedObjectContext];
-    fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     
     NSError *error;
-    NSArray *UIItemDataEntitiesArray = [managedObjectContext executeFetchRequest:fr error:&error];
+    NSArray *itemDataEntitiesArray = [managedObjectContext executeFetchRequest:fr error:&error];
     NSLog(@"%@", error);
     
-    for (UIItemData *data in UIItemDataEntitiesArray)
+    for (UIItemData *data in itemDataEntitiesArray)
     {
         data.defaultPositionX = [NSNumber numberWithFloat:defaultPositionX];
         data.defaultPositionY = [NSNumber numberWithFloat:defaultPositionY];
