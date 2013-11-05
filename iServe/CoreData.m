@@ -179,23 +179,21 @@ id observer2;
 
 -(void)updateUIItemDataEntitiesByTableName:(NSString *)tableName defaultPositionX:(float)defaultPositionX defaultPositionY:(float)defaultPositionY titleToDisplay:(NSString*)titleToDisplay imageLocation:(NSString *)imageLocation
 {
-    NSLog(@"deletePlacedOrders context %@", managedObjectContext);
     
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name MATCHES[cd] %@", tableName];
     
     fr.entity = [NSEntityDescription entityForName:@"UIItemData" inManagedObjectContext:managedObjectContext];
-    fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     
     NSError *error;
-    NSArray *UIItemDataEntitiesArray = [managedObjectContext executeFetchRequest:fr error:&error];
+    NSArray *itemDataEntitiesArray = [managedObjectContext executeFetchRequest:fr error:&error];
     NSLog(@"%@", error);
     
-    for (UIItemData *data in UIItemDataEntitiesArray)
+    for (UIItemData *data in itemDataEntitiesArray)
     {
         data.defaultPositionX = [NSNumber numberWithFloat:defaultPositionX];
-        data.defaultPositionY = [NSNumber numberWithFloat:defaultPositionX];
+        data.defaultPositionY = [NSNumber numberWithFloat:defaultPositionY];
         data.titleToDisplay = titleToDisplay;
         data.imageLocation = imageLocation;
     }

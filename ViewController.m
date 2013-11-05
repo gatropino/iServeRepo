@@ -1132,6 +1132,7 @@
 -(void)saveUIBuildData
 {
     
+    // save newly created objects
     for(MenuItemCell *z in uiObjects){
         
         if(([z.type isEqualToString:@"UIDestination"] ||
@@ -1140,7 +1141,7 @@
                     &&
              !z.orderConfirmed) {    // if not already saved (ie order confirmed) save in coredata
             
-    
+          NSLog(@"%@ %@ %@", z.name, z.type, z.localIDNumber);  
                        [[CoreData myData] makeNewUIItem_parentName:z.parentName
                                                               name:z.name 
                                                     titleToDisplay:z.titleToDisplay 
@@ -1167,6 +1168,23 @@
                         z.orderConfirmed = TRUE;
         }
     }
+    return;
+    
+    // update changed objects (x and y default positions, titleToDisplay, imageLocation)
+    
+    for(MenuItemCell *z in uiObjects){
+        
+        if(([z.type isEqualToString:@"UIDestination"] ||
+            [z.type isEqualToString:@"UIFilter"]      ||
+            [z.type isEqualToString:@"Pizza Image Display"])
+                &&
+            z.orderConfirmed) {    // if not already saved (ie order confirmed) save in coredata
+
+            [[CoreData myData] updateUIItemDataEntitiesByTableName:z.localIDNumber defaultPositionX:z.defaultPositionX defaultPositionY:z.defaultPositionY titleToDisplay:z.titleToDisplay imageLocation:z.imageLocation];
+        
+            }        
+    }
+    // deleted items are deleted at time of deletion, but data is saved to clipboard
     
 }
 
@@ -1198,7 +1216,7 @@
     
     for(MenuItemCell *z in uiObjectsOnScreen){
 
-        if([z.type isEqualToString:@"UIInstance"] && z.orderConfirmed == FALSE){
+        if([z.type isEqualToString:@"UIInstance"] && z.orderConfirmed != TRUE){
         
             [listOfConfirmedOrders addObject: z];
             
@@ -1294,8 +1312,11 @@
         for(MenuItemCell *z in copiedItems){
             z.hidden = TRUE;                    
             [uiObjects removeObject:z];
-            [uiObjectsOnScreen removeObject:z];}
+            [uiObjectsOnScreen removeObject:z];
+            [CoreData myData]deleteUIItemDataEntitiesByTableName:z.localIDNumber];
+        }
         for(MenuItemCell *z in copiedChildren){
+            [CoreData myData]deleteUIItemDataEntitiesByTableName:z.localIDNumber];
             [uiObjects removeObject:z];  }
     }
     
