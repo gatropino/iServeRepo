@@ -779,9 +779,6 @@ id observer2;
         order.uploaded = [NSNumber numberWithBool:YES];
         
         [confirmedOrder saveEventually];
-        //test
-        
-        
     }
 }
 
