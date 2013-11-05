@@ -1486,10 +1486,11 @@
         // copy all children
         for(MenuItemCell *c in copiedChildren){
             
-            if([c.table isEqualToString: parentCell.filterTable]){
+            if([c.table isEqualToString: parentCell.filterTable] && ([c.type isEqualToString:@"UIDestination"] || [c.type isEqualToString:@"UIFilter"] || [c.type isEqualToString:@"Pizza Image Display"]) ){
                 
                 // make new instance of child, where child.table = parent.tableFilter
                 [self makeInstanceOfChild:c childsTableNumber:childsTableNumber];
+                
                 
                 // if child is a UIInstance, find its children
                 [self dropBuildObjectCopyChildren:c childsTableNumber:childsTableNumber];  } 
@@ -1513,8 +1514,8 @@
                                               receives: sender.receives
                                         titleToDisplay: sender.titleToDisplay
                                
-                                                xValue: sender.frame.origin.x
-                                                yValue: sender.frame.origin.y
+                                                xValue: sender.defaultPositionX
+                                                yValue: sender.defaultPositionY
                                                     ht: uiItemHeight
                                                     wd: uiItemWidth
                                
