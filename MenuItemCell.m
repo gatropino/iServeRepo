@@ -8,7 +8,8 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"ok");
+    NSLog(@"%@ %@ %@ x=%f xDefault=%f", self.type, self.titleToDisplay, self.table, self.frame.origin.y, defaultPositionY );
+    
     // if type = UIDestination
     if ([self.type isEqualToString:@"UIDestination"]) {
         
@@ -156,7 +157,7 @@
                 else { return; }
             
         } else if ([self.type isEqualToString:@"UIInstance"]){
-            
+
                 [delegate collisionCheck:self x:x y:y transactionComplete:TRUE];
                 [delegate updateScreenLocationsAfterDragAndDrop];
             
