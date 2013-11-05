@@ -128,7 +128,7 @@ id observer2;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable MATCHES[cd] %@", tableName];
     
     fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
-    fr.resultType = NSDictionaryResultType;
+    //fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     [fr setResultType:NSManagedObjectIDResultType];
     
@@ -157,10 +157,9 @@ id observer2;
     NSLog(@"deletePlacedOrders context %@", managedObjectContext);
     
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name MATCHES[cd] %@", tableName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localIDNumber MATCHES[cd] %@", tableName];
     
     fr.entity = [NSEntityDescription entityForName:@"UIItemData" inManagedObjectContext:managedObjectContext];
-    fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     [fr setResultType:NSManagedObjectIDResultType];
     
@@ -179,10 +178,9 @@ id observer2;
 
 -(void)updateUIItemDataEntitiesByTableName:(NSString *)tableName defaultPositionX:(float)defaultPositionX defaultPositionY:(float)defaultPositionY titleToDisplay:(NSString*)titleToDisplay imageLocation:(NSString *)imageLocation
 {
-    NSLog(@"deletePlacedOrders context %@", managedObjectContext);
     
     NSFetchRequest *fr = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name MATCHES[cd] %@", tableName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localIDNumber MATCHES[cd] %@", tableName];
     
     fr.entity = [NSEntityDescription entityForName:@"UIItemData" inManagedObjectContext:managedObjectContext];
     fr.resultType = NSDictionaryResultType;
@@ -195,7 +193,7 @@ id observer2;
     for (UIItemData *data in UIItemDataEntitiesArray)
     {
         data.defaultPositionX = [NSNumber numberWithFloat:defaultPositionX];
-        data.defaultPositionY = [NSNumber numberWithFloat:defaultPositionX];
+        data.defaultPositionY = [NSNumber numberWithFloat:defaultPositionY];
         data.titleToDisplay = titleToDisplay;
         data.imageLocation = imageLocation;
     }
@@ -470,6 +468,7 @@ id observer2;
     confirmOrder.totalPizzas = @([confirmOrder.cheese floatValue] + [confirmOrder.sausage floatValue] + [confirmOrder.pepperoni floatValue] + [confirmOrder.veggie floatValue]);
 
     confirmOrder.orderedFromTable = tableName;
+    confirmOrder.uploaded = [NSNumber numberWithBool:NO];
     
     AvailableIngredients *ingrediants = [self getAvailableIngrediants];
     
@@ -485,6 +484,8 @@ id observer2;
     [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
     
     [self deletePlacedOrderEntitiesByTableName:tableName];
+    
+    [self parseSaveConfirmedOrders];
     //crashes on object deletion, maybe first object is not that entity?
 }
 
@@ -750,7 +751,7 @@ id observer2;
 {
     NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
     [searchRequest setEntity:[NSEntityDescription entityForName:@"ConfirmedOrder" inManagedObjectContext:managedObjectContext]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uploaded != YES"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uploaded != 1"];
     [searchRequest setPredicate:predicate];
     
     NSArray *matchedObjects = [managedObjectContext executeFetchRequest:searchRequest error:nil];
@@ -777,7 +778,9 @@ id observer2;
         
         order.uploaded = [NSNumber numberWithBool:YES];
         
-        [confirmedOrder saveEventually];
+        [confirmedOrder save];
+        
+        
     }
 }
 

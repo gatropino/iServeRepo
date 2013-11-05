@@ -21,9 +21,9 @@
                   clientKey:@"hVefaKEyVOPysOln8mL6gLxKmDAfQYHH4cQHd0Q4"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-    
     NSLog(@"%@", [[UIDevice currentDevice] identifierForVendor]);
     
+    [[CoreData myData] parseLoadConfirmedOrders];
     return YES;
 }
 
