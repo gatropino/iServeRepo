@@ -172,6 +172,8 @@
 -(void)dropBuildObjectCopyChildren:(MenuItemCell *)parentCell childsTableNumber:(NSString *)childsTableNumber;
 -(void)loadPizzaImage:(MenuItemCell *)pizzaImage;
 -(void)saveUIBuildData;
+-(void)nsLogUIObjects;
+-(void)nsLogCopiedItems;
 
 -(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destiation receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor editExistingBlockInsteadOfCreating:(MenuItemCell *)block;
 
@@ -257,13 +259,12 @@
     numberOfMenuItemsOnPage = (screenHeight - 65 - 120 - 2) / (menuItemHeight + menuItemPadding) -1;
     
     // set colors
-    colorDefaultForMenuItems = [UIColor colorWithRed:210/255.0 green:180/255.0 blue:140/255.0 alpha:1];     //purplish
-
-    colorDraggingForMenuItems = [UIColor grayColor];
+    colorDefaultForMenuItems = [UIColor colorWithRed:210/255.0 green:180/255.0 blue:140/255.0 alpha:1];   
+    colorDraggingForMenuItems = [UIColor colorWithRed:210/255.0 green:180/255.0 blue:140/255.0 alpha:.8];
     colorHighlightedForMenuItems = [UIColor brownColor];
     
-    colorDefaultForUIItems = [UIColor colorWithRed:30/255.0 green:144/255.0 blue:255/255.0 alpha:1];     //purplish
-    colorHighlightedForUIItems = [UIColor redColor];
+    colorDefaultForUIItems = [UIColor colorWithRed:30/255.0 green:144/255.0 blue:255/255.0 alpha:1];     
+    colorHighlightedForUIItems = [UIColor colorWithRed:255/255.0 green:0/255.0 blue:0/255.0 alpha:.7];  
     colorDraggingForUIItems = [UIColor purpleColor];
     
     /* I think what you mean is you want the backgroundColor of your UIView to be semi transparent? If you want white/transparent use this:
@@ -322,7 +323,7 @@
         
         // mark as confirmed (ie already in core data)
         menuBlock.orderConfirmed = TRUE;
-        
+        menuBlock.localIDNumber = z.localIDNumber;
     }
     
 }
@@ -480,7 +481,7 @@
     // FIX LATER
     return;
     
-    // show first page
+    // show first page  OR MAYBE BETTER TO CHANGE ORDER OF LIST
     pageNumber += 1;
     
     // get name of parent (all items in menu already have it, so grab one)
@@ -501,7 +502,7 @@
     
     // figure out when start and when stop
     
-    for(int x = pageNumber * numberOfMenuItemsOnPage; x < [menuData count]-1 ; x++){
+    for(int x = 0; x < [menuData count] ; x++){
         
         MenuItemData *z = [menuData objectAtIndex: x];
         
@@ -665,9 +666,21 @@
             [z.customer isEqualToString:customer]  ||
             [z.customer isEqualToString:@""]))   {
               
-               z.hidden = FALSE;
-               [uiObjectsOnScreen addObject:z];  
-               [self unhighlightUIObjects];}
+                    if(buildModeOn==0){
+                   
+                        z.hidden = FALSE;
+                        [uiObjectsOnScreen addObject:z];  
+                        [self unhighlightUIObjects];
+                        
+                    }else if(![z.type isEqualToString:@"UIInstance"]){
+                            
+                        z.hidden = FALSE;
+                        [uiObjectsOnScreen addObject:z];  
+                        [self unhighlightUIObjects];          
+                    }    
+                    
+           
+           }
 
     }
     
@@ -724,13 +737,19 @@
 
 #pragma mark Delegate
 
+-(void)bringThisViewToFront:(id)sender
+{
+
+    [self.view bringSubviewToFront:sender];
+}
+
 -(void)collisionCheck:(MenuItemCell *)sender x:(float)x y:(float)y transactionComplete: (BOOL)objectDropped;
 {
     
     MenuItemCell *objectBeingHit = nil;  // can't update an array you are iterating through, so save value
     
     // get location and size of drag object (just where your finger is, so reduce size of frame)
-    CGRect objectOne = CGRectMake(x, y, 5, 5);
+    CGRect objectOne = CGRectMake(x + uiItemWidth/2, y + uiItemHeight/2, 5, 5);
     
     // highlight potential receivers
     for(MenuItemCell *z in uiObjectsOnScreen){
@@ -1087,7 +1106,7 @@
     
     if(buildModeOn) {
         
-        self.view.backgroundColor = [UIColor redColor];
+        self.view.backgroundColor = [UIColor colorWithRed:255/255.0 green:0/255.0 blue:0/255.0 alpha:.2];
         for(MenuItemCell *z in uiObjects){
             
             [self clearClipBoard];
@@ -1131,6 +1150,7 @@
 
 -(void)saveUIBuildData
 {
+        [self nsLogUIObjects];
     
     // save newly created objects
     for(MenuItemCell *z in uiObjects){
@@ -1141,7 +1161,7 @@
                     &&
              !z.orderConfirmed) {    // if not already saved (ie order confirmed) save in coredata
             
-          NSLog(@"%@ %@ %@", z.name, z.type, z.localIDNumber);  
+          NSLog(@"creating object %@ %@ %@", z.name, z.type, z.localIDNumber);  
                        [[CoreData myData] makeNewUIItem_parentName:z.parentName
                                                               name:z.name 
                                                     titleToDisplay:z.titleToDisplay 
@@ -1168,7 +1188,6 @@
                         z.orderConfirmed = TRUE;
         }
     }
-    return;
     
     // update changed objects (x and y default positions, titleToDisplay, imageLocation)
     
@@ -1185,7 +1204,7 @@
             }        
     }
     // deleted items are deleted at time of deletion, but data is saved to clipboard
-    
+
 }
 
 #pragma mark Sequence
@@ -1272,11 +1291,12 @@
 
 -(void)copyObjectAndItsContents_deleteOriginal:(BOOL)pleaseDelete
 {
-     
-    // empty clipboard
+    
+    // empty arrays used by clipboard
     [copiedItems removeAllObjects];
     [copiedChildren removeAllObjects];
     
+    // copy objects and descendants
     // rem: not passing obj, grabbing selected obj
     for(MenuItemCell *z in uiObjectsOnScreen){
         
@@ -1306,6 +1326,10 @@
         }
     }    
     
+    [self nsLogUIObjects];
+    NSLog(@"yok");
+    [self nsLogCopiedItems];
+    
     // if pleaseDelete is on, then delete from screen and from array of all objects
     if(pleaseDelete==TRUE){
         
@@ -1313,10 +1337,10 @@
             z.hidden = TRUE;                    
             [uiObjects removeObject:z];
             [uiObjectsOnScreen removeObject:z];
-            [CoreData myData]deleteUIItemDataEntitiesByTableName:z.localIDNumber];
+            [[CoreData myData]deleteUIItemDataEntitiesByTableName:z.localIDNumber];
         }
         for(MenuItemCell *z in copiedChildren){
-            [CoreData myData]deleteUIItemDataEntitiesByTableName:z.localIDNumber];
+            [[CoreData myData]deleteUIItemDataEntitiesByTableName:z.localIDNumber];
             [uiObjects removeObject:z];  }
     }
     
@@ -1324,12 +1348,6 @@
     [self unhighlightUIObjects];
     [self menuForClipboard];
     
-    // NSLog Output
-    //for (MenuItemCell *z in copiedItems){
-    //    NSLog(@"adding to copied items: %@  table %@  filter %@", z.name, z.table, z.filterTable);}
-    
-    //for (MenuItemCell *z in copiedChildren){
-    //    NSLog(@"adding to copied items: %@  table %@  filter %@", z.name, z.table, z.filterTable);}    
 }
 
 -(void)copyNestedContentInUIFilters:(MenuItemCell *)parentCell
@@ -1563,8 +1581,7 @@
     // need to add to subview (even if hidden)
     [self.view addSubview:menuBlock];
     menuBlock.hidden = TRUE;
-    
-    //NSLog(@"child created %@ table: %@    filter: %@",menuBlock.name, menuBlock.table, menuBlock.filterTable ); 
+ 
 }
 
 
@@ -1605,8 +1622,27 @@
 
 }
 
+-(void)nsLogUIObjects
+{
+    for(MenuItemCell *z in uiObjects){
+    
+            NSLog(@"uiObjects  name: %@  id: %@  table: %@  orderCompleted: %i  defaultPosition: %f",z.name, z.localIDNumber, z.table, z.orderConfirmed, z.defaultPositionX);
+    
+    }
 
 
+}
+
+-(void)nsLogCopiedItems
+{
+    for(MenuItemCell *z in copiedItems){
+        
+        NSLog(@"copiedItems  name: %@  id: %@  table: %@  orderCompleted: %i  defaultPosition: %f",z.name, z.localIDNumber, z.table, z.orderConfirmed, z.defaultPositionX);
+        
+    }
+    
+    
+}
 // LOOK AT SCALING (SO CAN ASK)
 
 

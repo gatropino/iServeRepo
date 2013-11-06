@@ -21,7 +21,7 @@
                                  imageLocation:@"cup.png" 
                                           type:@"UIDestination" 
     
-                                 localIDNumber:@"" 
+                                 localIDNumber:@"d1" 
                                     instanceOf:@"Prototype" 
                                    
                                    destination:@"" 
@@ -49,7 +49,7 @@
                                   imageLocation:@"" 
                                            type:@"UIDestination" 
      
-                                  localIDNumber:@"" 
+                                  localIDNumber:@"d2" 
                                      instanceOf:@"Prototype" 
      
                                     destination:@"" 
@@ -76,7 +76,7 @@
                                   imageLocation:@"" 
                                            type:@"UIFilter" 
      
-                                  localIDNumber:@"" 
+                                  localIDNumber:@"d3" 
                                      instanceOf:@"Prototype" 
      
                                     destination:@"" 
@@ -103,7 +103,7 @@
                                   imageLocation:@"pizzaStart.png" 
                                            type:@"Pizza Image Display" 
      
-                                  localIDNumber:@"" 
+                                  localIDNumber:@"d4" 
                                      instanceOf:@"" 
      
                                     destination:@"" 

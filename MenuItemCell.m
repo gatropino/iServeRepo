@@ -8,7 +8,8 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"%@ %@ %@ x=%f xDefault=%f", self.type, self.titleToDisplay, self.table, self.frame.origin.y, defaultPositionY );
+
+    [delegate bringThisViewToFront:self];
     
     // if type = UIDestination
     if ([self.type isEqualToString:@"UIDestination"]) {
@@ -39,6 +40,15 @@
                 
             }
     
+    // if type = Pizza Image    
+    } else if ([self.type isEqualToString:@"Pizza Image Display"]) { 
+        
+        if(buildMode != 0){  
+           
+            [self toggleThisBlocksColor];
+            return;
+        }
+        
         
     // if in build mode, do not respond to other input    
     } else if (buildMode > 0) { 
@@ -100,7 +110,7 @@
 {
     
     if(canDrag){
-            
+         
         UITouch *touch = [touches anyObject];  
     
         // get CGPoint with postion info (returns value relative to origin this subview)
@@ -163,7 +173,9 @@
             
         } else if ([self.type isEqualToString:@"MenuBranch"]){
         
-        } else { NSLog(@"custom field");  }
+        } else if (@"Pizza Image Display") {
+                       
+        } else { NSLog(@"Custom Name Called"); }
         
         [delegate unhighlightUIObjects];
         [delegate unhighlightMenu];
