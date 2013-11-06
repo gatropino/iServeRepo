@@ -466,40 +466,46 @@ id observer2;
 
 -(void)confirmTicketsByTableName:(NSString *)tableName
 {
-    NSLog(@"confirmed tickets context %@", managedObjectContext);
-     ConfirmedOrder *confirmOrder = (ConfirmedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"ConfirmedOrder" inManagedObjectContext:managedObjectContext];
+    NSNumber *doorKeeper = @([self summedTablesSpritesByTableName:tableName] + [self summedTablesSpritesByTableName:tableName] + [self summedTablesBudweisersByTableName:tableName] + [self summedTablesCheesesByTableName:tableName] + [self summedTablesPepperoniByTableName:tableName] + [self summedTablesVeggiesByTableName:tableName]);
+    int allItemsInOrders = [doorKeeper intValue];
     
-    confirmOrder.sprite = [NSNumber numberWithInteger:[self summedTablesSpritesByTableName:tableName]];
-    confirmOrder.coke = [NSNumber numberWithInteger:[self summedTablesCokesByTableName:tableName]];
-    confirmOrder.budweiser = [NSNumber numberWithInteger:[self summedTablesBudweisersByTableName:tableName]];
-    confirmOrder.totalDrinks = @([confirmOrder.sprite floatValue] + [confirmOrder.coke floatValue] + [confirmOrder.budweiser floatValue]);
-    
-    confirmOrder.cheese = [NSNumber numberWithInteger:[self summedTablesCheesesByTableName:tableName]];
-    confirmOrder.sausage = [NSNumber numberWithInteger:[self summedTablesSausageByTableName:tableName]];
-    confirmOrder.pepperoni = [NSNumber numberWithInteger:[self summedTablesPepperoniByTableName:tableName]];
-    confirmOrder.veggie = [NSNumber numberWithInteger:[self summedTablesVeggiesByTableName:tableName]];
-    confirmOrder.totalPizzas = @([confirmOrder.cheese floatValue] + [confirmOrder.sausage floatValue] + [confirmOrder.pepperoni floatValue] + [confirmOrder.veggie floatValue]);
-
-    confirmOrder.orderedFromTable = tableName;
-    confirmOrder.uploaded = [NSNumber numberWithBool:NO];
-    
-    AvailableIngredients *ingrediants = [self getAvailableIngrediants];
-    
-    if (!ingrediants.confirmedTicketNumber) {
-        ingrediants.confirmedTicketNumber = @0;
+    if (allItemsInOrders > 0)
+    {
+        ConfirmedOrder *confirmOrder = (ConfirmedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"ConfirmedOrder" inManagedObjectContext:managedObjectContext];
+        
+        confirmOrder.sprite = [NSNumber numberWithInteger:[self summedTablesSpritesByTableName:tableName]];
+        confirmOrder.coke = [NSNumber numberWithInteger:[self summedTablesSpritesByTableName:tableName]];
+        confirmOrder.budweiser = [NSNumber numberWithInteger:[self summedTablesBudweisersByTableName:tableName]];
+        confirmOrder.totalDrinks = @([confirmOrder.sprite floatValue] + [confirmOrder.coke floatValue] + [confirmOrder.budweiser floatValue]);
+        
+        confirmOrder.cheese = [NSNumber numberWithInteger:[self summedTablesCheesesByTableName:tableName]];
+        confirmOrder.sausage = [NSNumber numberWithInteger:[self summedTablesSausageByTableName:tableName]];
+        confirmOrder.pepperoni = [NSNumber numberWithInteger:[self summedTablesPepperoniByTableName:tableName]];
+        confirmOrder.veggie = [NSNumber numberWithInteger:[self summedTablesVeggiesByTableName:tableName]];
+        confirmOrder.totalPizzas = @([confirmOrder.cheese floatValue] + [confirmOrder.sausage floatValue] + [confirmOrder.pepperoni floatValue] + [confirmOrder.veggie floatValue]);
+        
+        confirmOrder.orderedFromTable = tableName;
+        confirmOrder.uploaded = [NSNumber numberWithBool:NO];
+        
+        AvailableIngredients *ingrediants = [self getAvailableIngrediants];
+        
+        if (!ingrediants.confirmedTicketNumber) {
+            ingrediants.confirmedTicketNumber = @0;
+        }
+        ingrediants.confirmedTicketNumber = @([ingrediants.confirmedTicketNumber floatValue] + [@1 floatValue]);
+        
+        confirmOrder.ticketNumber = ingrediants.confirmedTicketNumber;
+        
+        confirmOrder.timeOfOrder = [NSDate date];
+        
+        [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
+        
+        [self deletePlacedOrderEntitiesByTableName:tableName];
+        
+        [self parseSaveConfirmedOrders];
     }
-    ingrediants.confirmedTicketNumber = @([ingrediants.confirmedTicketNumber floatValue] + [@1 floatValue]);
     
-    confirmOrder.ticketNumber = ingrediants.confirmedTicketNumber;
-
-    confirmOrder.timeOfOrder = [NSDate date];
-
-    [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
     
-    [self deletePlacedOrderEntitiesByTableName:tableName];
-    
-    [self parseSaveConfirmedOrders];
-    //crashes on object deletion, maybe first object is not that entity?
 }
 
 -(NSArray *)attributesOfPizza
@@ -514,8 +520,6 @@ id observer2;
 
 -(void)placeOrderWithArray:(NSMutableArray *)mutableArray
 {
-    NSLog(@"placedOrders context %@", managedObjectContext);
-    PlacedOrder *orderToBePlaced = (PlacedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
     
     int coke = 0, sprite = 0, cheese = 0, pepperoni = 0, veggie = 0, budweiser = 0, sausage = 0;
     NSString *tempTableString;
@@ -557,45 +561,50 @@ id observer2;
 
         tempTableString = tempMenuItemCell.table;
     }
+    int allOrderedItems = coke + sprite + budweiser + cheese + pepperoni + veggie + sausage;
     
-    orderToBePlaced.cheese = [NSNumber numberWithInt:cheese];
-    orderToBePlaced.sausage = [NSNumber numberWithInt:sausage];
-    orderToBePlaced.pepperoni = [NSNumber numberWithInt:pepperoni];
-    orderToBePlaced.sprite = [NSNumber numberWithInt:sprite];
-    orderToBePlaced.coke = [NSNumber numberWithInt:coke];
-    orderToBePlaced.veggie = [NSNumber numberWithInt:veggie];
-    orderToBePlaced.budweiser = [NSNumber numberWithInt:budweiser];
-    
-    orderToBePlaced.orderedFromTable = tempTableString;
-    NSLog(@"%@", orderToBePlaced.orderedFromTable);
-    NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
-    [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-    NSLog(@"%@",[DateFormatter stringFromDate:[NSDate date]]);
-    
-    orderToBePlaced.timeOfOrder = [NSDate date];
-    
-    AvailableIngredients *ingrediants = [self getAvailableIngrediants];
-    
-    if (!ingrediants.ticketNumber) {
-        ingrediants.ticketNumber = @0;
+    if (allOrderedItems > 0)
+    {
+        PlacedOrder *orderToBePlaced = (PlacedOrder *)[NSEntityDescription insertNewObjectForEntityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
+        
+        orderToBePlaced.cheese = [NSNumber numberWithInt:cheese];
+        orderToBePlaced.sausage = [NSNumber numberWithInt:sausage];
+        orderToBePlaced.pepperoni = [NSNumber numberWithInt:pepperoni];
+        orderToBePlaced.sprite = [NSNumber numberWithInt:sprite];
+        orderToBePlaced.coke = [NSNumber numberWithInt:coke];
+        orderToBePlaced.veggie = [NSNumber numberWithInt:veggie];
+        orderToBePlaced.budweiser = [NSNumber numberWithInt:budweiser];
+        
+        orderToBePlaced.orderedFromTable = tempTableString;
+        NSLog(@"%@", orderToBePlaced.orderedFromTable);
+        NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
+        [DateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+        NSLog(@"%@",[DateFormatter stringFromDate:[NSDate date]]);
+        
+        orderToBePlaced.timeOfOrder = [NSDate date];
+        
+        AvailableIngredients *ingrediants = [self getAvailableIngrediants];
+        
+        if (!ingrediants.ticketNumber)
+        {
+            ingrediants.ticketNumber = @0;
+        }
+        ingrediants.ticketNumber = @([ingrediants.ticketNumber floatValue] + [@1 floatValue]);
+        
+        orderToBePlaced.ticketNumber = ingrediants.ticketNumber;
+        
+        [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
     }
-    ingrediants.ticketNumber = @([ingrediants.ticketNumber floatValue] + [@1 floatValue]);
-    
-    orderToBePlaced.ticketNumber = ingrediants.ticketNumber;
-    
-    [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
 }
 
 -(NSArray *)fetchOrders
 {
-    
     NSFetchRequest *searchRequest = [[NSFetchRequest alloc] init];
     [searchRequest setEntity:[NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext]];
     
     NSArray *matchedObjects = [managedObjectContext executeFetchRequest:searchRequest error:nil];
     //creates a list of ALL pizzas created, would work well for a list of all pizzas made/sold but need it to show only ONE pizza, fix later
     return matchedObjects;
-    
 }
 
 -(Pizza *)quantityOfCheese:(NSNumber *)cheeseToppings quantityOfSausage:(NSNumber *)sausageToppings quantityOfPepperoni:(NSNumber *)pepperoniToppings

@@ -23,7 +23,7 @@
     
     NSLog(@"%@", [[UIDevice currentDevice] identifierForVendor]);
     
-    [[CoreData myData] parseLoadConfirmedOrders];
+    //[[CoreData myData] parseLoadConfirmedOrders];
     return YES;
 }
 
