@@ -40,6 +40,7 @@
 
 -(void)parseSaveConfirmedOrders;
 -(void)parseLoadConfirmedOrders;
+-(int)assignLocalIDNumber;
 
 -(NSArray *)attributesOfPizza;
 -(Pizza *)quantityOfCheese:(NSNumber *)cheeseToppings quantityOfSausage:(NSNumber *)sausageToppings quantityOfPepperoni:(NSNumber *)pepperoniToppings;
