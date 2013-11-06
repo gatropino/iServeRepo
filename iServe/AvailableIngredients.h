@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSNumber * sausage;
 @property (nonatomic, retain) NSNumber * ticketNumber;
 @property (nonatomic, retain) NSNumber * confirmedTicketNumber;
+@property (nonatomic, retain) NSNumber * localIDNumber;
 @property (nonatomic, retain) NSDate * createdAt;
 
 @end

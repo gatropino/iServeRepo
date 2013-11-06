@@ -360,7 +360,6 @@
         [self.view addSubview:menuBlock];
         
     }
-    
 }
 
 -(void)setupMenuBackgroundImages    // put image behind menu item, so when drag you see a box (wastes a bit of resources making MenuItemCells, but is a quick and dirty fix)
@@ -592,6 +591,10 @@
     menuBlock.dragColor = dragColor;
     menuBlock.isSelected = FALSE;
     menuBlock.buildMode = 0;    // 0 tells us it is false/off
+    
+    menuBlock.layer.cornerRadius = 15;
+    menuBlock.layer.borderWidth = 1;
+    menuBlock.layer.borderColor = [[UIColor redColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!
     
     menuBlock.localIDNumber = [NSString stringWithFormat:@"%i",localIDNumberCounter];
     localIDNumberCounter +=1;
@@ -1168,7 +1171,6 @@
                         z.orderConfirmed = TRUE;
         }
     }
-    return;
     
     // update changed objects (x and y default positions, titleToDisplay, imageLocation)
     
@@ -1313,10 +1315,10 @@
             z.hidden = TRUE;                    
             [uiObjects removeObject:z];
             [uiObjectsOnScreen removeObject:z];
-            [CoreData myData]deleteUIItemDataEntitiesByTableName:z.localIDNumber];
+            [[CoreData myData]deleteUIItemDataEntitiesByTableName:z.localIDNumber];
         }
         for(MenuItemCell *z in copiedChildren){
-            [CoreData myData]deleteUIItemDataEntitiesByTableName:z.localIDNumber];
+            [[CoreData myData]deleteUIItemDataEntitiesByTableName:z.localIDNumber];
             [uiObjects removeObject:z];  }
     }
     

@@ -17,5 +17,6 @@
 @dynamic ticketNumber;
 @dynamic confirmedTicketNumber;
 @dynamic createdAt;
+@dynamic localIDNumber;
 
 @end

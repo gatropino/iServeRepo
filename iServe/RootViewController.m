@@ -32,6 +32,7 @@
     
     [[CoreData myData] quantityOfCheese:@3 quantityOfSausage:@0 quantityOfPepperoni:@0];
     
+    self.view.layer.cornerRadius = 15;
     
     /*
     //tested and works

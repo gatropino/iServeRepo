@@ -99,6 +99,7 @@ id observer2;
         availIngredients.sausage = @5;
         availIngredients.cheese = @5;
         availIngredients.pepperoni = [NSNumber numberWithInt:5];  //same as @5
+        availIngredients.localIDNumber = @1;
         [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
         return availIngredients;
     }
@@ -108,6 +109,21 @@ id observer2;
         AvailableIngredients *ingredients = [searchedArray objectAtIndex:0];
         return ingredients;
     }
+}
+
+-(NSString *)assignLocalIDNumber
+{
+    AvailableIngredients *ingrediants = [self getAvailableIngrediants];
+    
+    if (!ingrediants.confirmedTicketNumber)
+    {
+        ingrediants.confirmedTicketNumber = @1;
+    }
+    ingrediants.confirmedTicketNumber = @([ingrediants.confirmedTicketNumber floatValue] + [@1 floatValue]);
+    
+     NSString *newLocalIDNumber = [NSString stringWithFormat:@"%@", ingrediants.confirmedTicketNumber];
+
+    return newLocalIDNumber;
 }
 
 -(NSArray *)fetchAllPizzasMade
@@ -128,7 +144,6 @@ id observer2;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"orderedFromTable MATCHES[cd] %@", tableName];
     
     fr.entity = [NSEntityDescription entityForName:@"PlacedOrder" inManagedObjectContext:managedObjectContext];
-    //fr.resultType = NSDictionaryResultType;
     [fr setPredicate:predicate];
     [fr setResultType:NSManagedObjectIDResultType];
     
@@ -140,7 +155,7 @@ id observer2;
     {
         [managedObjectContext deleteObject:[managedObjectContext objectWithID:order]];
     }
-    [managedObjectContext save:&error];
+    //[managedObjectContext save:&error];
     /*
     for (int x = 0; x < [placedOrderEntities count]; x++)
     {
@@ -149,7 +164,6 @@ id observer2;
     }
     */
     
-    NSLog(@"%@", error);
 }
 
 -(void)deleteUIItemDataEntitiesByTableName:(NSString *)tableName
@@ -165,15 +179,15 @@ id observer2;
     
     NSError *error;
     NSArray *UIItemDataEntitiesArray = [managedObjectContext executeFetchRequest:fr error:&error];
-    NSLog(@"%@", error);
     
     for (NSManagedObjectID *order in UIItemDataEntitiesArray)
     {
+        NSLog(@"%@", order);
+        
         [managedObjectContext deleteObject:[managedObjectContext objectWithID:order]];
     }
-    [managedObjectContext save:&error];
+    //[managedObjectContext save:&error];
     
-    NSLog(@"%@", error);
 }
 
 -(void)updateUIItemDataEntitiesByTableName:(NSString *)tableName defaultPositionX:(float)defaultPositionX defaultPositionY:(float)defaultPositionY titleToDisplay:(NSString*)titleToDisplay imageLocation:(NSString *)imageLocation
@@ -667,7 +681,7 @@ id observer2;
     menu.buildMode = buildMode;
     
     [(AppDelegate*)[[UIApplication sharedApplication] delegate] saveContext];
-    
+
     return menu;
 }
 
@@ -685,14 +699,14 @@ id observer2;
     
     PFQuery *query = [PFQuery queryWithClassName:@"ConfirmedOrder"];
     [query whereKey:@"uniqueIdentity" notEqualTo:uniqueID];
-    [query whereKey:@"createdAt" greaterThan:createdAt];
+    //[query whereKey:@"createdAt" greaterThan:createdAt];  //comparison not working properly, must FIX!!
     [query orderByAscending:@"createdAt"];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error)
         {
             // The find succeeded.
-            NSLog(@"Successfully retrieved %d scores.", objects.count);
+            NSLog(@"Successfully retrieved %d completed orders.", objects.count);
             // Do something with the found objects
             for (PFObject *object in objects)
             {
@@ -717,10 +731,10 @@ id observer2;
                 NSString *dateString = object[@"timeOfOrder"];
                 NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
                 [dateFormat setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-                NSDate *date = [dateFormat dateFromString:dateString];
+                NSDate *date = [dateFormat dateFromString:[dateString stringByReplacingOccurrencesOfString:@" +0000" withString:@""]];
                 
                 confirmOrder.ticketNumber = ingrediants.confirmedTicketNumber;
-                confirmOrder.timeOfOrder = date;
+                confirmOrder.timeOfOrder = date;  //not converting properly, must FIX!!
                 confirmOrder.sprite = [NSNumber numberWithInt:sprite];
                 confirmOrder.coke = [NSNumber numberWithInt:coke];
                 confirmOrder.budweiser = [NSNumber numberWithInt:budweiser];
