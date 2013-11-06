@@ -143,7 +143,6 @@
 - (IBAction)mainMenuButtonPressed:(id)sender;
 - (IBAction)confirmOrderButtonPressed:(id)sender;
 - (IBAction)copyButtonPressed:(id)sender;
-- (IBAction)viewClipBoardPasteMenuButtonPressed:(id)sender;
 - (IBAction)renameItemButtonPressed:(id)sender;
 - (IBAction)closeOrderButtonPressed:(id)sender;
 - (IBAction)nextPageButtonPressed:(id)sender;
@@ -170,6 +169,7 @@
 -(void)makeInstance:(MenuItemCell *)sender objectBeingHit:(MenuItemCell *)objectBeingHit;
 -(void)makeInstanceOfChild:(MenuItemCell *)sender childsTableNumber:(NSString *)childsTableNumber;
 -(void)dropBuildObjectCopyChildren:(MenuItemCell *)parentCell childsTableNumber:(NSString *)childsTableNumber;
+-(void)flashingTextForBuildModeOn;
 -(void)loadPizzaImage:(MenuItemCell *)pizzaImage;
 -(void)saveUIBuildData;
 -(void)nsLogUIObjects;
@@ -217,7 +217,7 @@
 
 -(void)getDefaultSettings
 {
-    localIDNumberCounter = 1;      
+    localIDNumberCounter = [[CoreData myData] assignLocalIDNumber];     
     buildModeOn = FALSE;
     restaurant = @"";
     table = @"Main View";
@@ -425,6 +425,9 @@
                                                            dragColor: colorDefaultForMenuItems
                                   editExistingBlockInsteadOfCreating: z   ];
         
+            
+        menuBlock.layer.borderColor = [[UIColor clearColor] CGColor]; 
+
     }
 
 }
@@ -595,10 +598,10 @@
     
     menuBlock.layer.cornerRadius = 15;
     menuBlock.layer.borderWidth = 1;
-    menuBlock.layer.borderColor = [[UIColor redColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!
+    menuBlock.layer.borderColor = [[UIColor redColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!! 
     
     menuBlock.localIDNumber = [NSString stringWithFormat:@"%i",localIDNumberCounter];
-    localIDNumberCounter +=1;
+    localIDNumberCounter = [[CoreData myData] assignLocalIDNumber];    
     
     if([type isEqualToString:@"MenuBranch"]) {
         menuBlock.canDrag = FALSE;
@@ -695,11 +698,12 @@
 
 -(void)loadPizzaImage:(MenuItemCell *)pizzaDisplayImage
 {
-    NSLog(@"pizza display ok");
+
     
     // in some situations, the size may be altered, readjust
     float wd = 200;
     float ht = 150;
+
     
     // pizzaDisplayImage.frame = CGRectMake(pizzaDisplayImage.frame.origin.x, pizzaDisplayImage.frame.origin.y, wd,  ht);
     
@@ -710,31 +714,39 @@
     
     for(int i = [uiObjectsOnScreen count] - 1 ; i >= 0 ; i--){  
         
-        name = [[uiObjectsOnScreen objectAtIndex: i] name];
+        MenuItemCell *z = [uiObjectsOnScreen objectAtIndex:i];
+        name = z.name;
         
         if([name isEqualToString:@"Pepperoni Pizza"]){
-            
+
+            z.layer.borderColor = [[UIColor clearColor] CGColor]; 
             pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"pepperoni.png"];
             return;
             
         }else if([name isEqualToString:@"Veggie Pizza"]){
             
+            z.layer.borderColor = [[UIColor clearColor] CGColor]; 
             pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"veggiePizza.png"];
             return;
             
         }else if([name isEqualToString:@"Cheese Pizza"]){
             
+            z.layer.borderColor = [[UIColor clearColor] CGColor]; 
             pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"cheese.png"];
+            return;
+        } else if ([z.type isEqualToString:@"Pizza Image Display"]){
+            
+            z.layer.borderColor = [[UIColor clearColor] CGColor];             
+            pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"pizzaStart.png"];
+            pizzaDisplayImage.imageView.frame = CGRectMake(0, 0, wd,  ht);
+            [pizzaDisplayImage.imageView reloadInputViews];
             return;
         };
         
         
         
     }
-    
-    pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"pizzaStart.png"];
-    pizzaDisplayImage.imageView.frame = CGRectMake(0, 0, wd,  ht);
-    [pizzaDisplayImage.imageView reloadInputViews];
+
 }
 
 
@@ -938,7 +950,7 @@
     sender.frame = CGRectMake(sender.defaultPositionX, sender.defaultPositionY, sender.frame.size.width, sender.frame.size.height);
     
     
-    localIDNumberCounter += 1;
+    localIDNumberCounter = [[CoreData myData] assignLocalIDNumber];    
     
     //NSLog(@"parent instance created %@ table: %@    filter: %@",menuBlock.name, menuBlock.table, menuBlock.filterTable ); 
 }
@@ -1053,7 +1065,7 @@
     int counter = 0;
     for(MenuItemCell *z in uiBuildMenuPrototypeCells){
  
-               localIDNumberCounter +=1;
+            localIDNumberCounter = [[CoreData myData] assignLocalIDNumber];    
                                                                                 //NSLog(@"%i", counter);
             __unused MenuItemCell *menuBlock = [self makeBlockView_Name: z.name
                                                           imageLocation: z.imageLocation
@@ -1110,6 +1122,12 @@
     if(buildModeOn) {
         
         self.view.backgroundColor = [UIColor colorWithRed:255/255.0 green:0/255.0 blue:0/255.0 alpha:.2];
+        
+        sequenceView.hidden = TRUE;
+        editSidebarView.hidden = FALSE;
+        [self flashingTextForBuildModeOn];
+        
+        
         for(MenuItemCell *z in uiObjects){
             
             [self clearClipBoard];
@@ -1121,12 +1139,17 @@
                 // 2 means it is an instance, which you can drag around
             
             z.backgroundColor = colorDefaultForUIItems;}
+
         
-        [self menuForBuildMode]; }
-    
-    else {
+        [self runUIFilterToUpdateScreen];
+        [self menuForBuildMode]; 
+        
+    } else {
         
         self.view.backgroundColor = [UIColor whiteColor];
+        
+        sequenceView.hidden = FALSE;
+        editSidebarView.hidden = TRUE;
         
         for(MenuItemCell *z in uiObjects){
             
@@ -1139,6 +1162,7 @@
     
             
             [self buildMenuByFindingChildrenOfParent:@"Main Menu"]; 
+            [self runUIFilterToUpdateScreen];
             [self clearClipBoard]; 
         }
         
@@ -1150,6 +1174,25 @@
     
 }
 
+-(void)flashingTextForBuildModeOn
+{
+    
+  if(buildModeOn == TRUE){
+    
+    [UIView animateWithDuration:1 animations:
+     ^{ editScreenButton.titleLabel.textColor = [UIColor yellowColor]; } completion:^(BOOL finished) {
+     
+            [UIView animateWithDuration:1 animations:
+             ^{editScreenButton.titleLabel.textColor = [UIColor blackColor];} completion:
+             ^(BOOL finished) { 
+                 
+                        //[self flashingTextForBuildModeOn]; 
+             }];
+     }];
+  
+  }   
+    
+}
 
 -(void)saveUIBuildData
 {
@@ -1454,13 +1497,7 @@
     }
     
 }
-
-- (IBAction)viewClipBoardPasteMenuButtonPressed:(id)sender {
-    
-    [self menuForClipboard];
-}            
-
-
+        
 
 -(void)menuForClipboard
 {
@@ -1545,7 +1582,7 @@
 -(void)makeInstanceOfChild:(MenuItemCell *)sender childsTableNumber:(NSString *)childsTableNumber
 {
     
-    localIDNumberCounter += 1;
+    localIDNumberCounter = [[CoreData myData] assignLocalIDNumber];    
     
     // create new instance
     MenuItemCell *menuBlock = [self makeBlockView_Name: sender.name

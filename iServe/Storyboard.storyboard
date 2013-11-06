@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="hXs-OZ-KGr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="hXs-OZ-KGr">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
@@ -23,64 +23,30 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8UM-Wk-dw2">
                                 <rect key="frame" x="0.0" y="670" width="924" height="98"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="UPH-AI-j9o">
-                                        <rect key="frame" x="0.0" y="-2" width="100" height="100"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Clear Clipboard">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="clearClipboardButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="lMN-bV-oKW"/>
-                                            <action selector="stepInsideButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="r0N-df-C9I"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" red="0.87075407608695654" green="0.78368910396858793" blue="0.73100342190016099" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hD7-Fd-NPb">
-                                <rect key="frame" x="0.0" y="64" width="100" height="185"/>
+                                <rect key="frame" x="0.0" y="214" width="100" height="258"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cIQ-Bc-Ao6">
-                                        <rect key="frame" x="0.0" y="8" width="100" height="60"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9Y-vO-Hke">
+                                        <rect key="frame" x="0.0" y="7" width="100" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.8707540761" green="0.78368910400000003" blue="0.73100342190000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                        <state key="normal" title="Ordering">
-                                            <color key="titleColor" red="0.69391134509999997" green="0.060950716539999998" blue="0.071017274929999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="sequenceButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="n3u-pc-6OH"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v7l-Wc-4Lo">
-                                        <rect key="frame" x="0.0" y="69" width="100" height="60"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.8707540761" green="0.78368910400000003" blue="0.73100342190000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Editing">
-                                            <color key="titleColor" red="0.69391134509999997" green="0.060950716539999998" blue="0.071017274929999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Clear Table">
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="editMenuButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="tZp-nn-E1H"/>
+                                            <action selector="clearTableButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="gdv-5d-UrD"/>
                                         </connections>
                                     </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lkM-ib-Y4Z">
-                                <rect key="frame" x="0.0" y="207" width="100" height="455"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8C5-0B-3a1">
-                                        <rect key="frame" x="0.0" y="65" width="100" height="60"/>
+                                        <rect key="frame" x="0.0" y="69" width="100" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.8707540761" green="0.78368910400000003" blue="0.73100342190000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="+ Copy">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -88,59 +54,23 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nyF-cr-f2l">
-                                        <rect key="frame" x="0.0" y="127" width="100" height="60"/>
+                                        <rect key="frame" x="0.0" y="131" width="100" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.8707540761" green="0.78368910400000003" blue="0.73100342190000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="- Delete">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="deleteButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="rL2-Bh-VpH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oeX-nk-zDc">
-                                        <rect key="frame" x="0.0" y="189" width="100" height="60"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Rename">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="renameItemButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="1uI-RR-FQX"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9Y-vO-Hke">
-                                        <rect key="frame" x="0.0" y="3" width="100" height="60"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Clear Table">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="clearTableButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="gdv-5d-UrD"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pYa-vW-7tK">
-                                        <rect key="frame" x="0.0" y="251" width="100" height="60"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Step Inside">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="stepInsideButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="bQH-8J-ebF"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mwl-J3-Hs6">
-                                        <rect key="frame" x="0.0" y="313" width="100" height="60"/>
+                                        <rect key="frame" x="0.0" y="193" width="100" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Edit Screen">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.8707540761" green="0.78368910400000003" blue="0.73100342190000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Edit Mode">
+                                            <color key="titleColor" red="0.2662814885" green="0.23968633919999999" blue="0.89236582880000004" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -148,7 +78,38 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.8707540761" green="0.78368910400000003" blue="0.73100342190000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lkM-ib-Y4Z">
+                                <rect key="frame" x="0.0" y="65" width="100" height="136"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oeX-nk-zDc">
+                                        <rect key="frame" x="0.0" y="67" width="100" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.8707540761" green="0.78368910400000003" blue="0.73100342190000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Rename">
+                                            <color key="titleColor" red="0.2662814885" green="0.23968633919999999" blue="0.89236582880000004" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" red="0.2662814885" green="0.23968633919999999" blue="0.89236582880000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="renameItemButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="1uI-RR-FQX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pYa-vW-7tK">
+                                        <rect key="frame" x="0.0" y="5" width="100" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.8707540761" green="0.78368910400000003" blue="0.73100342190000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="View Table">
+                                            <color key="titleColor" red="0.2662814885" green="0.23968633919999999" blue="0.89236582880000004" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" red="0.2662814885" green="0.23968633919999999" blue="0.89236582880000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="stepInsideButtonPressed:" destination="IZz-ak-qr8" eventType="touchUpInside" id="bQH-8J-ebF"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q49-DZ-dnO">
                                 <rect key="frame" x="924" y="65" width="100" height="703"/>
@@ -206,11 +167,11 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K1H-yz-xFI">
-                                <rect key="frame" x="100" y="191" width="100" height="462"/>
+                                <rect key="frame" x="0.0" y="65" width="100" height="136"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ht-1n-vds">
-                                        <rect key="frame" x="0.0" y="2" width="100" height="60"/>
+                                        <rect key="frame" x="0.0" y="5" width="100" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.8707540761" green="0.78368910400000003" blue="0.73100342190000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Place Order">
@@ -222,7 +183,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ow-al-2Va">
-                                        <rect key="frame" x="0.0" y="64" width="100" height="60"/>
+                                        <rect key="frame" x="0.0" y="67" width="100" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.8707540761" green="0.78368910400000003" blue="0.73100342190000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Close Order">

@@ -111,7 +111,7 @@ id observer2;
     }
 }
 
--(NSString *)assignLocalIDNumber
+-(int)assignLocalIDNumber
 {
     AvailableIngredients *ingrediants = [self getAvailableIngrediants];
     
@@ -121,7 +121,7 @@ id observer2;
     }
     ingrediants.confirmedTicketNumber = @([ingrediants.confirmedTicketNumber floatValue] + [@1 floatValue]);
     
-     NSString *newLocalIDNumber = [NSString stringWithFormat:@"%@", ingrediants.confirmedTicketNumber];
+    int newLocalIDNumber = [ingrediants.confirmedTicketNumber intValue];
 
     return newLocalIDNumber;
 }
