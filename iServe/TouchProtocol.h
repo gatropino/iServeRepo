@@ -19,6 +19,7 @@
 -(void)unhighlightUIObjects;
 -(void)dropBuildObject:(id)sender;
 -(void)deselectClipBoardItems;
+-(void)bringThisViewToFront:(id)sender;
 
 -(void)pickerHelperMethodLoadsViewController:(UIImagePickerController *)picker;
 

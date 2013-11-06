@@ -12,6 +12,14 @@
     
     senderCell = sender;
     menuLabel.text = senderCell.titleToDisplay;
+        
+    menuImagePreview.image = senderCell.imageView.image;
+    
+    return;
+    
+    // PHOTO PICKER TURNED OFF 
+    // it needs to be in portrait, not in landscape, which is a bit of a problem
+    // code needs to be added to the view controller to load the image on load
     
     if(senderCell.isCustomPhoto == FALSE){
         menuImagePreview.image = [UIImage imageNamed: senderCell.imageLocation];
@@ -35,6 +43,21 @@
     senderCell.textLabel.text = menuLabel.text;
     [senderCell reloadInputViews];
     
+    // exit
+    [menuLabel resignFirstResponder];
+    self.hidden = TRUE;
+    
+    [delegate unhighlightUIObjects];
+    
+    // save in core
+    [[CoreData myData] updateUIItemDataEntitiesByTableName:senderCell.localIDNumber defaultPositionX:senderCell.defaultPositionX defaultPositionY:senderCell.defaultPositionY titleToDisplay:senderCell.titleToDisplay imageLocation:senderCell.imageLocation];
+    
+    return;
+    
+    // PHOTO PICKER TURNED OFF 
+    // it needs to be in portrait, not in landscape, which is a bit of a problem
+    // code needs to be added to the view controller to load the image on load
+    
     senderCell.isCustomPhoto = TRUE;
     
     // save image to file
@@ -53,11 +76,7 @@
     senderCell.imageLocation = photoName;
 
     
-    // exit
-    [menuLabel resignFirstResponder];
-    self.hidden = TRUE;
-    
-    [delegate unhighlightUIObjects];
+
 }
 
 
