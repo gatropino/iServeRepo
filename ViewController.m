@@ -843,7 +843,7 @@
        // TRY FIX HERE????
                     mc.defaultPositionX = x;
                     mc.defaultPositionY = y;
-                    
+    
                     
                     if(placeInstancesInHorizontalLine){
                         x = x + wd + uiItemPadding; }
@@ -947,6 +947,11 @@
     menuBlock.filterCustomer = sender.filterCustomer; 
 
     menuBlock.placeInstancesInHorizontalLine = TRUE;
+    
+    // want all uiItems to be rounded with outline
+    menuBlock.layer.cornerRadius = 15;
+    menuBlock.layer.borderWidth = 1;
+    menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!! 
     
     // COPY CHILDREN (immediate children have table = parent.filterTable)
     //  to find children, use clipboardObj.filterTable number, but for new instance, use newInstance.filterTable number
@@ -1166,8 +1171,9 @@
                 // 1 means it is a menu item you can drag and drop to create a new instance
                 // 2 means it is an instance, which you can drag around
             
-            z.backgroundColor = colorDefaultForUIItems;}
-
+            z.backgroundColor = colorDefaultForUIItems;
+        
+        }
         
         [self runUIFilterToUpdateScreen];
         [self menuForBuildMode]; 
