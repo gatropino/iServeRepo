@@ -35,9 +35,9 @@
                                    filterTable:@"" 
                                 filterCustomer:@"" 
                                     
-                                    isSelected:false canDrag:false placeInstancesInHorizontalLine:TRUE isSeated:false filterIsSeated:false 
+                                    isSelected:false canDrag:false placeInstancesInHorizontalLine:FALSE isSeated:false filterIsSeated:false 
                               
-                              defaultPositionX:550
+                              defaultPositionX:200
                               defaultPositionY:200 
                                      buildMode:@0    ];
 
@@ -65,15 +65,15 @@
      
                                      isSelected:false canDrag:false placeInstancesInHorizontalLine:FALSE isSeated:false filterIsSeated:false 
      
-                               defaultPositionX:670 
-                               defaultPositionY:200 
+                               defaultPositionX:200 
+                               defaultPositionY:330 
                                       buildMode:@0    ];
     
     
     [[CoreData myData] makeNewUIItem_parentName:@"" 
                                            name:@"Table 1" 
                                  titleToDisplay:@"Table" 
-                                  imageLocation:@"" 
+                                  imageLocation:@"tableSetting" 
                                            type:@"UIFilter" 
      
                                   localIDNumber:@"d3" 
@@ -100,7 +100,7 @@
     [[CoreData myData] makeNewUIItem_parentName:@"" 
                                            name:@"Pizza Image Display" 
                                  titleToDisplay:@"" 
-                                  imageLocation:@"pizzaStart.png" 
+                                  imageLocation:@"pizzaStart-transparent" 
                                            type:@"Pizza Image Display" 
      
                                   localIDNumber:@"d4" 
@@ -117,10 +117,10 @@
                                     filterTable:@"" 
                                  filterCustomer:@"" 
      
-                                     isSelected:false canDrag:false placeInstancesInHorizontalLine:true isSeated:false filterIsSeated:false 
+                                     isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:FALSE filterIsSeated:FALSE 
      
-                               defaultPositionX:250 
-                               defaultPositionY:200 
+                               defaultPositionX:200 
+                               defaultPositionY:460 
                                       buildMode:@0    ];
     
     
@@ -131,7 +131,7 @@
     [[CoreData myData]      makeNewMenuItemFromData_parentName:@"Main Menu" 
                                                           name:@"Pizza Menu" 
                                                 titleToDisplay:@"Pizza" 
-                                                 imageLocation:@"" 
+                                                 imageLocation:@"pizza" 
                                                           type:@"MenuBranch"  
      
                                                  localIDNumber:@"" 
@@ -156,10 +156,10 @@
     [[CoreData myData]      makeNewMenuItemFromData_parentName:@"Main Menu" 
                                                           name:@"Drinks Menu" 
                                                 titleToDisplay:@"Drinks" 
-                                                 imageLocation:@"" 
+                                                 imageLocation:@"drink" 
                                                           type:@"MenuBranch"
      
-                                                 localIDNumber:@"" instanceOf:@"" destination:@""receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                 localIDNumber:@"" instanceOf:@"" destination:@""receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
     // MENU ITEMS - DRINKS
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Drinks Menu" 
@@ -172,7 +172,7 @@
      
                                                        destination:@"Drink" 
      
-                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Drinks Menu" 
                                                               name:@"Sprite" 
@@ -184,7 +184,7 @@
      
                                                        destination:@"Drink"
      
-                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Drinks Menu" 
                                                               name:@"Beer" 
@@ -196,38 +196,38 @@
      
                                                        destination:@"Drink" 
      
-                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
     //MENU ITEMS PIZZA
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
                                                               name:@"Cheese Pizza" 
                                                     titleToDisplay:@"Cheese Pizza" 
-                                                     imageLocation:@"" 
+                                                     imageLocation:@"cheese" 
                                                               type:@"MenuItem"
      
                                                      localIDNumber:@"" instanceOf:@"" 
      
                                                        destination:@"Pizza" 
      
-                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
                                                               name:@"Pepperoni Pizza" 
                                                     titleToDisplay:@"Pepperoni Pizza" 
-                                                     imageLocation:@"" 
+                                                     imageLocation:@"pepperoni" 
                                                               type:@"MenuItem"
      
                                                      localIDNumber:@"" instanceOf:@"" 
      
                                                        destination:@"Pizza" 
      
-                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
 
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
                                                               name:@"Veggie Pizza" 
                                                     titleToDisplay:@"Veggie Pizza" 
-                                                     imageLocation:@"" 
+                                                     imageLocation:@"veggiePizza" 
                                                               type:@"MenuItem"
      
                                                      localIDNumber:@"" instanceOf:@"" 

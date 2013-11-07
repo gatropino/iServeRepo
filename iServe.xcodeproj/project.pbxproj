@@ -56,6 +56,10 @@
 		37F7F56118181CCE0014B5BC /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7F56018181CCE0014B5BC /* RootViewController.m */; };
 		37F7F56418181D720014B5BC /* CoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = 37F7F56318181D720014B5BC /* CoreData.m */; };
 		CD29C30E18203FC700BEBD57 /* OrderItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD29C30D18203FC700BEBD57 /* OrderItemsViewController.m */; };
+		CD4B7DC3182B33EA00EFA2D9 /* bg_table_cloth.png in Resources */ = {isa = PBXBuildFile; fileRef = CD4B7DC2182B33EA00EFA2D9 /* bg_table_cloth.png */; };
+		CD4B7DC5182B3FF900EFA2D9 /* pizzaStart-transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = CD4B7DC4182B3FF900EFA2D9 /* pizzaStart-transparent.png */; };
+		CD4B7DCC182B56B700EFA2D9 /* drink.png in Resources */ = {isa = PBXBuildFile; fileRef = CD4B7DCA182B56B700EFA2D9 /* drink.png */; };
+		CD4B7DCD182B56B700EFA2D9 /* pizza.png in Resources */ = {isa = PBXBuildFile; fileRef = CD4B7DCB182B56B700EFA2D9 /* pizza.png */; };
 		CD50829D1820725F003FECED /* DefaultData.m in Sources */ = {isa = PBXBuildFile; fileRef = CD50829C1820725F003FECED /* DefaultData.m */; };
 		CD64A5B11828041D00AEE446 /* backgroundImage.png in Resources */ = {isa = PBXBuildFile; fileRef = CD64A5B01828041D00AEE446 /* backgroundImage.png */; };
 		CD64A5B31828123C00AEE446 /* backgroundImageWithFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = CD64A5B21828123C00AEE446 /* backgroundImageWithFrame.png */; };
@@ -155,6 +159,10 @@
 		37F7F56318181D720014B5BC /* CoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreData.m; sourceTree = "<group>"; };
 		CD29C30C18203FC700BEBD57 /* OrderItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderItemsViewController.h; sourceTree = "<group>"; };
 		CD29C30D18203FC700BEBD57 /* OrderItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderItemsViewController.m; sourceTree = "<group>"; };
+		CD4B7DC2182B33EA00EFA2D9 /* bg_table_cloth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_table_cloth.png; sourceTree = "<group>"; };
+		CD4B7DC4182B3FF900EFA2D9 /* pizzaStart-transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pizzaStart-transparent.png"; sourceTree = "<group>"; };
+		CD4B7DCA182B56B700EFA2D9 /* drink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drink.png; sourceTree = "<group>"; };
+		CD4B7DCB182B56B700EFA2D9 /* pizza.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizza.png; sourceTree = "<group>"; };
 		CD50829B1820725F003FECED /* DefaultData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultData.h; sourceTree = "<group>"; };
 		CD50829C1820725F003FECED /* DefaultData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultData.m; sourceTree = "<group>"; };
 		CD64A5B01828041D00AEE446 /* backgroundImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backgroundImage.png; sourceTree = "<group>"; };
@@ -243,11 +251,15 @@
 			isa = PBXGroup;
 			children = (
 				CD64A5B21828123C00AEE446 /* backgroundImageWithFrame.png */,
+				CD4B7DC2182B33EA00EFA2D9 /* bg_table_cloth.png */,
 				377FA196182AD81E001B75CD /* drinkIcon.png */,
 				CDF9DC451820CFEB0074DC0F /* pepperoniPizza.png */,
 				CDDE058E1827367C00596D6E /* pepperoni.png */,
 				CD64A5B01828041D00AEE446 /* backgroundImage.png */,
 				377FA194182AD689001B75CD /* pizzaIcon.png */,
+				CD4B7DC4182B3FF900EFA2D9 /* pizzaStart-transparent.png */,
+				CD4B7DCA182B56B700EFA2D9 /* drink.png */,
+				CD4B7DCB182B56B700EFA2D9 /* pizza.png */,
 				CDF9DC461820CFEB0074DC0F /* veggiePizza.png */,
 				CDF9DC491820D07B0074DC0F /* pizzaStart.png */,
 				CDDE05901827368E00596D6E /* cheese.png */,
@@ -456,6 +468,7 @@
 				37F7F53518181AFA0014B5BC /* InfoPlist.strings in Resources */,
 				CDF9DC471820CFEB0074DC0F /* pepperoniPizza.png in Resources */,
 				377FA190182AD591001B75CD /* table.jpg in Resources */,
+				CD4B7DCC182B56B700EFA2D9 /* drink.png in Resources */,
 				CD64A5B11828041D00AEE446 /* backgroundImage.png in Resources */,
 				CD65A2CF1819B75000422B43 /* coke.jpg in Resources */,
 				CDE8F4981820A35200BBB203 /* cup.png in Resources */,
@@ -470,10 +483,13 @@
 				CDDE05911827368E00596D6E /* cheese.png in Resources */,
 				37F7F55E18181BB40014B5BC /* Storyboard.storyboard in Resources */,
 				379F705E1826E899003CAD2D /* sample_iPod.m4v in Resources */,
+				CD4B7DC5182B3FF900EFA2D9 /* pizzaStart-transparent.png in Resources */,
 				CDF9DC481820CFEB0074DC0F /* veggiePizza.png in Resources */,
 				377FA18F182AD591001B75CD /* foodIcons.png in Resources */,
 				CDFA9FB41823687700A7A8DE /* EditMenuItemCellDetailView.xib in Resources */,
+				CD4B7DCD182B56B700EFA2D9 /* pizza.png in Resources */,
 				377FA195182AD689001B75CD /* pizzaIcon.png in Resources */,
+				CD4B7DC3182B33EA00EFA2D9 /* bg_table_cloth.png in Resources */,
 				377FA197182AD81E001B75CD /* drinkIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

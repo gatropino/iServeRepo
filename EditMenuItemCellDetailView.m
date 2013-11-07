@@ -15,6 +15,8 @@
         
     menuImagePreview.image = senderCell.imageView.image;
     
+    [menuLabel becomeFirstResponder];
+    
     return;
     
     // PHOTO PICKER TURNED OFF 

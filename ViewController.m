@@ -137,7 +137,9 @@
 @property (strong, nonatomic) IBOutlet UIView *editSidebarView;
 @property (strong, nonatomic) IBOutlet UIView *sequenceView;
 @property (strong, nonatomic) IBOutlet UIButton *editScreenButton;
+@property (strong, nonatomic) IBOutlet UIView *plainOverlay;
 @property (strong, nonatomic) IBOutlet UIButton *nextPageButton;
+@property (strong, nonatomic) IBOutlet UILabel *historyLastTableDisplayedOnScreen;
 
 - (IBAction)backButtonPressed:(id)sender;
 - (IBAction)mainMenuButtonPressed:(id)sender;
@@ -174,6 +176,7 @@
 -(void)saveUIBuildData;
 -(void)nsLogUIObjects;
 -(void)nsLogCopiedItems;
+-(void)nsLoguiObjectsOnScreen;
 
 -(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destiation receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor editExistingBlockInsteadOfCreating:(MenuItemCell *)block;
 
@@ -182,7 +185,7 @@
 
 @implementation ViewController
 
-  @synthesize uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems, yDefualtStartingPosition, menuItemsCurrent, uiItemPadding, localIDNumberCounter, restaurant, table, customer, isSeated, uiObjects, buildModeOn, menuItemHistory, uiBuildMenuPrototypeCells, uiItemHeight, uiItemWidth, copiedItems, clipboardBlankCells, editScreenButton, detailView, copiedChildren, pageNumber, nextPageButton, menuData, editSidebarView, sequenceView, clipboardBuilderOnItems, clipboardStoresTrash;
+  @synthesize uiObjectsOnScreen, colorDefaultForMenuItems, colorDefaultForUIItems, colorDraggingForMenuItems, colorHighlightedForMenuItems, colorHighlightedForUIItems, menuItemWidth, menuItemHeight, menuItemPadding, numberOfMenuItemsOnPage, itemPositionXStarting, colorDraggingForUIItems, yDefualtStartingPosition, menuItemsCurrent, uiItemPadding, localIDNumberCounter, restaurant, table, customer, isSeated, uiObjects, buildModeOn, menuItemHistory, uiBuildMenuPrototypeCells, uiItemHeight, uiItemWidth, copiedItems, clipboardBlankCells, editScreenButton, detailView, copiedChildren, pageNumber, nextPageButton, menuData, editSidebarView, sequenceView, clipboardBuilderOnItems, clipboardStoresTrash, historyLastTableDisplayedOnScreen, plainOverlay;
 
 
 #pragma mark Setup
@@ -247,7 +250,7 @@
     uiItemWidth = 100;
     uiItemHeight = 80;
     uiItemPadding = 2;
-    yDefualtStartingPosition = 128;
+    yDefualtStartingPosition = 126;
     
     // check screen size
     CGRect screenBound = [[UIScreen mainScreen] bounds];
@@ -256,10 +259,10 @@
     CGFloat screenWidth = screenSize.height;
     
     itemPositionXStarting = screenWidth - menuItemWidth;
-    numberOfMenuItemsOnPage = 8; //(screenHeight - 65 - 120 - 2) / (menuItemHeight + menuItemPadding) -1;
+    numberOfMenuItemsOnPage = 7; //(screenHeight - 65 - 120 - 2) / (menuItemHeight + menuItemPadding) -1;
     
     // set colors
-    colorDefaultForMenuItems = [UIColor colorWithRed:222/255.0 green:200/255.0 blue:186/255.0 alpha:1];   
+    colorDefaultForMenuItems = [UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:.8];   
     colorDraggingForMenuItems = [UIColor colorWithRed:210/255.0 green:180/255.0 blue:140/255.0 alpha:.8];
     colorHighlightedForMenuItems = [UIColor brownColor];
     
@@ -314,7 +317,12 @@
         menuBlock.filterCustomer = z.filterCustomer;
         menuBlock.filterIsSeated = [z.filterIsSeated boolValue];
         
+        menuBlock.layer.cornerRadius = 15;
+        menuBlock.layer.borderWidth = 1;
+        menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!  
+        
         menuBlock.instanceOf = z.instanceOf;
+        menuBlock.placeInstancesInHorizontalLine = TRUE;
         
         // store all UI objects in an Array
         [uiObjects addObject:menuBlock];
@@ -336,7 +344,7 @@
     
     for(int x = 0; x<numberOfMenuItemsOnPage; x++)  {
         
-        MenuItemCell *menuBlock = [self makeBlockView_Name: @""
+        MenuItemCell *menuBlock = [self makeBlockView_Name: @"not active"
                                              imageLocation: @""
                                                 parentName: @"no parent set"
                                                       type: @"MenuItem"
@@ -371,7 +379,7 @@
     
     for(int x = 0; x<numberOfMenuItemsOnPage; x++)  {
         
-        MenuItemCell *menuBlock = [self makeBlockView_Name: @""
+        MenuItemCell *menuBlock = [self makeBlockView_Name: @"not active"
                                              imageLocation: @""
                                                 parentName: @"no parent set"
                                                       type: @"background menu block"
@@ -406,7 +414,7 @@
     
     for(MenuItemCell *z in menuItemsCurrent)  {
         
-        __unused MenuItemCell * menuBlock = [self makeBlockView_Name: @""
+    __unused MenuItemCell * menuBlock = [self makeBlockView_Name: @"not active"
                                                        imageLocation: @""
                                                           parentName: @"no parent allowed"
                                                                 type: @"MenuItem"
@@ -427,7 +435,7 @@
         
             
         menuBlock.layer.borderColor = [[UIColor clearColor] CGColor]; 
-
+        z.layer.backgroundColor = [[UIColor clearColor] CGColor];
     }
 
 }
@@ -527,6 +535,7 @@
                                                        highlightedColor: colorHighlightedForMenuItems
                                                               dragColor: colorDraggingForMenuItems
                                      editExistingBlockInsteadOfCreating: [menuItemsCurrent objectAtIndex:blockCounter]];
+            
             if(blockCounter == [menuItemsCurrent count]-1) { return; }
             
             blockCounter +=1;
@@ -594,11 +603,8 @@
     menuBlock.highlightedColor = highlightedColor;
     menuBlock.dragColor = dragColor;
     menuBlock.isSelected = FALSE;
-    menuBlock.buildMode = 0;    // 0 tells us it is false/off
-    
-    menuBlock.layer.cornerRadius = 15;
-    menuBlock.layer.borderWidth = 1;
-    menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!! 
+    menuBlock.buildMode = 0;                                        // 0 tells us it is false/off
+    menuBlock.placeInstancesInHorizontalLine = TRUE;                // HARD CODED IN
     
     menuBlock.localIDNumber = [NSString stringWithFormat:@"%i",localIDNumberCounter];
     localIDNumberCounter = [[CoreData myData] assignLocalIDNumber];    
@@ -640,6 +646,7 @@
     restaurant = @"";
     table = @"Main View";
     customer = @"";
+    historyLastTableDisplayedOnScreen.text = @"Viewing: \"Restaurant\"";
     [self runUIFilterToUpdateScreen];
 }
 
@@ -736,9 +743,10 @@
             return;
         } else if ([z.type isEqualToString:@"Pizza Image Display"]){
             
-            z.layer.borderColor = [[UIColor clearColor] CGColor];             
-            pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"pizzaStart.png"];
+            pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"pizzaStart-transparent.png"];
             pizzaDisplayImage.imageView.frame = CGRectMake(0, 0, wd,  ht);
+            z.layer.borderColor = [[UIColor clearColor] CGColor];             
+            z.layer.backgroundColor = [[UIColor clearColor] CGColor];
             [pizzaDisplayImage.imageView reloadInputViews];
             return;
         };
@@ -827,11 +835,15 @@
             BOOL placeInstancesInHorizontalLine = z.placeInstancesInHorizontalLine;
             
             // for each instance of our destination object
-            //for(MenuItemCell *mc in uiObjectsOnScreen){
-            for(MenuItemCell *mc in copyUIObjectsOnScreen){
+            for(MenuItemCell *mc in copyUIObjectsOnScreen){   // using a copy to make sure does't get confused
                 if([mc.instanceOf isEqualToString: z.localIDNumber]){
                     
                     mc.frame = CGRectMake(x, y, wd, ht);
+                    
+       // TRY FIX HERE????
+                    mc.defaultPositionX = x;
+                    mc.defaultPositionY = y;
+                    
                     
                     if(placeInstancesInHorizontalLine){
                         x = x + wd + uiItemPadding; }
@@ -883,9 +895,14 @@
     menuBlock.filterCustomer = sender.filterCustomer;
     menuBlock.filterIsSeated = sender.filterIsSeated;
     
+    menuBlock.layer.cornerRadius = 15;
+    menuBlock.layer.borderWidth = 1;
+    menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!  
+    menuBlock.placeInstancesInHorizontalLine = TRUE;
     
     // add to view
     [self.view addSubview:menuBlock];
+    [self updateScreenLocationsAfterDragAndDrop];
     
     // add to data structures (currently arrayUI and uiObjects on the screen)
     [uiObjects addObject:menuBlock];
@@ -929,6 +946,8 @@
     menuBlock.filterTable = [NSString stringWithFormat:@"%@ %i",sender.filterTable, localIDNumberCounter];
     menuBlock.filterCustomer = sender.filterCustomer; 
 
+    menuBlock.placeInstancesInHorizontalLine = TRUE;
+    
     // COPY CHILDREN (immediate children have table = parent.filterTable)
     //  to find children, use clipboardObj.filterTable number, but for new instance, use newInstance.filterTable number
     [self dropBuildObjectCopyChildren:sender childsTableNumber:menuBlock.filterTable];
@@ -1011,7 +1030,8 @@
     for(MenuItemCell *z in copyOfUIObjectsOnScreen){
         
         
-        if(z.isSelected && ([sender.destination isEqualToString:z.name] || [sender.name isEqualToString:z.receives] || [z.receives isEqualToString:@"ALL"]) ){
+        if(z.isSelected && ![z.type isEqualToString:@"not active"] &&
+           ([sender.destination isEqualToString:z.name] || [sender.name isEqualToString:z.receives] || [z.receives isEqualToString:@"ALL"]) ){
             
             [self makeInstance:sender objectBeingHit:z];
             didDrop = TRUE;  }
@@ -1027,6 +1047,8 @@
     table = mit.filterTable;
     customer = mit.filterCustomer;
     isSeated = mit.filterIsSeated;
+        
+    historyLastTableDisplayedOnScreen.text = [NSString stringWithFormat:@"Viewing: \"%@\"", mit.titleToDisplay];
     
     [self runUIFilterToUpdateScreen];
     
@@ -1095,6 +1117,12 @@
             menuBlock.filterCustomer = z.filterCustomer;
             menuBlock.filterIsSeated = z.filterIsSeated;
              
+            menuBlock.layer.cornerRadius = 15;
+            menuBlock.layer.borderWidth = 1;
+            menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!! 
+        
+            menuBlock.placeInstancesInHorizontalLine = TRUE;
+        
             menuBlock.buildMode = 1;
             
             counter +=1; }
@@ -1121,7 +1149,7 @@
     
     if(buildModeOn) {
         
-        self.view.backgroundColor = [UIColor colorWithRed:255/255.0 green:0/255.0 blue:0/255.0 alpha:.2];
+        plainOverlay.hidden = FALSE;
         
         sequenceView.hidden = TRUE;
         editSidebarView.hidden = FALSE;
@@ -1146,7 +1174,7 @@
         
     } else {
         
-        self.view.backgroundColor = [UIColor whiteColor];
+        plainOverlay.hidden = TRUE;
         
         sequenceView.hidden = FALSE;
         editSidebarView.hidden = TRUE;
@@ -1183,7 +1211,7 @@
      ^{ editScreenButton.titleLabel.textColor = [UIColor yellowColor]; } completion:^(BOOL finished) {
      
             [UIView animateWithDuration:1 animations:
-             ^{editScreenButton.titleLabel.textColor = [UIColor blackColor];} completion:
+             ^{editScreenButton.titleLabel.textColor = [UIColor purpleColor];} completion:
              ^(BOOL finished) { 
                  
                         //[self flashingTextForBuildModeOn]; 
@@ -1196,7 +1224,6 @@
 
 -(void)saveUIBuildData
 {
-        [self nsLogUIObjects];
     
     // save newly created objects
     for(MenuItemCell *z in uiObjects){
@@ -1232,6 +1259,7 @@
                                                   defaultPositionY:z.defaultPositionY
                                                          buildMode:[NSNumber numberWithInt:z.buildMode] ];  
                         z.orderConfirmed = TRUE;
+                        z.placeInstancesInHorizontalLine = TRUE;
         }
     }
     
@@ -1298,7 +1326,7 @@
 
 
 - (IBAction)closeOrderButtonPressed:(id)sender {
-
+    [self confirmOrderAndSendToCoreData];
     [[CoreData myData] confirmTicketsByTableName:table];
     [self clearTableButtonPressed:nil];
 
@@ -1372,9 +1400,7 @@
         }
     }    
     
-    [self nsLogUIObjects];
-    NSLog(@"yok");
-    [self nsLogCopiedItems];
+   // [self nsLogCopiedItems];
     
     // if pleaseDelete is on, then delete from screen and from array of all objects
     if(pleaseDelete==TRUE){
@@ -1435,7 +1461,7 @@
                                             titleToDisplay: @""
                                    
                                                     xValue: xBlockPosition
-                                                    yValue: 668
+                                                    yValue: 688
                                                         ht: uiItemHeight
                                                         wd: uiItemWidth
                                                    canDrag: FALSE
@@ -1450,6 +1476,11 @@
         [clipboardBlankCells addObject:menuBlock];
         [self.view addSubview:menuBlock];
         
+        menuBlock.layer.cornerRadius = 15;
+        menuBlock.layer.borderWidth = 1;
+        menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!  
+        
+        menuBlock.placeInstancesInHorizontalLine = TRUE;
     }
     
 }
@@ -1541,6 +1572,12 @@
         menuBlock.filterCustomer = z.filterCustomer;
         menuBlock.filterIsSeated = z.filterIsSeated;
         
+        menuBlock.layer.cornerRadius = 15;
+        menuBlock.layer.borderWidth = 1;
+        menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!  
+        
+        menuBlock.placeInstancesInHorizontalLine = TRUE;
+        
         menuBlock.buildMode = 1;
         
         // make alterations
@@ -1549,6 +1586,8 @@
             menuBlock.type = @"MenuItem";  }
         
         counter += 1;
+        
+        if(counter == 8){ break; }  // THERE ARE ONLY 8 SPOTS, PLEASE REFACTOR
     }
     
     
@@ -1614,7 +1653,13 @@
     menuBlock.filterRestaurant = sender.filterRestaurant;
     menuBlock.filterTable = [NSString stringWithFormat:@"%@ %i",sender.filterTable, localIDNumberCounter];
     menuBlock.filterCustomer = sender.filterCustomer; 
-
+    
+    menuBlock.layer.cornerRadius = 15;
+    menuBlock.layer.borderWidth = 1;
+    menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!
+    
+    menuBlock.placeInstancesInHorizontalLine = TRUE;
+    
     // add to data structures
     [uiObjects addObject:menuBlock];
    
@@ -1683,6 +1728,18 @@
     
     
 }
+
+-(void)nsLoguiObjectsOnScreen
+{
+    for(MenuItemCell *z in uiObjectsOnScreen){
+        
+        NSLog(@"onScreen  name: %@  id: %@  table: %@  canDrag: %i  orderCompleted: %i  position: %f defaultPosition: %f",z.name, z.localIDNumber, z.table, z.canDrag, z.orderConfirmed, z.frame.origin.y, z.defaultPositionY);
+        
+    }
+    
+    
+}
+
 // LOOK AT SCALING (SO CAN ASK)
 
 
