@@ -754,7 +754,7 @@
             
             pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"pizzaStart-transparent.png"];
             pizzaDisplayImage.imageView.frame = CGRectMake(0, 0, wd,  ht);
-            z.layer.borderColor = [[UIColor clearColor] CGColor];             
+            z.layer.borderColor = [[UIColor clearColor] CGColor];
             z.layer.backgroundColor = [[UIColor clearColor] CGColor];
             [pizzaDisplayImage.imageView reloadInputViews];
             continue;
@@ -1011,8 +1011,17 @@
 {
     for(MenuItemCell *z in uiObjectsOnScreen)
     {
-        z.backgroundColor = colorDefaultForUIItems;
-        z.isSelected = FALSE;
+        if ([z.type isEqualToString:@"Pizza Image Display"])
+        {
+            z.layer.borderColor = [[UIColor clearColor] CGColor];
+            z.layer.backgroundColor = [[UIColor clearColor] CGColor];
+        }
+        else
+        {
+            z.backgroundColor = colorDefaultForUIItems;
+            z.isSelected = FALSE;
+            
+        }
     }
     
 }

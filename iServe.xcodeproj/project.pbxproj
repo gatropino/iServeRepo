@@ -13,6 +13,11 @@
 		377FA192182AD591001B75CD /* tableSetting.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA18E182AD591001B75CD /* tableSetting.png */; };
 		377FA195182AD689001B75CD /* pizzaIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA194182AD689001B75CD /* pizzaIcon.png */; };
 		377FA197182AD81E001B75CD /* drinkIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA196182AD81E001B75CD /* drinkIcon.png */; };
+		377FA199182C2D7F001B75CD /* ic_app_iserve_40@2xx.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA198182C2D7F001B75CD /* ic_app_iserve_40@2xx.png */; };
+		377FA19C182C32A8001B75CD /* ic_app_iserve29.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA19A182C32A8001B75CD /* ic_app_iserve29.png */; };
+		377FA19D182C32A8001B75CD /* ic_app_iserve40.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA19B182C32A8001B75CD /* ic_app_iserve40.png */; };
+		377FA19F182C32EB001B75CD /* ic_app_iserve76.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA19E182C32EB001B75CD /* ic_app_iserve76.png */; };
+		377FA1A1182C3361001B75CD /* ic_app_iserve29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA1A0182C3361001B75CD /* ic_app_iserve29@2x.png */; };
 		378E44941826B6EE007937A9 /* ConfirmedOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 378E44931826B6EE007937A9 /* ConfirmedOrder.m */; };
 		378E44961826C21B007937A9 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 378E44951826C21B007937A9 /* SpriteKit.framework */; };
 		378E44991826C7BB007937A9 /* SKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 378E44981826C7BB007937A9 /* SKViewController.m */; };
@@ -99,6 +104,11 @@
 		377FA18E182AD591001B75CD /* tableSetting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableSetting.png; sourceTree = "<group>"; };
 		377FA194182AD689001B75CD /* pizzaIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaIcon.png; sourceTree = "<group>"; };
 		377FA196182AD81E001B75CD /* drinkIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drinkIcon.png; sourceTree = "<group>"; };
+		377FA198182C2D7F001B75CD /* ic_app_iserve_40@2xx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_app_iserve_40@2xx.png"; sourceTree = "<group>"; };
+		377FA19A182C32A8001B75CD /* ic_app_iserve29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_app_iserve29.png; sourceTree = "<group>"; };
+		377FA19B182C32A8001B75CD /* ic_app_iserve40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_app_iserve40.png; sourceTree = "<group>"; };
+		377FA19E182C32EB001B75CD /* ic_app_iserve76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_app_iserve76.png; sourceTree = "<group>"; };
+		377FA1A0182C3361001B75CD /* ic_app_iserve29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_app_iserve29@2x.png"; sourceTree = "<group>"; };
 		378E44921826B6EE007937A9 /* ConfirmedOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmedOrder.h; sourceTree = "<group>"; };
 		378E44931826B6EE007937A9 /* ConfirmedOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmedOrder.m; sourceTree = "<group>"; };
 		378E44951826C21B007937A9 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
@@ -278,7 +288,12 @@
 				377FA18C182AD591001B75CD /* table.jpg */,
 				377FA18D182AD591001B75CD /* tableDrinkSetting.jpg */,
 				377FA18E182AD591001B75CD /* tableSetting.png */,
+				377FA19A182C32A8001B75CD /* ic_app_iserve29.png */,
+				377FA1A0182C3361001B75CD /* ic_app_iserve29@2x.png */,
+				377FA19B182C32A8001B75CD /* ic_app_iserve40.png */,
+				377FA19E182C32EB001B75CD /* ic_app_iserve76.png */,
 				CD0DF226182C15A7006BB681 /* ic_app_iserve.png */,
+				377FA198182C2D7F001B75CD /* ic_app_iserve_40@2xx.png */,
 				CD0DF227182C15A7006BB681 /* ic_app_iserve@2x.png */,
 			);
 			name = images;
@@ -473,6 +488,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				377FA19F182C32EB001B75CD /* ic_app_iserve76.png in Resources */,
 				CDDE058F1827367C00596D6E /* pepperoni.png in Resources */,
 				37F7F53518181AFA0014B5BC /* InfoPlist.strings in Resources */,
 				CDF9DC471820CFEB0074DC0F /* pepperoniPizza.png in Resources */,
@@ -480,8 +496,10 @@
 				CD4B7DCC182B56B700EFA2D9 /* drink.png in Resources */,
 				CD64A5B11828041D00AEE446 /* backgroundImage.png in Resources */,
 				CD65A2CF1819B75000422B43 /* coke.jpg in Resources */,
+				377FA199182C2D7F001B75CD /* ic_app_iserve_40@2xx.png in Resources */,
 				CDE8F4981820A35200BBB203 /* cup.png in Resources */,
 				CD65A2D21819B79400422B43 /* MenuItemCell.xib in Resources */,
+				377FA19C182C32A8001B75CD /* ic_app_iserve29.png in Resources */,
 				CD65A2CE1819B75000422B43 /* bud.png in Resources */,
 				37F7F54018181AFA0014B5BC /* Images.xcassets in Resources */,
 				377FA191182AD591001B75CD /* tableDrinkSetting.jpg in Resources */,
@@ -490,9 +508,11 @@
 				CD0DF229182C15A7006BB681 /* ic_app_iserve@2x.png in Resources */,
 				CD65A2D01819B75000422B43 /* sprite.jpg in Resources */,
 				CDF9DC4A1820D07B0074DC0F /* pizzaStart.png in Resources */,
+				377FA19D182C32A8001B75CD /* ic_app_iserve40.png in Resources */,
 				CDDE05911827368E00596D6E /* cheese.png in Resources */,
 				37F7F55E18181BB40014B5BC /* Storyboard.storyboard in Resources */,
 				CD0DF225182C0927006BB681 /* plate.png in Resources */,
+				377FA1A1182C3361001B75CD /* ic_app_iserve29@2x.png in Resources */,
 				379F705E1826E899003CAD2D /* sample_iPod.m4v in Resources */,
 				CD4B7DC5182B3FF900EFA2D9 /* pizzaStart-transparent.png in Resources */,
 				CDF9DC481820CFEB0074DC0F /* veggiePizza.png in Resources */,
