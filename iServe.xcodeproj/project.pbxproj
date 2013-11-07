@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		377FA18F182AD591001B75CD /* foodIcons.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA18B182AD591001B75CD /* foodIcons.png */; };
+		377FA190182AD591001B75CD /* table.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 377FA18C182AD591001B75CD /* table.jpg */; };
+		377FA191182AD591001B75CD /* tableDrinkSetting.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 377FA18D182AD591001B75CD /* tableDrinkSetting.jpg */; };
+		377FA192182AD591001B75CD /* tableSetting.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA18E182AD591001B75CD /* tableSetting.png */; };
+		377FA195182AD689001B75CD /* pizzaIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA194182AD689001B75CD /* pizzaIcon.png */; };
+		377FA197182AD81E001B75CD /* drinkIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 377FA196182AD81E001B75CD /* drinkIcon.png */; };
 		378E44941826B6EE007937A9 /* ConfirmedOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 378E44931826B6EE007937A9 /* ConfirmedOrder.m */; };
 		378E44961826C21B007937A9 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 378E44951826C21B007937A9 /* SpriteKit.framework */; };
 		378E44991826C7BB007937A9 /* SKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 378E44981826C7BB007937A9 /* SKViewController.m */; };
@@ -80,6 +86,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		377FA18B182AD591001B75CD /* foodIcons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = foodIcons.png; sourceTree = "<group>"; };
+		377FA18C182AD591001B75CD /* table.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = table.jpg; sourceTree = "<group>"; };
+		377FA18D182AD591001B75CD /* tableDrinkSetting.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tableDrinkSetting.jpg; sourceTree = "<group>"; };
+		377FA18E182AD591001B75CD /* tableSetting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tableSetting.png; sourceTree = "<group>"; };
+		377FA194182AD689001B75CD /* pizzaIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pizzaIcon.png; sourceTree = "<group>"; };
+		377FA196182AD81E001B75CD /* drinkIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drinkIcon.png; sourceTree = "<group>"; };
 		378E44921826B6EE007937A9 /* ConfirmedOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmedOrder.h; sourceTree = "<group>"; };
 		378E44931826B6EE007937A9 /* ConfirmedOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmedOrder.m; sourceTree = "<group>"; };
 		378E44951826C21B007937A9 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
@@ -227,6 +239,30 @@
 			name = Entities;
 			sourceTree = "<group>";
 		};
+		377FA193182AD59D001B75CD /* images */ = {
+			isa = PBXGroup;
+			children = (
+				CD64A5B21828123C00AEE446 /* backgroundImageWithFrame.png */,
+				377FA196182AD81E001B75CD /* drinkIcon.png */,
+				CDF9DC451820CFEB0074DC0F /* pepperoniPizza.png */,
+				CDDE058E1827367C00596D6E /* pepperoni.png */,
+				CD64A5B01828041D00AEE446 /* backgroundImage.png */,
+				377FA194182AD689001B75CD /* pizzaIcon.png */,
+				CDF9DC461820CFEB0074DC0F /* veggiePizza.png */,
+				CDF9DC491820D07B0074DC0F /* pizzaStart.png */,
+				CDDE05901827368E00596D6E /* cheese.png */,
+				CD65A2CB1819B75000422B43 /* bud.png */,
+				CDE8F4971820A35200BBB203 /* cup.png */,
+				CD65A2CC1819B75000422B43 /* coke.jpg */,
+				CD65A2CD1819B75000422B43 /* sprite.jpg */,
+				377FA18B182AD591001B75CD /* foodIcons.png */,
+				377FA18C182AD591001B75CD /* table.jpg */,
+				377FA18D182AD591001B75CD /* tableDrinkSetting.jpg */,
+				377FA18E182AD591001B75CD /* tableSetting.png */,
+			);
+			name = images;
+			sourceTree = "<group>";
+		};
 		37F7F51C18181AFA0014B5BC = {
 			isa = PBXGroup;
 			children = (
@@ -241,17 +277,7 @@
 				CD65A2C61819B66200422B43 /* ViewController.m */,
 				CD50829B1820725F003FECED /* DefaultData.h */,
 				CD50829C1820725F003FECED /* DefaultData.m */,
-				CD64A5B21828123C00AEE446 /* backgroundImageWithFrame.png */,
-				CDF9DC451820CFEB0074DC0F /* pepperoniPizza.png */,
-				CDDE058E1827367C00596D6E /* pepperoni.png */,
-				CD64A5B01828041D00AEE446 /* backgroundImage.png */,
-				CDF9DC461820CFEB0074DC0F /* veggiePizza.png */,
-				CDF9DC491820D07B0074DC0F /* pizzaStart.png */,
-				CDDE05901827368E00596D6E /* cheese.png */,
-				CD65A2CB1819B75000422B43 /* bud.png */,
-				CDE8F4971820A35200BBB203 /* cup.png */,
-				CD65A2CC1819B75000422B43 /* coke.jpg */,
-				CD65A2CD1819B75000422B43 /* sprite.jpg */,
+				377FA193182AD59D001B75CD /* images */,
 				37F7F53018181AFA0014B5BC /* iServe */,
 				37F7F54D18181AFA0014B5BC /* iServeTests */,
 				37F7F52718181AFA0014B5BC /* Frameworks */,
@@ -429,12 +455,15 @@
 				CDDE058F1827367C00596D6E /* pepperoni.png in Resources */,
 				37F7F53518181AFA0014B5BC /* InfoPlist.strings in Resources */,
 				CDF9DC471820CFEB0074DC0F /* pepperoniPizza.png in Resources */,
+				377FA190182AD591001B75CD /* table.jpg in Resources */,
 				CD64A5B11828041D00AEE446 /* backgroundImage.png in Resources */,
 				CD65A2CF1819B75000422B43 /* coke.jpg in Resources */,
 				CDE8F4981820A35200BBB203 /* cup.png in Resources */,
 				CD65A2D21819B79400422B43 /* MenuItemCell.xib in Resources */,
 				CD65A2CE1819B75000422B43 /* bud.png in Resources */,
 				37F7F54018181AFA0014B5BC /* Images.xcassets in Resources */,
+				377FA191182AD591001B75CD /* tableDrinkSetting.jpg in Resources */,
+				377FA192182AD591001B75CD /* tableSetting.png in Resources */,
 				CD64A5B31828123C00AEE446 /* backgroundImageWithFrame.png in Resources */,
 				CD65A2D01819B75000422B43 /* sprite.jpg in Resources */,
 				CDF9DC4A1820D07B0074DC0F /* pizzaStart.png in Resources */,
@@ -442,7 +471,10 @@
 				37F7F55E18181BB40014B5BC /* Storyboard.storyboard in Resources */,
 				379F705E1826E899003CAD2D /* sample_iPod.m4v in Resources */,
 				CDF9DC481820CFEB0074DC0F /* veggiePizza.png in Resources */,
+				377FA18F182AD591001B75CD /* foodIcons.png in Resources */,
 				CDFA9FB41823687700A7A8DE /* EditMenuItemCellDetailView.xib in Resources */,
+				377FA195182AD689001B75CD /* pizzaIcon.png in Resources */,
+				377FA197182AD81E001B75CD /* drinkIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,6 +643,7 @@
 				GCC_PREFIX_HEADER = "iServe/iServe-Prefix.pch";
 				INFOPLIST_FILE = "iServe/iServe-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "925ABEE0-F076-48CC-884E-6EF7882B1B8C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -628,6 +661,7 @@
 				GCC_PREFIX_HEADER = "iServe/iServe-Prefix.pch";
 				INFOPLIST_FILE = "iServe/iServe-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "46EDFC40-839A-4419-B1D8-5D7F181A3970";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

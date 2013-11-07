@@ -18,7 +18,7 @@
    [[CoreData myData] makeNewUIItem_parentName:@"Respective Tables" 
                                           name:@"Drink" 
                                 titleToDisplay:@"+ Drink" 
-                                 imageLocation:@"cup.png" 
+                                 imageLocation:@"drinkIcon"
                                           type:@"UIDestination" 
     
                                  localIDNumber:@"d1" 
@@ -46,7 +46,7 @@
     [[CoreData myData] makeNewUIItem_parentName:@"Respective Tables" 
                                            name:@"Pizza" 
                                  titleToDisplay:@"+ Pizza" 
-                                  imageLocation:@"" 
+                                  imageLocation:@"pizzaIcon"
                                            type:@"UIDestination" 
      
                                   localIDNumber:@"d2" 

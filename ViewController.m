@@ -712,7 +712,7 @@
     
     NSString *name;
     
-    for(int i = [uiObjectsOnScreen count] - 1 ; i >= 0 ; i--){  
+    for(int i = (int)[uiObjectsOnScreen count] - 1 ; i >= 0 ; i--){
         
         MenuItemCell *z = [uiObjectsOnScreen objectAtIndex:i];
         name = z.name;
@@ -965,11 +965,11 @@
         
  // input coming in, but not changing???
         //    NSLog(@"%@", editScreenButton.titleLabel.text);
-        editScreenButton.titleLabel.text =@"Edit Screen Off";
-    
-    }else{
-        //       NSLog(@"%i", buildModeOn);
-        editScreenButton.titleLabel.text = @"Edit Screen"      ;   
+//        editScreenButton.titleLabel.text =@"Edit Screen Off";
+//    
+//    }else{
+//        //       NSLog(@"%i", buildModeOn);
+//        editScreenButton.titleLabel.text = @"Edit Screen"      ;   
     }
 }
 

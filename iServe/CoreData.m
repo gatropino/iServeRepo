@@ -704,7 +704,7 @@ id observer2;
     {
         ingrediants.confirmedTicketNumber = @0;
     }
-    NSString *createdAt = [NSString stringWithFormat:@"%@", ingrediants.createdAt];
+   // NSString *createdAt = [NSString stringWithFormat:@"%@", ingrediants.createdAt];
     
     PFQuery *query = [PFQuery queryWithClassName:@"ConfirmedOrder"];
     [query whereKey:@"uniqueIdentity" notEqualTo:uniqueID];
@@ -715,7 +715,7 @@ id observer2;
         if (!error)
         {
             // The find succeeded.
-            NSLog(@"Successfully retrieved %d completed orders.", objects.count);
+            NSLog(@"Successfully retrieved %lu completed orders.", (unsigned long)objects.count);
             // Do something with the found objects
             for (PFObject *object in objects)
             {

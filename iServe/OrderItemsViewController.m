@@ -125,7 +125,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSLog(@"%d", [[self.fetchedResultsController sections]count]);
+    NSLog(@"%lu", (unsigned long)[[self.fetchedResultsController sections]count]);
     return [[self.fetchedResultsController sections]count];
 }
 
