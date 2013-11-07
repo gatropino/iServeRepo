@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *tableLabel;
 @property (weak, nonatomic) IBOutlet UILabel *quantityTotalLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dollarTotalLabel;
+@property (weak, nonatomic) IBOutlet UILabel *taxTotalLabel;
+@property (weak, nonatomic) IBOutlet UILabel *grandTotalLabel;
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 

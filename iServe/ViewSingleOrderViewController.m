@@ -15,7 +15,7 @@
 
 @implementation ViewSingleOrderViewController
 
-@synthesize currentOrder, timeLabel, ticketNumberLabel, textView, tableLabel, quantityTotalLabel, dollarTotalLabel;
+@synthesize currentOrder, timeLabel, ticketNumberLabel, textView, tableLabel, quantityTotalLabel, dollarTotalLabel, taxTotalLabel, grandTotalLabel;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -81,8 +81,10 @@
     textView.text = [NSString stringWithFormat:@"%@%@%@%@%@%@%@", temp1 ?: @"", temp2 ?: @"", temp3 ?: @"", temp4 ?: @"", temp5 ?: @"",temp6 ?: @"",temp7 ?: @""];
     textView.font = [UIFont systemFontOfSize:25];
     
-    
-    dollarTotalLabel.text = [NSString stringWithFormat:@"$%@", grandTotal];
+    dollarTotalLabel.text = [NSString stringWithFormat:@"$%1.2f", [grandTotal floatValue]];
+    NSNumber *taxTotal = @([grandTotal floatValue] * .095);
+    taxTotalLabel.text = [NSString stringWithFormat:@"$%1.2f", [taxTotal floatValue]];
+    grandTotalLabel.text = [NSString stringWithFormat:@"$%1.2f", [grandTotal floatValue] + [taxTotal floatValue]];
 }
 
 
