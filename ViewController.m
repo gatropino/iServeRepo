@@ -196,6 +196,12 @@
     [self setupScreen];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self updateScreenLocationsAfterDragAndDrop];
+    
+}
+
 -(void)setupScreen
 {
     
@@ -728,18 +734,21 @@
 
             z.layer.borderColor = [[UIColor clearColor] CGColor]; 
             pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"pepperoni.png"];
+                        [pizzaDisplayImage.imageView reloadInputViews];
             return;
             
         }else if([name isEqualToString:@"Veggie Pizza"]){
             
             z.layer.borderColor = [[UIColor clearColor] CGColor]; 
             pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"veggiePizza.png"];
+                        [pizzaDisplayImage.imageView reloadInputViews];
             return;
             
         }else if([name isEqualToString:@"Cheese Pizza"]){
             
             z.layer.borderColor = [[UIColor clearColor] CGColor]; 
             pizzaDisplayImage.imageView.image = [UIImage imageNamed: @"cheese.png"];
+            [pizzaDisplayImage.imageView reloadInputViews];
             return;
         } else if ([z.type isEqualToString:@"Pizza Image Display"]){
             
@@ -748,13 +757,14 @@
             z.layer.borderColor = [[UIColor clearColor] CGColor];             
             z.layer.backgroundColor = [[UIColor clearColor] CGColor];
             [pizzaDisplayImage.imageView reloadInputViews];
-            return;
+            continue;
         };
         
         
         
     }
 
+    NSLog(@"asihd");
 }
 
 
