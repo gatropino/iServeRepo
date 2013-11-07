@@ -73,7 +73,7 @@
     [[CoreData myData] makeNewUIItem_parentName:@"" 
                                            name:@"Table 1" 
                                  titleToDisplay:@"Table" 
-                                  imageLocation:@"" 
+                                  imageLocation:@"tableSetting" 
                                            type:@"UIFilter" 
      
                                   localIDNumber:@"d3" 
@@ -100,7 +100,7 @@
     [[CoreData myData] makeNewUIItem_parentName:@"" 
                                            name:@"Pizza Image Display" 
                                  titleToDisplay:@"" 
-                                  imageLocation:@"pizzaStart.png" 
+                                  imageLocation:@"pizzaStart-transparent" 
                                            type:@"Pizza Image Display" 
      
                                   localIDNumber:@"d4" 
@@ -131,7 +131,7 @@
     [[CoreData myData]      makeNewMenuItemFromData_parentName:@"Main Menu" 
                                                           name:@"Pizza Menu" 
                                                 titleToDisplay:@"Pizza" 
-                                                 imageLocation:@"" 
+                                                 imageLocation:@"pizza" 
                                                           type:@"MenuBranch"  
      
                                                  localIDNumber:@"" 
@@ -156,7 +156,7 @@
     [[CoreData myData]      makeNewMenuItemFromData_parentName:@"Main Menu" 
                                                           name:@"Drinks Menu" 
                                                 titleToDisplay:@"Drinks" 
-                                                 imageLocation:@"" 
+                                                 imageLocation:@"drink" 
                                                           type:@"MenuBranch"
      
                                                  localIDNumber:@"" instanceOf:@"" destination:@""receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
@@ -202,7 +202,7 @@
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
                                                               name:@"Cheese Pizza" 
                                                     titleToDisplay:@"Cheese Pizza" 
-                                                     imageLocation:@"" 
+                                                     imageLocation:@"cheese" 
                                                               type:@"MenuItem"
      
                                                      localIDNumber:@"" instanceOf:@"" 
@@ -214,7 +214,7 @@
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
                                                               name:@"Pepperoni Pizza" 
                                                     titleToDisplay:@"Pepperoni Pizza" 
-                                                     imageLocation:@"" 
+                                                     imageLocation:@"pepperoni" 
                                                               type:@"MenuItem"
      
                                                      localIDNumber:@"" instanceOf:@"" 
@@ -227,7 +227,7 @@
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
                                                               name:@"Veggie Pizza" 
                                                     titleToDisplay:@"Veggie Pizza" 
-                                                     imageLocation:@"" 
+                                                     imageLocation:@"veggiePizza" 
                                                               type:@"MenuItem"
      
                                                      localIDNumber:@"" instanceOf:@"" 
