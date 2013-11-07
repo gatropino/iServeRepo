@@ -37,7 +37,7 @@
                                     
                                     isSelected:false canDrag:false placeInstancesInHorizontalLine:FALSE isSeated:false filterIsSeated:false 
                               
-                              defaultPositionX:550
+                              defaultPositionX:200
                               defaultPositionY:200 
                                      buildMode:@0    ];
 
@@ -65,8 +65,8 @@
      
                                      isSelected:false canDrag:false placeInstancesInHorizontalLine:FALSE isSeated:false filterIsSeated:false 
      
-                               defaultPositionX:670 
-                               defaultPositionY:200 
+                               defaultPositionX:200 
+                               defaultPositionY:330 
                                       buildMode:@0    ];
     
     
@@ -119,8 +119,8 @@
      
                                      isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:FALSE filterIsSeated:FALSE 
      
-                               defaultPositionX:250 
-                               defaultPositionY:200 
+                               defaultPositionX:200 
+                               defaultPositionY:460 
                                       buildMode:@0    ];
     
     

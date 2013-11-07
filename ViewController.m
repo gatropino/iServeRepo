@@ -603,7 +603,8 @@
     menuBlock.highlightedColor = highlightedColor;
     menuBlock.dragColor = dragColor;
     menuBlock.isSelected = FALSE;
-    menuBlock.buildMode = 0;    // 0 tells us it is false/off
+    menuBlock.buildMode = 0;                                        // 0 tells us it is false/off
+    menuBlock.placeInstancesInHorizontalLine = TRUE;                // HARD CODED IN
     
     menuBlock.localIDNumber = [NSString stringWithFormat:@"%i",localIDNumberCounter];
     localIDNumberCounter = [[CoreData myData] assignLocalIDNumber];    
@@ -897,6 +898,7 @@
     menuBlock.layer.cornerRadius = 15;
     menuBlock.layer.borderWidth = 1;
     menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!  
+    menuBlock.placeInstancesInHorizontalLine = TRUE;
     
     // add to view
     [self.view addSubview:menuBlock];
@@ -944,6 +946,8 @@
     menuBlock.filterTable = [NSString stringWithFormat:@"%@ %i",sender.filterTable, localIDNumberCounter];
     menuBlock.filterCustomer = sender.filterCustomer; 
 
+    menuBlock.placeInstancesInHorizontalLine = TRUE;
+    
     // COPY CHILDREN (immediate children have table = parent.filterTable)
     //  to find children, use clipboardObj.filterTable number, but for new instance, use newInstance.filterTable number
     [self dropBuildObjectCopyChildren:sender childsTableNumber:menuBlock.filterTable];
@@ -1117,6 +1121,8 @@
             menuBlock.layer.borderWidth = 1;
             menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!! 
         
+            menuBlock.placeInstancesInHorizontalLine = TRUE;
+        
             menuBlock.buildMode = 1;
             
             counter +=1; }
@@ -1253,6 +1259,7 @@
                                                   defaultPositionY:z.defaultPositionY
                                                          buildMode:[NSNumber numberWithInt:z.buildMode] ];  
                         z.orderConfirmed = TRUE;
+                        z.placeInstancesInHorizontalLine = TRUE;
         }
     }
     
@@ -1319,7 +1326,7 @@
 
 
 - (IBAction)closeOrderButtonPressed:(id)sender {
-
+    [self confirmOrderAndSendToCoreData];
     [[CoreData myData] confirmTicketsByTableName:table];
     [self clearTableButtonPressed:nil];
 
@@ -1472,6 +1479,8 @@
         menuBlock.layer.cornerRadius = 15;
         menuBlock.layer.borderWidth = 1;
         menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!  
+        
+        menuBlock.placeInstancesInHorizontalLine = TRUE;
     }
     
 }
@@ -1567,6 +1576,8 @@
         menuBlock.layer.borderWidth = 1;
         menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!  
         
+        menuBlock.placeInstancesInHorizontalLine = TRUE;
+        
         menuBlock.buildMode = 1;
         
         // make alterations
@@ -1575,6 +1586,8 @@
             menuBlock.type = @"MenuItem";  }
         
         counter += 1;
+        
+        if(counter == 8){ break; }  // THERE ARE ONLY 8 SPOTS, PLEASE REFACTOR
     }
     
     
@@ -1644,6 +1657,8 @@
     menuBlock.layer.cornerRadius = 15;
     menuBlock.layer.borderWidth = 1;
     menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!
+    
+    menuBlock.placeInstancesInHorizontalLine = TRUE;
     
     // add to data structures
     [uiObjects addObject:menuBlock];
