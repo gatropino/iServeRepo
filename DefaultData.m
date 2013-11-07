@@ -35,7 +35,7 @@
                                    filterTable:@"" 
                                 filterCustomer:@"" 
                                     
-                                    isSelected:false canDrag:false placeInstancesInHorizontalLine:TRUE isSeated:false filterIsSeated:false 
+                                    isSelected:false canDrag:false placeInstancesInHorizontalLine:FALSE isSeated:false filterIsSeated:false 
                               
                               defaultPositionX:550
                               defaultPositionY:200 
@@ -117,7 +117,7 @@
                                     filterTable:@"" 
                                  filterCustomer:@"" 
      
-                                     isSelected:false canDrag:false placeInstancesInHorizontalLine:true isSeated:false filterIsSeated:false 
+                                     isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:FALSE filterIsSeated:FALSE 
      
                                defaultPositionX:250 
                                defaultPositionY:200 
@@ -159,7 +159,7 @@
                                                  imageLocation:@"drink" 
                                                           type:@"MenuBranch"
      
-                                                 localIDNumber:@"" instanceOf:@"" destination:@""receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                 localIDNumber:@"" instanceOf:@"" destination:@""receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
     // MENU ITEMS - DRINKS
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Drinks Menu" 
@@ -172,7 +172,7 @@
      
                                                        destination:@"Drink" 
      
-                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Drinks Menu" 
                                                               name:@"Sprite" 
@@ -184,7 +184,7 @@
      
                                                        destination:@"Drink"
      
-                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Drinks Menu" 
                                                               name:@"Beer" 
@@ -196,7 +196,7 @@
      
                                                        destination:@"Drink" 
      
-                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
     //MENU ITEMS PIZZA
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
@@ -209,7 +209,7 @@
      
                                                        destination:@"Pizza" 
      
-                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 
                                                               name:@"Pepperoni Pizza" 
@@ -221,7 +221,7 @@
      
                                                        destination:@"Pizza" 
      
-                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:true defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
+                                                          receives:@"" restaurant:@"" table:@"" customer:@"" filterRestaurant:@"" filterTable:@"" filterCustomer:@"" isSelected:FALSE canDrag:FALSE placeInstancesInHorizontalLine:TRUE isSeated:TRUE filterIsSeated:TRUE defaultPositionX:0 defaultPositionY:0 buildMode:@0      ];
     
 
     [[CoreData myData]          makeNewMenuItemFromData_parentName:@"Pizza Menu" 

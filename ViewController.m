@@ -176,6 +176,7 @@
 -(void)saveUIBuildData;
 -(void)nsLogUIObjects;
 -(void)nsLogCopiedItems;
+-(void)nsLoguiObjectsOnScreen;
 
 -(MenuItemCell *)makeBlockView_Name:(NSString *)name imageLocation:(NSString *)imageLocation parentName:(NSString *)parentName type:(NSString *)type destintation:(NSString *)destiation receives:(NSString *)receives titleToDisplay:(NSString *)titleToDisplay xValue:(float)x yValue:(float)y ht:(float)height wd:(float)width canDrag:(BOOL)canDrag defaultColor:(UIColor *)defaultColor highlightedColor:(UIColor *)highlightedColor dragColor:(UIColor *)dragColor editExistingBlockInsteadOfCreating:(MenuItemCell *)block;
 
@@ -321,6 +322,7 @@
         menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!!  
         
         menuBlock.instanceOf = z.instanceOf;
+        menuBlock.placeInstancesInHorizontalLine = TRUE;
         
         // store all UI objects in an Array
         [uiObjects addObject:menuBlock];
@@ -342,7 +344,7 @@
     
     for(int x = 0; x<numberOfMenuItemsOnPage; x++)  {
         
-        MenuItemCell *menuBlock = [self makeBlockView_Name: @""
+        MenuItemCell *menuBlock = [self makeBlockView_Name: @"not active"
                                              imageLocation: @""
                                                 parentName: @"no parent set"
                                                       type: @"MenuItem"
@@ -377,7 +379,7 @@
     
     for(int x = 0; x<numberOfMenuItemsOnPage; x++)  {
         
-        MenuItemCell *menuBlock = [self makeBlockView_Name: @""
+        MenuItemCell *menuBlock = [self makeBlockView_Name: @"not active"
                                              imageLocation: @""
                                                 parentName: @"no parent set"
                                                       type: @"background menu block"
@@ -412,7 +414,7 @@
     
     for(MenuItemCell *z in menuItemsCurrent)  {
         
-        __unused MenuItemCell * menuBlock = [self makeBlockView_Name: @""
+    __unused MenuItemCell * menuBlock = [self makeBlockView_Name: @"not active"
                                                        imageLocation: @""
                                                           parentName: @"no parent allowed"
                                                                 type: @"MenuItem"
@@ -832,11 +834,15 @@
             BOOL placeInstancesInHorizontalLine = z.placeInstancesInHorizontalLine;
             
             // for each instance of our destination object
-            //for(MenuItemCell *mc in uiObjectsOnScreen){
-            for(MenuItemCell *mc in copyUIObjectsOnScreen){
+            for(MenuItemCell *mc in copyUIObjectsOnScreen){   // using a copy to make sure does't get confused
                 if([mc.instanceOf isEqualToString: z.localIDNumber]){
                     
                     mc.frame = CGRectMake(x, y, wd, ht);
+                    
+       // TRY FIX HERE????
+                    mc.defaultPositionX = x;
+                    mc.defaultPositionY = y;
+                    
                     
                     if(placeInstancesInHorizontalLine){
                         x = x + wd + uiItemPadding; }
@@ -1020,7 +1026,8 @@
     for(MenuItemCell *z in copyOfUIObjectsOnScreen){
         
         
-        if(z.isSelected && ([sender.destination isEqualToString:z.name] || [sender.name isEqualToString:z.receives] || [z.receives isEqualToString:@"ALL"]) ){
+        if(z.isSelected && ![z.type isEqualToString:@"not active"] &&
+           ([sender.destination isEqualToString:z.name] || [sender.name isEqualToString:z.receives] || [z.receives isEqualToString:@"ALL"]) ){
             
             [self makeInstance:sender objectBeingHit:z];
             didDrop = TRUE;  }
@@ -1211,7 +1218,6 @@
 
 -(void)saveUIBuildData
 {
-        [self nsLogUIObjects];
     
     // save newly created objects
     for(MenuItemCell *z in uiObjects){
@@ -1387,9 +1393,7 @@
         }
     }    
     
-    [self nsLogUIObjects];
-    NSLog(@"yok");
-    [self nsLogCopiedItems];
+   // [self nsLogCopiedItems];
     
     // if pleaseDelete is on, then delete from screen and from array of all objects
     if(pleaseDelete==TRUE){
@@ -1709,6 +1713,18 @@
     
     
 }
+
+-(void)nsLoguiObjectsOnScreen
+{
+    for(MenuItemCell *z in uiObjectsOnScreen){
+        
+        NSLog(@"onScreen  name: %@  id: %@  table: %@  canDrag: %i  orderCompleted: %i  position: %f defaultPosition: %f",z.name, z.localIDNumber, z.table, z.canDrag, z.orderConfirmed, z.frame.origin.y, z.defaultPositionY);
+        
+    }
+    
+    
+}
+
 // LOOK AT SCALING (SO CAN ASK)
 
 

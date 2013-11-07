@@ -10,7 +10,7 @@
 {
 
     [delegate bringThisViewToFront:self];
-    
+
     // if type = UIDestination
     if ([self.type isEqualToString:@"UIDestination"]) {
         
@@ -84,7 +84,7 @@
 
     // if type = UIInstance       
     } else if ([self.type isEqualToString:@"UIInstance"]) {
-        
+       
             [self toggleThisBlocksColor];
         
     } else { 
@@ -108,9 +108,9 @@
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
+
     if(canDrag){
-         
+
         UITouch *touch = [touches anyObject];  
     
         // get CGPoint with postion info (returns value relative to origin this subview)
@@ -134,7 +134,7 @@
 {
     
     UITouch *touch = [touches anyObject];
-    
+
     // if moved object then
     if (self.frame.origin.x != defaultPositionX || self.frame.origin.y != defaultPositionY)
     { 
