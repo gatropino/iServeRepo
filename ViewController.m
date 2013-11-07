@@ -241,29 +241,29 @@
     
     // set sizes
     menuItemWidth = 100;
-    menuItemHeight = 60;
+    menuItemHeight = 80;
     menuItemPadding = 2;
     
     uiItemWidth = 100;
-    uiItemHeight = 100;
+    uiItemHeight = 80;
     uiItemPadding = 2;
-    yDefualtStartingPosition = 139;
+    yDefualtStartingPosition = 128;
     
     // check screen size
     CGRect screenBound = [[UIScreen mainScreen] bounds];
     CGSize screenSize = screenBound.size;
-    CGFloat screenHeight = screenSize.width;  // view in landscape
+//    CGFloat screenHeight = screenSize.width;  // view in landscape
     CGFloat screenWidth = screenSize.height;
     
     itemPositionXStarting = screenWidth - menuItemWidth;
-    numberOfMenuItemsOnPage = (screenHeight - 65 - 120 - 2) / (menuItemHeight + menuItemPadding) -1;
+    numberOfMenuItemsOnPage = 8; //(screenHeight - 65 - 120 - 2) / (menuItemHeight + menuItemPadding) -1;
     
     // set colors
-    colorDefaultForMenuItems = [UIColor colorWithRed:210/255.0 green:180/255.0 blue:140/255.0 alpha:1];   
+    colorDefaultForMenuItems = [UIColor colorWithRed:222/255.0 green:200/255.0 blue:186/255.0 alpha:1];   
     colorDraggingForMenuItems = [UIColor colorWithRed:210/255.0 green:180/255.0 blue:140/255.0 alpha:.8];
     colorHighlightedForMenuItems = [UIColor brownColor];
     
-    colorDefaultForUIItems = [UIColor colorWithRed:30/255.0 green:144/255.0 blue:255/255.0 alpha:1];     
+    colorDefaultForUIItems = [UIColor colorWithRed:222/255.0 green:200/255.0 blue:186/255.0 alpha:1];     
     colorHighlightedForUIItems = [UIColor colorWithRed:255/255.0 green:0/255.0 blue:0/255.0 alpha:.7];  
     colorDraggingForUIItems = [UIColor purpleColor];
     
@@ -598,7 +598,7 @@
     
     menuBlock.layer.cornerRadius = 15;
     menuBlock.layer.borderWidth = 1;
-    menuBlock.layer.borderColor = [[UIColor redColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!! 
+    menuBlock.layer.borderColor = [[UIColor blackColor] CGColor];    //GREGS AWESOME BEAUTIFICATION!!! 
     
     menuBlock.localIDNumber = [NSString stringWithFormat:@"%i",localIDNumberCounter];
     localIDNumberCounter = [[CoreData myData] assignLocalIDNumber];    
